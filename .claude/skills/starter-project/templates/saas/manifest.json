@@ -1,0 +1,21 @@
+{
+  "name": "SaaS Web App",
+  "description": "Full-stack Next.js application with authentication and dashboard",
+  "stack": ["Next.js 14", "TypeScript", "Tailwind CSS", "NextAuth", "Drizzle ORM", "PostgreSQL"],
+  "agents": ["all"],
+  "features": {
+    "included": ["auth", "database", "dashboard", "testing"],
+    "optional": []
+  },
+  "postSetup": [
+    "npm install",
+    "cp .env.example .env",
+    "npm run db:push",
+    "npm run dev"
+  ],
+  "suggestedTasks": [
+    "Use 'architecture-planner' to design your data model",
+    "Use 'api-developer' to build your first API endpoint",
+    "Use 'ui-ux-designer' to design your dashboard"
+  ]
+}

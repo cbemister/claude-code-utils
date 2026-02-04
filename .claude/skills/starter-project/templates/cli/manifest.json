@@ -1,0 +1,20 @@
+{
+  "name": "CLI Tool",
+  "description": "Command-line application with Commander.js and comprehensive testing",
+  "stack": ["Node.js", "TypeScript", "Commander.js", "Inquirer", "Vitest"],
+  "agents": ["explore/pattern-finder", "implement/test-writer", "implement/debugger"],
+  "features": {
+    "included": ["commander", "inquirer", "testing"],
+    "optional": []
+  },
+  "postSetup": [
+    "npm install",
+    "npm run build",
+    "npm link"
+  ],
+  "suggestedTasks": [
+    "Use 'pattern-finder' to understand command patterns",
+    "Add your first command with proper arg parsing",
+    "Use 'test-writer' to add command tests"
+  ]
+}

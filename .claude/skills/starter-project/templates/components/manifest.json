@@ -1,0 +1,19 @@
+{
+  "name": "Component Library",
+  "description": "React component library with Storybook and comprehensive testing",
+  "stack": ["React", "TypeScript", "Storybook", "Vitest", "CSS Modules"],
+  "agents": ["explore/pattern-finder", "plan/feature-planner", "implement/component-builder", "implement/test-writer", "design/ui-ux-designer"],
+  "features": {
+    "included": ["storybook", "testing", "css-modules"],
+    "optional": []
+  },
+  "postSetup": [
+    "npm install",
+    "npm run storybook"
+  ],
+  "suggestedTasks": [
+    "Use 'ui-ux-designer' to create a design system",
+    "Use 'component-builder' to build core components",
+    "Use 'test-writer' to add component tests"
+  ]
+}

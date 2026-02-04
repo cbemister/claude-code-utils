@@ -1,0 +1,21 @@
+{
+  "name": "E-Commerce Store",
+  "description": "Next.js e-commerce store with Stripe integration and product management",
+  "stack": ["Next.js 14", "TypeScript", "Tailwind CSS", "Stripe", "Drizzle ORM", "PostgreSQL"],
+  "agents": ["all"],
+  "features": {
+    "included": ["stripe", "products", "cart", "checkout", "database"],
+    "optional": []
+  },
+  "postSetup": [
+    "npm install",
+    "cp .env.example .env",
+    "npm run db:push",
+    "npm run dev"
+  ],
+  "suggestedTasks": [
+    "Use 'ui-ux-designer' to design product cards",
+    "Use 'api-developer' to build cart API",
+    "Use 'architecture-planner' for payment integration"
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "name": "API Service",
+  "description": "Node.js REST API service with testing and OpenAPI documentation",
+  "stack": ["Node.js", "Express", "TypeScript", "Vitest", "Drizzle ORM"],
+  "agents": ["explore/codebase-explorer", "explore/dependency-analyzer", "explore/pattern-finder", "plan/architecture-planner", "implement/api-developer", "implement/test-writer", "implement/debugger"],
+  "features": {
+    "included": ["express", "testing", "database"],
+    "optional": []
+  },
+  "postSetup": [
+    "npm install",
+    "cp .env.example .env",
+    "npm run dev"
+  ],
+  "suggestedTasks": [
+    "Use 'api-developer' to add a CRUD endpoint",
+    "Use 'test-writer' to add comprehensive tests",
+    "Use 'pattern-finder' to ensure API consistency"
+  ]
+}

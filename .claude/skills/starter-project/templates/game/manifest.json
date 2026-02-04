@@ -1,0 +1,19 @@
+{
+  "name": "Browser Game",
+  "description": "Browser-based game with Phaser.js and TypeScript",
+  "stack": ["TypeScript", "Phaser.js", "Vite", "Vitest"],
+  "agents": ["explore/codebase-explorer", "implement/component-builder", "implement/debugger", "design/ui-ux-designer"],
+  "features": {
+    "included": ["phaser", "vite", "testing"],
+    "optional": []
+  },
+  "postSetup": [
+    "npm install",
+    "npm run dev"
+  ],
+  "suggestedTasks": [
+    "Use 'ui-ux-designer' to design game UI/menus",
+    "Implement player mechanics and controls",
+    "Use 'debugger' for physics/collision issues"
+  ]
+}
