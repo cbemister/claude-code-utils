@@ -81,6 +81,11 @@ Each skill must be a directory with `SKILL.md` inside:
   - Categories: SaaS app, API service, component library, CLI tool, e-commerce, browser game
   - Each includes: CLAUDE.md, relevant agents, workflow skills, initial plan, working foundation
 
+- **enhance-project** - Add Claude Code resources and improvements to existing projects
+  - Options: Full enhancement, resources only, analysis only, code improvements, custom
+  - Analyzes codebase, fixes issues, adds tests, refactors code
+  - Recommended: Run on a git branch for safe experimentation
+
 ## Usage
 
 Skills are invoked with `/skill-name`:
