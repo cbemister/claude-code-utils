@@ -15,6 +15,29 @@ A well-crafted skill is:
 
 ## Skill Anatomy
 
+### File Location
+
+Claude Code discovers skills from multiple locations with different scopes:
+
+```
+# Project-local (works in this project)
+.claude/skills/
+└── skill-name/
+    └── SKILL.md
+
+# Personal (works in all projects)
+~/.claude/skills/
+└── skill-name/
+    └── SKILL.md
+
+# Enterprise (managed by organization)
+(Configured via enterprise settings)
+```
+
+**Discovery Priority:** Enterprise > Personal > Project
+
+See [.claude/skills/README.md](../../.claude/skills/README.md) for complete details on skill installation and discovery.
+
 ### Required Elements
 
 ```markdown
@@ -706,7 +729,7 @@ Before publishing a skill, verify:
 ## Resources
 
 - [Template](../../templates/skills/skill-template.md) - Skill authoring template
-- [Examples](../../.claude/skills/) - Real skill implementations
+- [Examples](../../skills/) - Real skill implementations
 - [Bash Guide](https://www.gnu.org/software/bash/manual/) - Bash reference
 
 ---
@@ -715,11 +738,11 @@ Before publishing a skill, verify:
 
 1. **Copy template:**
    ```bash
-   cp templates/skills/skill-template.md .claude/skills/my-skill.md
+   cp templates/skills/skill-template.md my-skill.md
    ```
 
 2. **Customize frontmatter:**
-   - Set `name` to match filename
+   - Set `name` to match skill name (e.g., `my-skill`)
    - Write clear `description`
 
 3. **Write instructions:**
@@ -732,12 +755,20 @@ Before publishing a skill, verify:
    - Advanced usage
    - Error scenarios
 
-5. **Test thoroughly:**
+5. **Install to user directory:**
+   ```bash
+   mkdir -p ~/.claude/skills/my-skill
+   cp my-skill.md ~/.claude/skills/my-skill/SKILL.md
+   ```
+
+6. **Restart Claude Code** (close and reopen VSCode)
+
+7. **Test thoroughly:**
    - All input variations
    - Error conditions
    - Different projects
 
-6. **Document issues:**
+8. **Document issues:**
    - Common errors
    - Solutions
    - Tips

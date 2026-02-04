@@ -8,12 +8,12 @@ This repository contains shareable Claude Code resources including sub-agents, s
 .claude/
 ├── agents/           # Sub-agents by purpose (explore, plan, implement)
 ├── commands/         # Slash commands (git, plan, project)
-└── skills/           # Workflow automations
+└── skills/           # Project-local skills (work immediately!)
 
 plans/                # Plan system and templates
 templates/            # Reusable templates (CLAUDE.md, skills, agents)
 docs/                 # Documentation and best practices
-scripts/              # Installation scripts
+scripts/              # Install scripts (copy skills to ~/.claude/skills/ for personal use)
 ```
 
 ## Key Conventions
@@ -35,7 +35,14 @@ model: haiku | sonnet | opus | inherit
 - **Opus**: Powerful - use for architecture and complex planning
 
 ### Skill Format
-Skills are Markdown files that define workflows:
+Skills are directories with a `SKILL.md` file:
+```
+.claude/skills/
+└── skill-name/
+    └── SKILL.md    # Frontmatter + instructions
+```
+
+SKILL.md format:
 ```yaml
 ---
 name: skill-name
@@ -58,7 +65,9 @@ description: What this skill does
 4. Update agents README
 
 ### New Skill
-1. Create file in `.claude/skills/<name>.md`
-2. Add YAML frontmatter
-3. Write instructions in markdown
-4. Update skills README
+1. Create directory `.claude/skills/<name>/`
+2. Create `SKILL.md` file inside
+3. Add YAML frontmatter with name and description
+4. Write instructions in markdown
+5. Restart Claude Code to test
+6. Update [.claude/skills/README.md](.claude/skills/README.md)

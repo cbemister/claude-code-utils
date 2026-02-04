@@ -170,9 +170,17 @@ cp -r ~/claude-code-shared/.claude/agents/* .claude/agents/
 ```
 
 **Example: Only Skills**
+
+> **Important:** Skills must be installed to `~/.claude/skills/<name>/SKILL.md` to work as slash commands.
+
 ```bash
-mkdir -p .claude/skills
-cp -r ~/claude-code-shared/.claude/skills/worktree-*.md .claude/skills/
+# Use the install script
+cd ~/claude-code-shared
+./scripts/install-skills.sh
+
+# Or install specific skills
+./scripts/install-skills.sh worktree-create
+./scripts/install-skills.sh worktree-sync
 ```
 
 **Example: Only Templates**
@@ -279,7 +287,7 @@ git config push.autoSetupRemote true
 ### Check Installation
 
 - [ ] Agents directory exists (`.claude/agents/` or `~/.claude/agents/`)
-- [ ] Skills directory exists (`.claude/skills/` or `~/.claude/skills/`)
+- [ ] Skills installed to user directory (`~/.claude/skills/<name>/SKILL.md`)
 - [ ] Templates available (`templates/` or `~/.claude/templates/`)
 - [ ] Documentation accessible (`docs/` or `~/.claude/docs/`)
 
@@ -291,15 +299,15 @@ git config push.autoSetupRemote true
 # Test 1: List agents
 ls .claude/agents/**/*.md
 
-# Test 2: List skills
-ls .claude/skills/*.md
+# Test 2: List installed skills
+ls ~/.claude/skills/
 
 # Test 3: Agent invocation
 claude
 > Explore the codebase
 # Should delegate to codebase-explorer
 
-# Test 4: Skill invocation
+# Test 4: Skill invocation (requires restart after install)
 /plan-status
 # Should show plans or "No active plans"
 
@@ -457,18 +465,28 @@ head -20 .claude/agents/explore/codebase-explorer.md
 ### Problem: Skills Not Found
 
 **Symptoms:**
-- `/skill-name` gives error
-- Skill not listed
+- `/skill-name` doesn't appear in autocomplete
+- Skill not listed as slash command
+
+**Cause:**
+Skills must be installed to `~/.claude/skills/<name>/SKILL.md` directory structure. Skill source files in the repo must be installed to work as slash commands.
 
 **Solution:**
 ```bash
-# Check skill files exist
-ls .claude/skills/*.md
-ls ~/.claude/skills/*.md
+# Check skill directories exist
+ls ~/.claude/skills/
 
-# Check name matches filename
-grep "name:" .claude/skills/skill-name.md
-# Should output: name: skill-name
+# Each skill needs this structure:
+# ~/.claude/skills/skill-name/SKILL.md
+
+# Install from this repo using the script:
+cd /path/to/claude-code-shared
+./scripts/install-skills.sh
+
+# Or install specific skill:
+./scripts/install-skills.sh skill-name
+
+# Restart Claude Code (close and reopen VSCode)
 ```
 
 ---
@@ -619,7 +637,7 @@ If you have skills from agile-toolkit:
 
 ```bash
 # They're already included!
-# These skills are in .claude/skills/:
+# These skills are in skills/:
 - benchmark-performance.md
 - generate-tests.md
 - organize-commits.md
@@ -634,6 +652,9 @@ If you have skills from agile-toolkit:
 - worktree-cleanup.md
 - create-plan.md
 - plan-status.md
+
+# Install them all:
+./scripts/install-skills.sh
 ```
 
 ---
