@@ -1,0 +1,19 @@
+# Active plans (project-specific)
+plans/active/
+
+# Worktree directories
+worktrees/
+
+# Local settings overrides
+.claude/settings.local.json
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
