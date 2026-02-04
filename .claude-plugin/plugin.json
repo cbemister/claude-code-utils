@@ -1,0 +1,7 @@
+{
+  "name": "claude-code-shared",
+  "version": "1.0.0",
+  "description": "Shared Claude Code skills for development workflows, git worktrees, and planning",
+  "author": "Chris",
+  "repository": "https://github.com/your-username/claude-code-shared"
+}
