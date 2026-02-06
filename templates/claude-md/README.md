@@ -63,6 +63,97 @@ Template for publishable npm packages with:
 
 ---
 
+### [api-service.md](./api-service.md) - API Services
+Template for backend REST APIs with:
+- Route organization
+- Middleware patterns
+- Request validation
+- Error handling
+- Authentication/Authorization
+- Database integration
+
+**Use for:**
+- REST APIs
+- Microservices
+- Backend services
+- GraphQL APIs
+
+**Example projects:**
+- Express/Fastify APIs
+- Backend microservices
+- Authentication services
+- Data processing APIs
+
+---
+
+### [cli-tool.md](./cli-tool.md) - Command Line Tools
+Template for CLI applications with:
+- Command structure patterns
+- Argument parsing
+- Interactive prompts
+- Help text conventions
+- Configuration handling
+- Testing CLI applications
+
+**Use for:**
+- Command-line utilities
+- Developer tools
+- Build tools
+- Automation scripts
+
+**Example projects:**
+- Code generators
+- Build/deployment tools
+- File processors
+- CLI frameworks
+
+---
+
+### [game-browser.md](./game-browser.md) - Browser Games
+Template for browser-based games with:
+- Game loop architecture
+- Scene management
+- Entity/sprite patterns
+- Asset loading
+- Input handling
+- State management
+
+**Use for:**
+- Canvas games
+- Phaser.js games
+- WebGL games
+- Casual browser games
+
+**Example projects:**
+- 2D platformers
+- Puzzle games
+- Arcade games
+- Educational games
+
+---
+
+### [python-app.md](./python-app.md) - Python Applications
+Template for Python projects with:
+- Project structure patterns
+- Virtual environment setup
+- Type hints conventions
+- Testing patterns (pytest)
+- Framework-specific patterns
+
+**Use for:**
+- FastAPI services
+- Flask applications
+- Django projects
+- Python scripts
+
+**Example projects:**
+- Web APIs
+- Data processing apps
+- Machine learning services
+- Automation tools
+
+---
+
 ### [minimal.md](./minimal.md) - Simple Projects
 Lightweight template for:
 - Simple projects
@@ -180,6 +271,34 @@ Good templates include:
 
 ---
 
+## Quality Standards
+
+For comprehensive guidance on writing effective CLAUDE.md files, see:
+**[CLAUDE.md Authoring Best Practices](../docs/best-practices/claude-md-authoring.md)**
+
+### Key Quality Metrics
+
+| Category | Weight | Criteria |
+|----------|--------|----------|
+| **Completeness** | 25% | Has all required sections (Overview, Tech Stack, Structure, Commands) |
+| **Accuracy** | 25% | Information matches actual project state (paths exist, versions correct) |
+| **Specificity** | 20% | Contains project-specific content, not generic boilerplate |
+| **Code Examples** | 15% | Includes actual examples from your codebase |
+| **Maintenance** | 15% | Kept current as project evolves |
+
+### Quality Checklist
+
+Before committing your CLAUDE.md:
+- [ ] All file paths referenced actually exist
+- [ ] Tech stack versions match package.json/requirements.txt
+- [ ] Commands work as documented
+- [ ] Has at least 2-3 real code examples from your project
+- [ ] Contains project-specific patterns (not just framework defaults)
+- [ ] Length is 200-400 lines (not too short, not too long)
+- [ ] No obviously stale or outdated information
+
+---
+
 ## Examples
 
 ### Minimal Customization
@@ -262,20 +381,20 @@ A: Start with `minimal.md` and customize, or use the closest template and adapt 
 ## Contributing
 
 Have a template for a popular stack? Contributions welcome:
-1. Create template following the pattern
-2. Include README section
-3. Add real code examples
-4. Test with actual project
+1. Create template following the pattern from existing templates
+2. Include comprehensive code examples
+3. Reference docs/best-practices/claude-md-authoring.md for quality standards
+4. Test with an actual project of that type
 5. Submit PR
 
 Popular stacks we'd love templates for:
-- Python (FastAPI, Django, Flask)
 - React Native
 - Electron
 - Vue.js / Nuxt
 - Svelte / SvelteKit
-- Express.js
-- NestJS
+- Ruby on Rails
+- Go applications
+- Rust projects
 
 ---
 

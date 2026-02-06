@@ -12,6 +12,7 @@ Comprehensive documentation for Claude Code Shared Resources.
 - [Model Selection](./best-practices/model-selection.md) - Choosing Haiku, Sonnet, or Opus
 - [Agent Design](./best-practices/agent-design.md) - Creating effective sub-agents
 - [Skill Authoring](./best-practices/skill-authoring.md) - Writing reusable skills
+- [CLAUDE.md Authoring](./best-practices/claude-md-authoring.md) - Writing effective project documentation
 - [Worktree Workflow](./best-practices/worktree-workflow.md) - Mastering git worktrees
 
 ---
@@ -28,6 +29,7 @@ docs/
     ├── model-selection.md             # Model selection strategy
     ├── agent-design.md                # Agent design patterns
     ├── skill-authoring.md             # Skill authoring guide
+    ├── claude-md-authoring.md         # CLAUDE.md best practices
     └── worktree-workflow.md           # Git worktree workflow
 ```
 
@@ -118,6 +120,32 @@ Setting up for a team?
 - `.claude/skills/worktree-*.md` - Worktree workflow skills
 - `.claude/skills/create-plan.md` - Plan creation
 - `.claude/skills/plan-status.md` - Plan tracking
+
+---
+
+### CLAUDE.md Documentation
+
+**What:** Project-specific documentation that helps Claude understand your codebase
+
+**Learn:**
+- [CLAUDE.md Authoring Best Practices](./best-practices/claude-md-authoring.md)
+- [Templates](../templates/claude-md/README.md)
+
+**Templates:**
+- `templates/claude-md/minimal.md` - Simple projects
+- `templates/claude-md/nextjs-app.md` - Next.js applications
+- `templates/claude-md/node-library.md` - npm packages
+- `templates/claude-md/api-service.md` - REST APIs
+- `templates/claude-md/cli-tool.md` - CLI applications
+- `templates/claude-md/python-app.md` - Python projects
+- `templates/claude-md/game-browser.md` - Browser games
+
+**Quality Metrics:**
+- Completeness (25%) - Has required sections
+- Accuracy (25%) - Paths exist, versions match
+- Specificity (20%) - Project-specific content
+- Code Examples (15%) - Real examples from your code
+- Maintenance (15%) - Kept current
 
 ---
 
@@ -234,6 +262,25 @@ cd worktrees/feature-name
 # Create PR when done
 /worktree-cleanup feature-name  # After merge
 ```
+
+---
+
+### How do I write a good CLAUDE.md?
+
+See [CLAUDE.md Authoring Best Practices](./best-practices/claude-md-authoring.md)
+
+**Quick answer:**
+- 200-400 lines, not more
+- Include actual code examples from YOUR project
+- Document patterns, not obvious things
+- Keep it updated when project changes
+- Use a template as starting point:
+  - Next.js app → `templates/claude-md/nextjs-app.md`
+  - API service → `templates/claude-md/api-service.md`
+  - CLI tool → `templates/claude-md/cli-tool.md`
+  - Python app → `templates/claude-md/python-app.md`
+  - Game → `templates/claude-md/game-browser.md`
+  - Simple project → `templates/claude-md/minimal.md`
 
 ---
 
