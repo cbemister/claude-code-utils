@@ -1,6 +1,41 @@
 ---
 name: ship
 description: Complete end-of-session workflow - verify work quality, organize commits, and track progress. Use at the end of a development session to ship cleanly.
+hooks:
+  SubagentStart:
+    - matcher: ".*"
+      hooks:
+        - type: command
+          command: |
+            echo ""
+            echo "🤖 Using agent: $AGENT_TYPE"
+  SubagentStop:
+    - hooks:
+        - type: command
+          command: "echo '   ✓ Agent complete'"
+  Stop:
+    - hooks:
+        - type: prompt
+          prompt: |
+            Verify that /ship completed all required phases successfully:
+
+            1. Phase 0 (Verify Work):
+               - Did /verify-work run and find all issues?
+               - Were ALL blocking issues resolved (security, best practices, standards)?
+               - Did tests run and pass?
+
+            2. Phase 1 (Organize Commits):
+               - Were git commits created with conventional commit format?
+               - Were changes grouped logically?
+
+            3. Phase 2 (Track Progress):
+               - Did /track-progress run and record the work?
+
+            Context: $ARGUMENTS
+
+            Return {"ok": true} ONLY if all three phases completed successfully.
+            Return {"ok": false, "reason": "specific issue"} if any phase was incomplete or failed.
+          timeout: 30
 ---
 
 # Ship Skill

@@ -1,6 +1,45 @@
 ---
 name: enhance-project
 description: Enhance existing projects with Claude Code agents, skills, and quality improvements. Analyzes your codebase and adds best-practice tooling.
+hooks:
+  SubagentStart:
+    - hooks:
+        - type: command
+          command: |
+            echo ""
+            echo "┌─────────────────────────────────────┐"
+            case "$AGENT_TYPE" in
+              "codebase-explorer") echo "│ 🔍 Exploring codebase structure" ;;
+              "dependency-analyzer") echo "│ 📦 Analyzing dependencies" ;;
+              "pattern-finder") echo "│ 🎯 Finding code patterns" ;;
+              "test-writer") echo "│ 🧪 Generating tests" ;;
+              "refactor-planner") echo "│ 🔧 Planning refactoring" ;;
+              "debugger") echo "│ 🐛 Debugging issues" ;;
+              "feature-planner") echo "│ 📋 Planning improvements" ;;
+              *) echo "│ 🤖 Agent: $AGENT_TYPE" ;;
+            esac
+            echo "└─────────────────────────────────────┘"
+  SubagentStop:
+    - hooks:
+        - type: command
+          command: "echo '   ✓ $AGENT_TYPE complete'"
+  Stop:
+    - hooks:
+        - type: prompt
+          prompt: |
+            Verify that /enhance-project completed properly:
+
+            1. Was the target project validated?
+            2. Was the project type and tech stack detected?
+            3. Were existing Claude Code resources checked?
+            4. Did the selected enhancement phases complete?
+            5. Was the enhancement report generated?
+
+            Context: $ARGUMENTS
+
+            Return {"ok": true} if the enhancement completed successfully.
+            Return {"ok": false, "reason": "specific issue"} if incomplete.
+          timeout: 30
 ---
 
 # Enhance Existing Project
@@ -127,6 +166,56 @@ fi
 echo ""
 ```
 
+### Step 3b: Assess Existing CLAUDE.md Quality
+
+If CLAUDE.md exists, evaluate its quality:
+
+```bash
+if [ "$CLAUDE_MD_EXISTS" = true ]; then
+  echo "📊 Assessing CLAUDE.md quality..."
+
+  # Claude: Analyze existing CLAUDE.md against quality criteria:
+  #
+  # COMPLETENESS (25 points):
+  # - Has Overview section (5 pts)
+  # - Has Tech Stack section (5 pts)
+  # - Has Project Structure section (5 pts)
+  # - Has Commands section (5 pts)
+  # - Has Key Files section (5 pts)
+  #
+  # ACCURACY (25 points):
+  # - Tech stack matches package.json/requirements.txt/etc (10 pts)
+  # - File paths referenced actually exist (10 pts)
+  # - Commands are correct and work (5 pts)
+  #
+  # SPECIFICITY (20 points):
+  # - Contains project-specific patterns, not generic (10 pts)
+  # - Has unique conventions documented (5 pts)
+  # - Explains "why" not just "what" (5 pts)
+  #
+  # CODE EXAMPLES (15 points):
+  # - Has actual code examples (10 pts)
+  # - Examples are from this project (5 pts)
+  #
+  # MAINTENANCE (15 points):
+  # - Versions match current dependencies (10 pts)
+  # - No obviously stale information (5 pts)
+  #
+  # Calculate total score (0-100)
+  # Generate improvement suggestions for areas scoring < 80%
+
+  echo "   Quality score: $QUALITY_SCORE/100"
+
+  if [ "$QUALITY_SCORE" -lt 80 ]; then
+    echo "   ⚠️  Improvements recommended"
+  else
+    echo "   ✓ CLAUDE.md meets quality standards"
+  fi
+
+  echo ""
+fi
+```
+
 ### Step 4: Determine Enhancement Scope
 
 Based on what exists, determine what needs to be added:
@@ -141,7 +230,8 @@ echo "   1. Full Enhancement     - Resources + analysis + code improvements"
 echo "   2. Resources Only       - Add agents, skills, CLAUDE.md (no code changes)"
 echo "   3. Analysis Only        - Report only (no changes)"
 echo "   4. Code Improvements    - Fix issues, refactor, add tests"
-echo "   5. Custom               - Choose specific enhancements"
+echo "   5. CLAUDE.md Review     - Review/improve existing CLAUDE.md only"
+echo "   6. Custom               - Choose specific enhancements"
 echo ""
 
 # Claude: Present as selection menu and capture ENHANCEMENT_SCOPE
@@ -238,30 +328,69 @@ fi
 
 ```bash
 if [ "$CREATE_CLAUDE_MD" = true ]; then
-  echo "📝 Phase 3: Creating CLAUDE.md"
+  echo "📝 Phase 3: Creating/Updating CLAUDE.md"
   echo ""
 
-  # Use pattern-finder to understand project conventions
-  echo "   ✓ Using pattern-finder to analyze conventions..."
-  # Claude: Invoke pattern-finder agent with prompt:
-  # "Analyze this project and identify:
-  #  - Code style and formatting conventions
-  #  - Naming conventions (files, functions, variables)
-  #  - Import/module patterns
-  #  - Error handling patterns
-  #  - Testing patterns
-  #  - Documentation patterns"
+  if [ "$CLAUDE_MD_EXISTS" = true ] && [ "$QUALITY_SCORE" -ge 80 ]; then
+    echo "   ℹ️  Existing CLAUDE.md meets quality standards (score: $QUALITY_SCORE/100)"
+    echo "   Skipping regeneration (use 'CLAUDE.md Review' option to force update)"
+  else
+    # Determine appropriate template based on detected tech stack
+    echo "   ✓ Selecting appropriate template..."
+    # Claude: Select template from templates/claude-md/ based on:
+    # - Next.js detected → nextjs-app.md
+    # - Express/Fastify/NestJS detected → api-service.md
+    # - CLI tool (commander.js, yargs, etc.) → cli-tool.md
+    # - React library detected → node-library.md
+    # - Python project detected → python-app.md
+    # - Phaser.js/game detected → game-browser.md
+    # - Unknown/minimal → minimal.md
 
-  # Generate CLAUDE.md based on analysis
-  # Claude: Create CLAUDE.md with:
-  # - Project overview
-  # - Tech stack
-  # - Key conventions discovered
-  # - Development commands
-  # - File structure
-  # - Testing guidelines
+    # Use pattern-finder to understand project conventions
+    echo "   ✓ Using pattern-finder to analyze conventions..."
+    # Claude: Invoke pattern-finder agent with prompt:
+    # "Analyze this project and identify:
+    #  - Code style and formatting conventions
+    #  - Naming conventions (files, functions, variables)
+    #  - Import/module patterns
+    #  - Error handling patterns
+    #  - Testing patterns
+    #  - Documentation patterns"
 
-  echo "   ✓ Generated CLAUDE.md with project conventions"
+    # Generate CLAUDE.md from selected template
+    # Claude: Create CLAUDE.md by:
+    # 1. Start with selected template from templates/claude-md/
+    # 2. Replace placeholders ([Project Name], etc.) with actual values
+    # 3. Add patterns found by pattern-finder agent
+    # 4. Fill in tech stack from detected dependencies
+    # 5. Document actual project structure
+    # 6. Add real file paths for key files
+    # 7. Follow quality standards from docs/best-practices/claude-md-authoring.md
+    # 8. Validate against quality criteria from Step 3b
+
+    echo "   ✓ Generated CLAUDE.md from template: $SELECTED_TEMPLATE"
+
+    # Calculate new quality score
+    # Claude: Re-assess the generated CLAUDE.md using same criteria from Step 3b
+    echo "   ✓ Quality score: $NEW_QUALITY_SCORE/100"
+  fi
+
+  if [ "$CLAUDE_MD_EXISTS" = true ] && [ "$IMPROVE_EXISTING" = true ]; then
+    echo "   ✓ Improving existing CLAUDE.md..."
+    # Claude: Instead of replacing, improve existing CLAUDE.md:
+    # 1. Identify sections scoring below 80% (from Step 3b assessment)
+    # 2. For Completeness: Add missing required sections
+    # 3. For Accuracy: Update file paths, tech stack versions, commands
+    # 4. For Specificity: Replace generic content with project-specific patterns
+    # 5. For Code Examples: Add real code examples from the project
+    # 6. For Maintenance: Update outdated dependency versions
+    # 7. Preserve all custom content and non-generic sections
+    # 8. Validate final result meets quality standards
+
+    echo "   ✓ Improved existing CLAUDE.md (preserved custom content)"
+    echo "   ✓ New quality score: $IMPROVED_SCORE/100"
+  fi
+
   echo ""
 fi
 ```
@@ -271,16 +400,25 @@ fi
 ```bash
 if [ "$RUN_ANALYSIS" = true ]; then
   echo ""
-  echo "🔍 Phase 4: Codebase Analysis"
+  echo "🔍 Phase 4: Codebase Analysis (PARALLEL)"
   echo ""
 
-  # Use codebase-explorer for structure analysis
-  echo "   ✓ Using codebase-explorer to map project structure..."
-  # Claude: Invoke codebase-explorer agent to create a comprehensive map
+  # ⚡ PERFORMANCE TIP: These three agents are independent and should run in parallel
 
-  # Use dependency-analyzer to check dependencies
-  echo "   ✓ Using dependency-analyzer to check dependencies..."
-  # Claude: Invoke dependency-analyzer agent with prompt:
+  # Run all three simultaneously for faster analysis
+  echo "   ✓ Running analysis agents in parallel..."
+
+  # Claude: Invoke these three agents simultaneously (parallel Task calls):
+
+  # 1. codebase-explorer - Map project structure
+  # "Analyze this project and report:
+  #  - Primary language and version
+  #  - Framework(s) used
+  #  - Project structure pattern (monorepo, standard, etc.)
+  #  - Key directories and their purpose
+  #  - Build and test configuration"
+
+  # 2. dependency-analyzer - Check dependencies
   # "Analyze dependencies in this project:
   #  - Check for security vulnerabilities
   #  - Identify outdated packages
@@ -288,9 +426,17 @@ if [ "$RUN_ANALYSIS" = true ]; then
   #  - Check for circular dependencies
   #  - Verify license compatibility"
 
-  # Use pattern-finder to identify patterns
-  echo "   ✓ Using pattern-finder to identify code patterns..."
-  # Claude: Invoke pattern-finder agent to document existing patterns
+  # 3. pattern-finder - Identify code patterns
+  # "Analyze this project and identify:
+  #  - Code style and formatting conventions
+  #  - Naming conventions (files, functions, variables)
+  #  - Import/module patterns
+  #  - Error handling patterns
+  #  - Testing patterns
+  #  - Documentation patterns"
+
+  # Wait for all three agents to complete
+  # Synthesize findings from all three agents
 
   echo ""
 fi
@@ -335,15 +481,13 @@ if [ "$APPLY_IMPROVEMENTS" = true ]; then
   echo "🔧 Phase 6: Code Improvements"
   echo ""
 
-  # Use /verify-work first to identify issues
-  echo "   ✓ Using /verify-work to identify issues..."
-  # Claude: Invoke /verify-work skill
-  # Store results for fixing
+  # ⚡ PERFORMANCE TIP: Run verification checks in parallel
+  echo "   ✓ Running quality checks in parallel..."
 
-  # Use /performance-check to find performance issues
-  echo "   ✓ Using /performance-check to find bottlenecks..."
-  # Claude: Invoke /performance-check skill
-  # Store results for fixing
+  # Claude: Invoke these simultaneously:
+  # - /verify-work (security, best practices, standards)
+  # - /performance-check (performance anti-patterns)
+  # Store results from both for fixing
 
   # Use refactor-planner to identify refactorings
   echo "   ✓ Using refactor-planner to identify improvements..."
@@ -474,6 +618,42 @@ if [ "$CREATE_PLAN" = true ]; then
 fi
 
 echo ""
+
+# Show CLAUDE.md improvement suggestions if quality is below threshold
+if [ "$CLAUDE_MD_EXISTS" = true ] && [ "$QUALITY_SCORE" -lt 80 ]; then
+  echo "📋 CLAUDE.md Improvement Suggestions:"
+  echo ""
+  # Claude: Output specific suggestions based on scoring from Step 3b:
+  #
+  # For COMPLETENESS issues:
+  # - "Add Overview section explaining what the project does"
+  # - "Add Tech Stack section with framework versions"
+  # - "Add Project Structure section with directory layout"
+  # - "Add Commands section with dev/build/test commands"
+  # - "Add Key Files section with important file purposes"
+  #
+  # For ACCURACY issues:
+  # - "Update Next.js version from 13 to 14 in Tech Stack"
+  # - "Fix path to database schema (should be drizzle/schema.ts not db/schema.ts)"
+  # - "Update 'npm run dev' command (actual command is 'npm start')"
+  #
+  # For SPECIFICITY issues:
+  # - "Replace generic component pattern with actual custom hook pattern found in codebase"
+  # - "Document the withAuth wrapper pattern used in all protected routes"
+  # - "Add project-specific validation pattern (Zod schemas in schemas/ directory)"
+  #
+  # For CODE EXAMPLES issues:
+  # - "Add code example showing the actual API route pattern used in app/api/"
+  # - "Add example of how authentication middleware is used"
+  # - "Show actual database query pattern from services/ layer"
+  #
+  # For MAINTENANCE issues:
+  # - "Update PostgreSQL version from 14 to 15"
+  # - "Remove reference to old auth library (now using NextAuth)"
+  # - "Update Node version requirement to match package.json engines field"
+  echo ""
+fi
+
 echo "🎯 Next Steps:"
 echo ""
 echo "   1. Review CLAUDE.md for accuracy"

@@ -76,6 +76,23 @@ Each skill must be a directory with `SKILL.md` inside:
 - **create-plan** - Initialize feature plan with phases
 - **plan-status** - Show current plan progress
 
+### Mobile Design
+- **mobile-patterns** - Mobile navigation, layout, and responsive patterns
+- **touch-interactions** - Touch targets, gestures, haptics, and swipe actions
+- **mobile-accessibility** - VoiceOver/TalkBack, screen readers, and mobile a11y
+
+### Conversion Optimization
+- **conversion-audit** - Audit pages for conversion issues and drop-off points
+- **copywriting-guide** - Headlines, body copy, and microcopy frameworks
+- **cta-optimizer** - CTA button design, placement, and copy psychology
+- **social-proof** - Testimonials, logos, trust signals, and review patterns
+
+### Design Enhancement
+- **enhance-design** - Comprehensive design workflow that chains all design skills
+  - Phases: Analyze → Mobile Optimize → Conversion Optimize → Visual Polish
+  - Chains: conversion-audit, mobile-patterns, touch-interactions, mobile-accessibility, copywriting-guide, cta-optimizer, social-proof, color-palette, typography-system, spacing-system, component-states, micro-interactions, component-polish
+  - Similar to `/ship` for design work - one command to enhance everything
+
 ### Project Scaffolding (NEW)
 - **starter-project** - Generate starter projects with agents/skills pre-configured
   - Categories: SaaS app, API service, component library, CLI tool, e-commerce, browser game
@@ -98,8 +115,37 @@ Skills are invoked with `/skill-name`:
 
 ## Skill Chaining
 
-Some skills automatically invoke others:
+Some skills automatically invoke others in sequence or parallel:
 - `/ship` → `/verify-work` → `/organize-commits` → `/track-progress`
+- `/enhance-design` → 4 phases with parallel execution (see below)
+- `/enhance-project` → Analysis agents run in parallel
+
+### Parallel Execution
+
+Chaining skills now support parallel execution for independent operations:
+
+**enhance-design:**
+- Phase 2: `mobile-patterns`, `touch-interactions`, `mobile-accessibility` run in parallel
+- Phase 3: `copywriting-guide`, `cta-optimizer`, `social-proof` run in parallel
+- Phase 4: Three batches of parallel execution for visual polish
+
+**enhance-project:**
+- Analysis: `codebase-explorer`, `dependency-analyzer`, `pattern-finder` run in parallel
+- Quality checks: `verify-work` and `performance-check` run in parallel
+
+### Hooks Integration
+
+Chaining skills now include hooks for better visibility and quality gates:
+
+**Agent Notifications:**
+- `SubagentStart` hooks show which agent is running
+- `SubagentStop` hooks confirm completion
+- Provides real-time visibility into background operations
+
+**Quality Gates:**
+- `Stop` hooks verify all phases completed successfully
+- Prevents incomplete skill execution
+- Validates that all required steps ran
 
 ## Creating Custom Skills
 
