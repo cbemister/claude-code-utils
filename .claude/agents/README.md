@@ -18,6 +18,13 @@ Powerful agents for complex planning:
 - **feature-planner** - Feature breakdown and estimation
 - **refactor-planner** - Refactoring strategy and planning
 
+### Design Agents (Opus, Full Access)
+Specialized agents for interface design and optimization:
+
+- **ui-ux-designer** - Visual identity, design systems, and polished interfaces
+- **mobile-designer** - Mobile-first design, touch interactions, and platform patterns
+- **conversion-optimizer** - Conversion optimization, copywriting, and buyer journeys
+
 ### Implement Agents (Sonnet, Full Access)
 Balanced agents for code implementation:
 
