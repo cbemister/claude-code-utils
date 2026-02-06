@@ -156,6 +156,35 @@ echo "🔧 Tech Stack: $TECH_STACK"
 echo ""
 ```
 
+### Step 4b: Select CLAUDE.md Template
+
+Based on the project category, select the appropriate CLAUDE.md template:
+
+```bash
+case "$CATEGORY" in
+  saas|ecommerce)
+    CLAUDE_TEMPLATE="templates/claude-md/nextjs-app.md"
+    ;;
+  api)
+    CLAUDE_TEMPLATE="templates/claude-md/api-service.md"
+    ;;
+  components)
+    CLAUDE_TEMPLATE="templates/claude-md/node-library.md"
+    ;;
+  cli)
+    CLAUDE_TEMPLATE="templates/claude-md/cli-tool.md"
+    ;;
+  game)
+    CLAUDE_TEMPLATE="templates/claude-md/game-browser.md"
+    ;;
+  *)
+    CLAUDE_TEMPLATE="templates/claude-md/minimal.md"
+    ;;
+esac
+
+echo "📝 CLAUDE.md template: $CLAUDE_TEMPLATE"
+```
+
 ### Step 5: Create Project Directory Structure
 
 ```bash
@@ -258,6 +287,18 @@ echo ""
 # Generate base configuration files first
 echo "✓ Generating base configuration files..."
 # Claude: Generate package.json, tsconfig.json, etc. based on $CATEGORY
+
+# Create CLAUDE.md from template
+echo "✓ Creating CLAUDE.md from template..."
+# Claude: Create CLAUDE.md by:
+# 1. Copy template from $CLAUDE_TEMPLATE (selected in Step 4b)
+# 2. Replace [Project Name] with $PROJECT_NAME
+# 3. Replace [Tool Name]/[CLI Tool Name] with $PROJECT_NAME
+# 4. Fill in tech stack based on $TECH_STACK
+# 5. Update project structure to match generated files
+# 6. Add project-specific patterns based on $CATEGORY
+# 7. Reference docs/best-practices/claude-md-authoring.md for quality standards
+# 8. Remove template sections not applicable to $CATEGORY
 
 # Use api-developer to create API endpoints
 echo "✓ Using api-developer to create API endpoints..."
@@ -436,7 +477,7 @@ echo ""
 ## What Gets Created
 
 All projects include:
-- **CLAUDE.md** - Project-specific Claude Code instructions
+- **CLAUDE.md** - Generated from template (templates/claude-md/[category].md) following best practices from docs/best-practices/claude-md-authoring.md
 - **.claude/agents/** - Relevant agents for the project type
 - **.claude/skills/** - Development workflow skills
 - **plans/active/getting-started/** - Initial development plan
