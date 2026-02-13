@@ -65,73 +65,39 @@ hooks:
 
 # Enhance Design Skill
 
-Comprehensive design enhancement workflow that orchestrates all design skills to transform interfaces into professional, high-converting, mobile-friendly experiences.
-
-## When to Use
-
-Use `/enhance-design` when you need to:
-- Do a complete design overhaul of an existing interface
-- Prepare an app or page for production launch
-- Transform generic/AI-generated UI into professional design
-- Optimize for both mobile experience AND conversion
-- Apply full design system improvements systematically
-
-**For targeted improvements, use individual skills instead:**
-- `/ui-transform` - Quick visual polish
-- `/mobile-patterns` - Mobile-specific work only
-- `/conversion-audit` - Conversion analysis only
-
-## Skill Chain Overview
-
-```
-/enhance-design
-    │
-    ├─▶ Phase 1: ANALYZE
-    │   └─▶ /conversion-audit (identify issues)
-    │
-    ├─▶ Phase 2: MOBILE OPTIMIZE
-    │   ├─▶ /mobile-patterns (navigation, layout)
-    │   ├─▶ /touch-interactions (gestures, targets)
-    │   └─▶ /mobile-accessibility (screen readers)
-    │
-    ├─▶ Phase 3: CONVERSION OPTIMIZE
-    │   ├─▶ /copywriting-guide (headlines, copy)
-    │   ├─▶ /cta-optimizer (buttons, placement)
-    │   └─▶ /social-proof (testimonials, trust)
-    │
-    └─▶ Phase 4: VISUAL POLISH
-        ├─▶ /color-palette (professional colors)
-        ├─▶ /typography-system (type hierarchy)
-        ├─▶ /spacing-system (visual rhythm)
-        ├─▶ /component-states (hover, focus, etc.)
-        ├─▶ /micro-interactions (animations)
-        └─▶ /component-polish (final details)
-```
-
 ## Instructions
+
+**IMPORTANT: Execute immediately. Do NOT explore the codebase first or propose a plan. Start Phase 1 right now.**
+
+Default mode is **Full Enhancement** (all 4 phases). If the user passed an argument, select the matching mode:
+- `quick` → Phase 1 + Phase 4 only
+- `mobile` → Phase 1 + Phase 2 only
+- `conversion` → Phase 1 + Phase 3 only
+- No argument or `all` → Full Enhancement (Phase 1 → 2 → 3 → 4)
+
+---
 
 ### Phase 1: Analyze & Audit
 
-**Goal**: Understand current state and identify all improvement opportunities
+1. **Quick project scan** (30 seconds max): Use Glob to find page files and Read the main layout to understand project structure. Do NOT launch an Explore agent - just do a quick Glob + Read.
 
-**Run `/conversion-audit` to assess:**
-- Page structure and information hierarchy
-- Copy effectiveness and messaging
-- Trust signals and social proof
-- Friction points and obstacles
-- Mobile conversion readiness
+2. **Invoke `/conversion-audit`** immediately using the Skill tool. This skill will assess:
+   - Page structure and information hierarchy
+   - Copy effectiveness and messaging
+   - Trust signals and social proof
+   - Friction points and obstacles
+   - Mobile conversion readiness
 
-**Output**: Prioritized list of improvements with estimated impact
+3. **Present audit results** to the user as a prioritized list:
 
 ```markdown
 ## Design Audit Results
 
 ### Critical Issues (Fix First)
 1. [Issue] - [Impact] - [Recommended fix]
-2. [Issue] - [Impact] - [Recommended fix]
 
 ### High Priority
-3. [Issue] - [Impact] - [Recommended fix]
+2. [Issue] - [Impact] - [Recommended fix]
 
 ### Medium Priority
 ...
@@ -140,26 +106,25 @@ Use `/enhance-design` when you need to:
 - [What's working well]
 ```
 
-**User checkpoint**: Review audit results before proceeding
+4. **Ask the user** to confirm before proceeding to the next phase.
 
 ---
 
-### Phase 2: Mobile Optimization (PARALLEL EXECUTION)
+### Phase 2: Mobile Optimization
 
-**Goal**: Ensure excellent mobile experience with thumb-friendly, accessible interactions
+**Invoke all three skills in parallel** using the Skill tool in a single message:
+- `/mobile-patterns` - Navigation patterns (bottom nav, drawer, tabs), responsive grid, component adaptations (tables → lists, modals → sheets), safe area handling
+- `/touch-interactions` - Touch targets ≥ 48x48px, swipe gestures, touch feedback (scale, ripple), pull-to-refresh
+- `/mobile-accessibility` - Screen reader labels (VoiceOver/TalkBack), focus management, live regions, reduced motion support
 
-**⚡ PERFORMANCE TIP**: These three skills are independent and should run in parallel for faster completion.
+**Wait for all three to complete.**
 
-**Execute simultaneously:**
-- `/mobile-patterns` - Implement appropriate navigation pattern (bottom nav, drawer, tabs), create responsive grid and breakpoint system, adapt components for mobile (tables → lists, modals → sheets), handle safe areas (notches, home indicators)
+**VERIFY**: After all three skills complete, run `git diff --stat` to check if files were actually modified. If NO files changed (agents completed without writing), the sub-skills' tool calls were likely blocked by permissions. In that case:
+1. Review the analysis/recommendations returned by each sub-skill
+2. Implement the changes yourself directly using Edit/Write tools
+3. Apply mobile patterns, touch interaction fixes, and accessibility improvements based on the sub-skills' guidance
 
-- `/touch-interactions` - Ensure all touch targets ≥ 48x48px, add swipe gestures where appropriate, implement touch feedback (scale, ripple), add pull-to-refresh if applicable
-
-- `/mobile-accessibility` - Add screen reader labels (VoiceOver/TalkBack), implement proper focus management, add live regions for dynamic content, verify reduced motion support
-
-**Wait for all three to complete before proceeding to Phase 3.**
-
-**Output**: Mobile-optimized interface with:
+Verify these outputs before proceeding to Phase 3:
 - [ ] Bottom-heavy layout (thumb zone friendly)
 - [ ] All touch targets ≥ 48px
 - [ ] Platform-appropriate patterns
@@ -168,22 +133,18 @@ Use `/enhance-design` when you need to:
 
 ---
 
-### Phase 3: Conversion Optimization (PARALLEL EXECUTION)
+### Phase 3: Conversion Optimization
 
-**Goal**: Optimize copy, CTAs, and trust signals for maximum conversion
+**Invoke all three skills in parallel** using the Skill tool in a single message:
+- `/copywriting-guide` - Rewrite headlines using PAS/AIDA/BAB frameworks, transform features into benefits, optimize microcopy, apply power words
+- `/cta-optimizer` - CTA copy (action verb + value + friction reducer), visual design (contrast, size, spacing), placement strategy, primary/secondary/tertiary hierarchy
+- `/social-proof` - Testimonials (photos, names, results), logo trust bar, stats/usage numbers, trust signals near CTAs and forms
 
-**⚡ PERFORMANCE TIP**: These three skills modify independent content areas and should run in parallel.
+**Wait for all three to complete.**
 
-**Execute simultaneously:**
-- `/copywriting-guide` - Rewrite headlines using PAS/AIDA/BAB frameworks, transform features into benefits, optimize microcopy (buttons, forms, errors), apply power words strategically
+**VERIFY**: Run `git diff --stat` to check if files were actually modified. If NO files changed, implement the changes yourself directly based on the sub-skills' recommendations.
 
-- `/cta-optimizer` - Optimize CTA copy (action verb + value + friction reducer), improve CTA visual design (contrast, size, spacing), strategic CTA placement (above fold, after value, before footer), establish clear primary/secondary/tertiary hierarchy
-
-- `/social-proof` - Add/improve testimonials (photos, names, results), implement logo trust bar, add stats and usage numbers, place trust signals near CTAs and forms
-
-**Wait for all three to complete before proceeding to Phase 4.**
-
-**Output**: Conversion-optimized interface with:
+Verify these outputs before proceeding to Phase 4:
 - [ ] Benefit-driven headlines
 - [ ] Prominent, action-oriented CTAs
 - [ ] Strategic social proof placement
@@ -192,34 +153,31 @@ Use `/enhance-design` when you need to:
 
 ---
 
-### Phase 4: Visual Polish (BATCHED PARALLEL EXECUTION)
+### Phase 4: Visual Polish (3 Batches)
 
-**Goal**: Elevate visual quality to professional, human-designed standards
-
-**⚡ PERFORMANCE TIP**: Run these in three parallel batches - later batches depend on earlier ones.
-
-**Batch 1 (parallel) - Design Systems:**
-Execute simultaneously (independent systems):
-- `/color-palette` - Replace generic AI colors with sophisticated palette, create proper color scales (50-900), ensure contrast ratios meet WCAG, define semantic color usage
-
-- `/typography-system` - Establish type scale with clear hierarchy, choose appropriate font pairing, define weight usage and line heights, implement responsive sizing
-
-- `/spacing-system` - Create intentional spacing rhythm, apply spacing based on content relationships, break mechanical uniformity, define consistent spacing scale
+**Batch 1 - Invoke all three in parallel** using the Skill tool in a single message:
+- `/color-palette` - Replace generic colors with sophisticated palette, create color scales (50-900), ensure WCAG contrast ratios, define semantic usage
+- `/typography-system` - Type scale with clear hierarchy, font pairing, weight/line-height definitions, responsive sizing
+- `/spacing-system` - Intentional spacing rhythm, content-relationship-based spacing, break mechanical uniformity, consistent scale
 
 **Wait for Batch 1 to complete.**
 
-**Batch 2 (parallel) - Component Enhancements:**
-Execute simultaneously (depend on design systems but independent of each other):
-- `/component-states` - Add complete interactive states (hover, focus, active, disabled, loading), ensure smooth transitions, implement keyboard focus indicators, add error and success states
+**VERIFY**: Run `git diff --stat`. If no files changed, implement the design system changes yourself directly.
 
-- `/micro-interactions` - Add subtle hover effects, implement entrance animations, create meaningful loading states, polish transitions between states
+**Batch 2 - Invoke both in parallel** using the Skill tool in a single message:
+- `/component-states` - Complete interactive states (hover, focus, active, disabled, loading), smooth transitions, keyboard focus indicators, error/success states
+- `/micro-interactions` - Subtle hover effects, entrance animations, meaningful loading states, polished state transitions
 
 **Wait for Batch 2 to complete.**
 
-**Batch 3 (sequential) - Final Pass:**
-- `/component-polish` - Final detail pass, perfect alignment and spacing, add subtle shadows and depth, ensure pixel-perfect implementation
+**VERIFY**: Run `git diff --stat`. If no files changed, implement states and interactions yourself directly.
 
-**Output**: Polished, professional interface with:
+**Batch 3 - Invoke sequentially:**
+- `/component-polish` - Final detail pass, perfect alignment and spacing, subtle shadows and depth, pixel-perfect implementation
+
+**VERIFY**: Run `git diff --stat`. If no files changed, implement the polish yourself directly.
+
+Verify these outputs:
 - [ ] Sophisticated color palette
 - [ ] Clear typography hierarchy
 - [ ] Intentional spacing rhythm
@@ -229,99 +187,32 @@ Execute simultaneously (depend on design systems but independent of each other):
 
 ---
 
-## Execution Options
+### Final Report
 
-When invoking `/enhance-design`, choose execution mode:
-
-### Option A: Full Enhancement (Default)
-Run all 4 phases sequentially. Best for complete design overhaul.
-- Time: 30-60 minutes
-- Output: Fully transformed interface
-
-### Option B: Quick Enhancement
-Run Phase 1 (Analyze) + Phase 4 (Polish) only. Best for visual improvements without mobile/conversion changes.
-- Time: 15-20 minutes
-- Output: Visually improved interface
-
-### Option C: Mobile Focus
-Run Phase 1 (Analyze) + Phase 2 (Mobile) only. Best for mobile-specific improvements.
-- Time: 15-20 minutes
-- Output: Mobile-optimized interface
-
-### Option D: Conversion Focus
-Run Phase 1 (Analyze) + Phase 3 (Conversion) only. Best for landing pages and revenue pages.
-- Time: 15-20 minutes
-- Output: Conversion-optimized interface
-
----
-
-## Output Format
+After all phases complete, present a summary:
 
 ```markdown
 # Design Enhancement Report
 
 ## Summary
-- **Mode**: Full Enhancement
+- **Mode**: [Full/Quick/Mobile/Conversion]
 - **Components Enhanced**: [number]
 - **Issues Fixed**: [number]
-- **Estimated Conversion Lift**: +[X-Y]%
-
----
 
 ## Phase 1: Audit Results
-[Summary of conversion audit findings]
-
-### Issues Addressed
-1. [Issue] → [Solution applied]
-2. [Issue] → [Solution applied]
-
----
+[Summary of findings]
 
 ## Phase 2: Mobile Optimization
-[Summary of mobile improvements]
-
-### Changes Made
-- Navigation: Implemented bottom tab bar
-- Touch targets: Fixed 12 undersized elements
-- Accessibility: Added 8 screen reader labels
-
----
+[Summary: navigation changes, touch target fixes, accessibility additions]
 
 ## Phase 3: Conversion Optimization
-[Summary of conversion improvements]
-
-### Copy Changes
-- Headline: [Before] → [After]
-- CTAs: Updated 5 buttons with value-driven copy
-
-### Social Proof Added
-- Logo bar after hero (4 brands)
-- Testimonial section (3 cards)
-- Stats counter (3 metrics)
-
----
+[Summary: copy changes, CTA updates, social proof added]
 
 ## Phase 4: Visual Polish
-[Summary of visual improvements]
-
-### Design System Updates
-- Colors: Replaced #2563eb with custom palette
-- Typography: Established 6-level hierarchy
-- Spacing: Applied 8px grid rhythm
-- States: Added complete interactive states
-
----
+[Summary: color palette, typography, spacing, states, interactions]
 
 ## Files Modified
 - `[filepath]` - [Changes made]
-- `[filepath]` - [Changes made]
-
----
-
-## Before/After Comparison
-[Key visual differences highlighted]
-
----
 
 ## Verification Checklist
 - [x] All touch targets ≥ 48px
@@ -336,7 +227,7 @@ Run Phase 1 (Analyze) + Phase 3 (Conversion) only. Best for landing pages and re
 
 ---
 
-## Chained Skills Reference
+## Skill Chain Reference
 
 | Phase | Skill | Purpose |
 |-------|-------|---------|
@@ -354,8 +245,6 @@ Run Phase 1 (Analyze) + Phase 3 (Conversion) only. Best for landing pages and re
 | 4e | `/micro-interactions` | Animations |
 | 4f | `/component-polish` | Final details |
 
----
-
 ## Integration with Agents
 
 This skill works well when invoked by:
@@ -363,12 +252,10 @@ This skill works well when invoked by:
 - **mobile-designer** - When mobile-first approach is needed
 - **conversion-optimizer** - When revenue optimization is primary goal
 
----
-
 ## Notes
 
 - Each phase can be run independently if needed
-- User approval checkpoints after Phase 1 (audit) recommended
+- User approval checkpoint after Phase 1 (audit) is recommended
 - For very large projects, consider running one phase per session
 - Individual skills can be re-run if specific improvements needed
 - All changes follow ethical design principles (no dark patterns)

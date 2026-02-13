@@ -64,8 +64,12 @@ Each skill must be a directory with `SKILL.md` inside:
 
 ### Testing & Quality
 - **generate-tests** - Generate test files following project patterns
-- **benchmark-performance** - Static analysis for performance anti-patterns
-- **verify-performance** - API performance regression testing
+- **performance-check** - Static analysis for performance anti-patterns
+- **browser-test** - Run Playwright browser tests across desktop, tablet, and mobile viewports
+  - Auto-discovers routes and features from any web framework
+  - Tests: navigation, forms, auth, CRUD, responsive, interactive, errors, user flows, performance
+  - Generates reusable test scripts users can re-run
+  - Captures screenshots at each viewport size
 
 ### Git Workflow (NEW)
 - **worktree-create** - Create git worktree for parallel development
