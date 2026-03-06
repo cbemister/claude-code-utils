@@ -169,6 +169,28 @@ Lightweight template for:
 
 ---
 
+## Enterprise Templates
+
+For enterprise-grade projects that need a full Claude Code configuration layer (agent teams, rules, hooks, plugin marketplace, MCP, context management), use the enterprise templates instead of a standalone CLAUDE.md.
+
+### Enterprise Greenfield Starter (`templates/enterprise-starter/`)
+Complete `.claude/` configuration for new projects. Includes:
+- 8 specialized agents (coordinator, backend-architect, frontend-architect, security-auditor, test-engineer, devops-engineer, code-reviewer, performance-analyst)
+- `.claude/rules/` knowledge base (architecture, API conventions, security policy, code standards, testing standards, env vars)
+- Hooks: secret scanning, auto-format, TypeScript check, bash protection
+- Plugin marketplace catalog (`marketplace.json`)
+- MCP server stubs
+- Plan templates including context handoff
+
+**Use:** Run `/enterprise-starter` in your project directory.
+
+### Enterprise Enhancement Pack (`templates/enterprise-enhancement/`)
+Modular add-ons for existing projects. Pick and choose from: agent teams, rules, context management, marketplace, hooks, MCP stubs, and CLAUDE.md snippets.
+
+**Use:** Run `/enterprise-enhance` in your existing project.
+
+---
+
 ## How to Use
 
 ### 1. Choose a Template

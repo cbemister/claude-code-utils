@@ -107,6 +107,17 @@ Each skill must be a directory with `SKILL.md` inside:
   - Analyzes codebase, fixes issues, adds tests, refactors code
   - Recommended: Run on a git branch for safe experimentation
 
+### Enterprise (NEW)
+- **enterprise-starter** - Scaffold a full enterprise Claude Code configuration layer for new projects
+  - Creates: 8 specialist agents, .claude/rules/ knowledge base, hooks, plans structure, marketplace.json, MCP stubs, enterprise CLAUDE.md
+  - Tech-stack agnostic — works with any framework
+  - Use for greenfield projects needing enterprise-grade Claude Code setup
+
+- **enterprise-enhance** - Add enterprise modules to an existing project (pick and choose)
+  - Modules: agent-teams, rules, context-management, marketplace, hooks, MCP stubs, CLAUDE.md snippets
+  - Safely merges with existing .claude/settings.json — never overwrites
+  - Use for projects already using Claude Code that need enterprise capabilities
+
 ## Usage
 
 Skills are invoked with `/skill-name`:
