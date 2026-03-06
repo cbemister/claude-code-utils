@@ -1,0 +1,15 @@
+{
+  "_comment": "Merge this into the PreToolUse array in your .claude/settings.json",
+  "_merge_into": "hooks.PreToolUse",
+  "hooks_to_merge": [
+    {
+      "matcher": "Edit|Write",
+      "hooks": [
+        {
+          "type": "command",
+          "command": "python3 -c \"\nimport sys, re, os\nfile = os.environ.get('CLAUDE_TOOL_FILE_PATH', '')\nif not file:\n    sys.exit(0)\ntry:\n    with open(file, 'r', encoding='utf-8', errors='ignore') as f:\n        content = f.read()\nexcept:\n    sys.exit(0)\npatterns = [\n    r'(?i)(sk-[a-zA-Z0-9]{20,})',\n    r'(?i)(AKIA[0-9A-Z]{16})',\n    r'(?i)(ghp_[a-zA-Z0-9]{36})',\n    r'(?i)(xoxb-[0-9]+-[0-9a-zA-Z]+)',\n    r'(?i)password\\s*=\\s*[\\x27\\x22][^\\x27\\x22]{8,}[\\x27\\x22]',\n    r'(?i)api[_-]?key\\s*=\\s*[\\x27\\x22][^\\x27\\x22]{16,}[\\x27\\x22]',\n    r'(?i)secret\\s*=\\s*[\\x27\\x22][^\\x27\\x22]{16,}[\\x27\\x22]'\n]\nfor pattern in patterns:\n    if re.search(pattern, content):\n        print(f'WARNING: Possible secret detected in {file}. Review before saving.', file=sys.stderr)\n        sys.exit(0)\n\" 2>&1 || true"
+        }
+      ]
+    }
+  ]
+}

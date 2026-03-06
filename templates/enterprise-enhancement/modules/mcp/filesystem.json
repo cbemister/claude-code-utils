@@ -1,0 +1,11 @@
+{
+  "_comment": "Merge this into mcpServers in your .mcp.json. Update the path to match your project.",
+  "filesystem": {
+    "command": "npx",
+    "args": [
+      "-y",
+      "@modelcontextprotocol/server-filesystem",
+      "/path/to/your/project"
+    ]
+  }
+}

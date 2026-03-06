@@ -1,0 +1,15 @@
+{
+  "_comment": "Merge this into the PostToolUse array in your .claude/settings.json",
+  "_merge_into": "hooks.PostToolUse",
+  "hooks_to_merge": [
+    {
+      "matcher": "Edit|Write",
+      "hooks": [
+        {
+          "type": "command",
+          "command": "FILE=\"$CLAUDE_TOOL_FILE_PATH\"; if [ -z \"$FILE\" ]; then exit 0; fi; if echo \"$FILE\" | grep -qE '\\.(ts|tsx)$'; then if [ -f \"tsconfig.json\" ] && command -v npx >/dev/null 2>&1; then npx tsc --noEmit 2>&1 | head -20 || true; fi; fi"
+        }
+      ]
+    }
+  ]
+}

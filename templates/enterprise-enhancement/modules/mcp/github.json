@@ -1,0 +1,10 @@
+{
+  "_comment": "Merge this into mcpServers in your .mcp.json",
+  "github": {
+    "command": "npx",
+    "args": ["-y", "@modelcontextprotocol/server-github"],
+    "env": {
+      "GITHUB_PERSONAL_ACCESS_TOKEN": "${GITHUB_TOKEN}"
+    }
+  }
+}

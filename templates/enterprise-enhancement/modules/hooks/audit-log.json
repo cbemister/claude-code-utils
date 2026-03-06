@@ -1,0 +1,15 @@
+{
+  "_comment": "Merge this into the PostToolUse array in your .claude/settings.json",
+  "_merge_into": "hooks.PostToolUse",
+  "hooks_to_merge": [
+    {
+      "matcher": ".*",
+      "hooks": [
+        {
+          "type": "command",
+          "command": "mkdir -p .claude && echo \"$(date -u +\"%Y-%m-%dT%H:%M:%SZ\") tool=$CLAUDE_TOOL_NAME file=${CLAUDE_TOOL_FILE_PATH:-}\" >> .claude/audit.log 2>/dev/null || true"
+        }
+      ]
+    }
+  ]
+}
