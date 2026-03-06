@@ -1,19 +1,25 @@
 # Claude Code Shared Resources
 
 ## Overview
-This repository contains shareable Claude Code resources including sub-agents, skills, commands, templates, and documentation.
+This repository contains shareable Claude Code resources: sub-agents, skills, commands, templates, and documentation. Resources work immediately when project-local, or can be installed globally via the install scripts.
 
 ## Project Structure
 ```
 .claude/
-├── agents/           # Sub-agents by purpose (explore, plan, implement)
+├── agents/           # Sub-agents by category
+│   ├── design/       # ui-ux-designer (Opus, 14 skills)
+│   ├── explore/      # Codebase exploration agents
+│   └── implement/    # Implementation agents
 ├── commands/         # Slash commands (git, plan, project)
-└── skills/           # Project-local skills (work immediately!)
+└── skills/           # 40+ project-local skills (work immediately!)
 
-plans/                # Plan system and templates
-templates/            # Reusable templates (CLAUDE.md, skills, agents)
+templates/
+├── claude-md/        # CLAUDE.md templates and authoring guide
+├── enterprise-starter/    # Full enterprise Claude Code scaffold
+└── enterprise-enhancement/ # Modular enterprise add-ons
+
 docs/                 # Documentation and best practices
-scripts/              # Install scripts (copy skills to ~/.claude/skills/ for personal use)
+scripts/              # install-skills.sh — copy skills to ~/.claude/skills/
 ```
 
 ## Key Conventions
@@ -26,13 +32,15 @@ name: agent-name
 description: When to use this agent
 tools: Read, Grep, Glob
 model: haiku | sonnet | opus | inherit
+skills:
+  - skill-name   # Skills the agent can invoke
 ---
 ```
 
 ### Model Selection
-- **Haiku**: Fast, cheap - use for exploration and simple tasks
-- **Sonnet**: Balanced - use for implementation and reviews
-- **Opus**: Powerful - use for architecture and complex planning
+- **Haiku**: Fast, cheap — use for exploration and simple tasks
+- **Sonnet**: Balanced — use for implementation and reviews
+- **Opus**: Powerful — use for architecture and complex planning
 
 ### Skill Format
 Skills are directories with a `SKILL.md` file:
@@ -47,20 +55,26 @@ SKILL.md format:
 ---
 name: skill-name
 description: What this skill does
+args: "[arg] - Optional: description"  # if skill accepts args
 ---
 ```
 
-## Development Commands
+### Skills Installation
 ```bash
-# No build required - this is a resource repository
-# Test by copying to a project and using the agents/skills
+# Install all skills globally (available in every project)
+./scripts/install-skills.sh
+
+# Or install specific skill
+./scripts/install-skills.sh typography-system
 ```
+
+Project-local skills in `.claude/skills/` work immediately — no install needed. Restart Claude Code after adding new skills.
 
 ## Adding New Resources
 
 ### New Agent
 1. Create file in `.claude/agents/<category>/<name>.md`
-2. Add YAML frontmatter with name, description, tools, model
+2. Add YAML frontmatter with name, description, tools, model, and optional skills list
 3. Write system prompt in markdown body
 4. Update agents README
 
@@ -71,3 +85,17 @@ description: What this skill does
 4. Write instructions in markdown
 5. Restart Claude Code to test
 6. Update [.claude/skills/README.md](.claude/skills/README.md)
+
+## Key Skills Reference
+
+| Category | Skills |
+|----------|--------|
+| Workflow | ship, verify-work, verify-performance, organize-commits, summarize-session |
+| Design System | color-palette, typography-system, spacing-system, layout-asymmetry, micro-interactions, component-states, component-polish, style, ui-transform |
+| Accessibility | accessibility-audit, mobile-accessibility, critique-value |
+| Mobile | mobile-patterns, touch-interactions |
+| Conversion | conversion-audit, copywriting-guide, cta-optimizer, social-proof |
+| Enterprise | enterprise-starter, enterprise-enhance |
+| Scaffolding | starter-project, enhance-project, find-skills |
+| Framework | nextjs-optimization, electron-nextjs |
+| Planning | create-plan, plan-status, pm-review |
