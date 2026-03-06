@@ -24,15 +24,36 @@ git status 2>/dev/null || echo "Not a git repository"
 
 If not a git repo, ask: "This directory is not a git repository. Initialize one? (recommended)"
 
-### Step 2: Get Project Name
+### Step 2: Gather Project Details
 
-Ask the user for the project name if not provided:
+Collect the following from the user in a single prompt. Use sensible defaults (shown in parentheses) and accept all answers at once:
 
 ```
-What is your project name? (used to replace [PROJECT_NAME] placeholders)
+Let's configure your enterprise project. Answer the following (press Enter to accept defaults):
+
+1. Project name: [current directory name]
+2. Project type: (e.g. SaaS web app / REST API / internal tool)
+3. Tech stack: (e.g. Next.js 14 + TypeScript + PostgreSQL + Tailwind)
+4. Short description: (1-2 sentences — what it does and who it's for)
+5. Team: (team name or size, e.g. "4-person startup team")
+6. Install command: (npm install)
+7. Dev command: (npm run dev)
+8. Test command: (npm test)
+9. Build command: (npm run build)
+10. Lint command: (npm run lint)
 ```
 
-Use the current directory name as the default suggestion.
+Store these as variables:
+- PROJECT_NAME
+- PROJECT_TYPE
+- STACK
+- DESCRIPTION
+- TEAM
+- CMD_INSTALL
+- CMD_DEV
+- CMD_TEST
+- CMD_BUILD
+- CMD_LINT
 
 ### Step 3: Find Template Source
 
@@ -79,15 +100,35 @@ fi
 
 ### Step 5: Replace Placeholders
 
-Replace `[PROJECT_NAME]` with the actual project name in all copied files:
+Replace all collected values in copied files. Use the variables from Step 2.
+
+Also derive `PROJECT_SLUG` (lowercase, hyphens) from PROJECT_NAME for use in paths.
 
 ```bash
-PROJECT_NAME="[user-provided-name]"
+# Derive slug from project name (lowercase, spaces→hyphens)
+PROJECT_SLUG=$(echo "$PROJECT_NAME" | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9]/-/g' | sed 's/--*/-/g' | sed 's/^-\|-$//g')
 
-# Replace in CLAUDE.md and all .claude/ files
-find . -name "*.md" -o -name "*.json" | grep -E "(CLAUDE\.md|\.claude/|plans/|marketplace\.json|\.mcp\.json)" | while read -r file; do
-  sed -i "s/\[PROJECT_NAME\]/$PROJECT_NAME/g" "$file" 2>/dev/null || true
+TARGET_FILES=$(find . \( -name "CLAUDE.md" -o -path "./.claude/*" -o -path "./plans/*" -o -name "marketplace.json" -o -name ".mcp.json" \) -type f)
+
+for file in $TARGET_FILES; do
+  sed -i "s/\[PROJECT_NAME\]/$PROJECT_NAME/g" "$file"
+  sed -i "s/\[YOUR_PROJECT\]/$PROJECT_SLUG/g" "$file"
+  sed -i "s|\[e\.g\., SaaS web application / REST API / internal tool\]|$PROJECT_TYPE|g" "$file"
+  sed -i "s|\[e\.g\., Next\.js 14 + TypeScript + PostgreSQL + Tailwind\]|$STACK|g" "$file"
+  sed -i "s|\[1-2 sentences describing what this project does and who it's for\.\]|$DESCRIPTION|g" "$file"
+  sed -i "s|\[Team name or size\]|$TEAM|g" "$file"
+  sed -i "s|\[install command\]|$CMD_INSTALL|g" "$file"
+  sed -i "s|\[dev command\]|$CMD_DEV|g" "$file"
+  sed -i "s|\[test command\]|$CMD_TEST|g" "$file"
+  sed -i "s|\[build command\]|$CMD_BUILD|g" "$file"
+  sed -i "s|\[lint command\]|$CMD_LINT|g" "$file"
+  sed -i "s/\[project-slug\]/$PROJECT_SLUG/g" "$file"
 done
+```
+
+Remove the `> Replace all [PLACEHOLDER] values...` notice from CLAUDE.md since placeholders are already filled:
+```bash
+sed -i '/Replace all.*PLACEHOLDER.*values/d' CLAUDE.md
 ```
 
 ### Step 6: Display Results
