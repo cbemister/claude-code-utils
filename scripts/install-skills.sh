@@ -79,7 +79,15 @@ install_skill() {
   # Copy skill file
   cp "$skill_dir/SKILL.md" "$dest_dir/SKILL.md"
 
-  echo -e "  ${GREEN}✓${NC} Installed: $skill_name"
+  # Copy bundled templates if they exist (e.g. templates/enterprise-starter/)
+  local template_src="$REPO_DIR/templates/$skill_name"
+  if [ -d "$template_src" ]; then
+    mkdir -p "$dest_dir/templates/$skill_name"
+    cp -r "$template_src/." "$dest_dir/templates/$skill_name/"
+    echo -e "  ${GREEN}✓${NC} Installed: $skill_name (+ templates)"
+  else
+    echo -e "  ${GREEN}✓${NC} Installed: $skill_name"
+  fi
 }
 
 # Install skills
