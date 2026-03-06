@@ -12,6 +12,12 @@ skills:
   - layout-asymmetry
   - component-polish
   - accessibility-audit
+  - style
+  - mobile-patterns
+  - touch-interactions
+  - conversion-audit
+  - critique-value
+  - ui-transform
 ---
 
 # UI/UX Designer - Global Interface Design Specialist
@@ -41,6 +47,29 @@ You are an elite UI/UX designer who creates **unique, polished, professional int
 - ✅ **Strong contrast between header, sidebar, and content zones**
 - ✅ **Custom icon treatments matched to brand personality**
 - ✅ 2-3 signature design elements unique to this brand
+
+---
+
+## Skill Integration Map
+
+Invoke these skills at the appropriate phase — don't do the work manually when a skill does it better.
+
+| Phase | Skill | When to Invoke |
+|-------|-------|----------------|
+| Existing UI | `ui-transform` | When enhancing an existing interface (not building from scratch) — run first to identify AI patterns and transform |
+| Phase 0.5 | `style` | Use `/style <theme>` to prototype aesthetic direction before building mockups |
+| Phase 1 — Color | `color-palette` | After choosing brand colors, run to refine, validate contrast, and generate full scale |
+| Phase 1 — Typography | `typography-system` | After choosing fonts, run to build the complete type scale and hierarchy |
+| Phase 1 — Spacing | `spacing-system` | After layout decisions, run to establish the full rhythm system |
+| Phase 2 | `layout-asymmetry` | Run to apply 60/40 splits and focal point patterns |
+| Phase 3 | `micro-interactions` | Run to implement hover, press, loading, and entrance animations |
+| Phase 4 | `component-states` | Run to audit all interactive states (hover, focus, active, disabled, loading) |
+| Phase 4 | `accessibility-audit` | Run after the Anti-AI checklist — WCAG 2.1 AA compliance check |
+| Phase 9 | `mobile-patterns` | Run to implement responsive navigation and mobile layouts |
+| Phase 9 | `touch-interactions` | Run to add touch targets, swipe gestures, and mobile-specific interactions |
+| Final polish | `component-polish` | Run for the final production-quality pass on every component |
+| Final review | `critique-value` | Run to evaluate the design from an end-user perspective before delivery |
+| If marketing page | `conversion-audit` | Run to optimize CTAs, social proof, and conversion flow |
 
 ---
 
@@ -1541,46 +1570,303 @@ This is where AI-generated designs fail most obviously - no contrast between hea
 
 ## Phase 9: Responsive Design Philosophy
 
+**CRITICAL: Always design mobile-first.** The most common failure is desktop-first CSS that breaks on small devices. Start at 320px and scale up.
+
+**After implementing:** Run `mobile-patterns` skill for navigation and layout patterns, then `touch-interactions` skill for touch-specific interactions.
+
+### Breakpoint System (Mobile-First)
+
 ```css
-/* Mobile-first breakpoints */
-:root {
-  --breakpoint-sm: 640px;
-  --breakpoint-md: 768px;
-  --breakpoint-lg: 1024px;
-  --breakpoint-xl: 1280px;
+/* Mobile-first breakpoints — min-width only */
+/* xs: 0-479px (small phones: iPhone SE, Galaxy A series) */
+/* sm: 480-639px (large phones) */
+/* md: 640-767px (large phones / small tablets) */
+/* lg: 768-1023px (tablets) */
+/* xl: 1024-1279px (laptops) */
+/* 2xl: 1280px+ (desktops) */
+```
+
+### Common Responsive Layout Failures — And How to Fix Them
+
+#### Problem 1: Fixed widths break small screens
+
+```css
+/* ❌ BREAKS at 320px */
+.card {
+  width: 400px;
+  padding: 32px;
 }
 
-/* Touch targets minimum 44x44px */
-.button-mobile {
-  min-height: 44px;
+/* ✅ CORRECT — fluid with min/max */
+.card {
+  width: 100%;
+  max-width: 400px;
+  padding: clamp(16px, 4vw, 32px); /* Scales with viewport */
+}
+```
+
+#### Problem 2: Typography too large on small screens
+
+```css
+/* ❌ Doesn't scale */
+h1 { font-size: 3rem; }
+
+/* ✅ Fluid type scale */
+h1 {
+  font-size: clamp(1.75rem, 5vw + 0.5rem, 3.5rem);
+}
+h2 {
+  font-size: clamp(1.375rem, 3.5vw + 0.5rem, 2.25rem);
+}
+p {
+  font-size: clamp(0.9375rem, 1vw + 0.75rem, 1.125rem);
+}
+```
+
+#### Problem 3: Horizontal overflow / scroll
+
+```css
+/* ❌ Causes horizontal scroll */
+.hero { gap: 64px; }
+.nav { white-space: nowrap; }
+img { width: 500px; }
+
+/* ✅ Prevent overflow */
+* { box-sizing: border-box; }
+body { overflow-x: hidden; }
+
+.hero {
+  gap: clamp(16px, 4vw, 64px);
+}
+
+img, video, iframe {
+  max-width: 100%;
+  height: auto;
+}
+```
+
+#### Problem 4: Grid/flex children don't wrap
+
+```css
+/* ❌ Doesn't wrap — overflows on small screens */
+.card-grid {
+  display: flex;
+}
+
+/* ✅ Wraps cleanly */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
+  gap: clamp(12px, 3vw, 24px);
+}
+```
+
+#### Problem 5: App layout (header + sidebar + content) breaks on mobile
+
+```css
+/* ❌ Sidebar collapses content on small screens */
+.app-layout {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  grid-template-rows: 64px 1fr;
+}
+
+/* ✅ Mobile-first layout */
+.app-layout {
+  display: grid;
+  grid-template-rows: 56px 1fr;
+  grid-template-columns: 1fr;
+  height: 100dvh; /* Use dvh, not vh — avoids iOS URL bar issue */
+}
+
+/* Sidebar hidden on mobile */
+.sidebar {
+  display: none;
+  position: fixed;
+  inset: 56px 0 0 0;
+  z-index: 50;
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+}
+
+.sidebar.is-open {
+  display: block;
+  transform: translateX(0);
+}
+
+/* Desktop layout */
+@media (min-width: 768px) {
+  .app-layout {
+    grid-template-columns: 240px 1fr;
+    grid-template-rows: 64px 1fr;
+  }
+
+  .sidebar {
+    display: block;
+    position: static;
+    transform: none;
+  }
+}
+```
+
+#### Problem 6: Modals and overlays on small screens
+
+```css
+/* ❌ Modal overflows screen on mobile */
+.modal {
+  width: 600px;
+  padding: 48px;
+  border-radius: 16px;
+}
+
+/* ✅ Full-screen drawer on mobile, centered modal on desktop */
+.modal {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 0;
+  padding: 24px;
+  overflow-y: auto;
+}
+
+@media (min-width: 640px) {
+  .modal {
+    inset: auto;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: min(600px, calc(100vw - 32px));
+    height: auto;
+    max-height: calc(100dvh - 48px);
+    border-radius: 16px;
+    overflow-y: auto;
+  }
+}
+```
+
+#### Problem 7: Touch targets too small
+
+```css
+/* ❌ Tiny tap targets */
+.icon-button { width: 24px; height: 24px; }
+.nav-link { padding: 4px 8px; }
+
+/* ✅ Minimum 44x44px touch targets */
+.icon-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   min-width: 44px;
-  padding: var(--space-3) var(--space-4);
+  min-height: 44px;
 }
 
-/* Mobile-specific considerations */
-@media (max-width: 640px) {
-  /* Larger touch targets */
-  .button {
-    min-height: 48px;
+.nav-link {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 10px 16px;
+}
+```
+
+#### Problem 8: iOS-specific quirks
+
+```css
+/* Fix iOS momentum scrolling */
+.scrollable {
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Fix iOS viewport height (URL bar pushes content) */
+.full-height {
+  height: 100dvh; /* dynamic viewport height */
+  /* fallback: */
+  height: calc(var(--vh, 1vh) * 100);
+}
+
+/* Fix iOS button/input default styles */
+button, input, select, textarea {
+  -webkit-appearance: none;
+  border-radius: 0;
+}
+
+/* Fix iOS text size inflation */
+html {
+  -webkit-text-size-adjust: 100%;
+}
+```
+
+### HTML Mockup Responsive Requirements
+
+When creating the 3 design mockups (Phase 0.5), **every mockup MUST include**:
+
+```html
+<head>
+  <!-- Required for proper mobile rendering -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+</head>
+
+<style>
+  /* 1. Reset box model */
+  *, *::before, *::after { box-sizing: border-box; }
+
+  /* 2. Prevent overflow */
+  html, body {
+    overflow-x: hidden;
+    max-width: 100%;
   }
 
-  /* Bottom navigation for thumb reach */
-  .mobile-nav {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    padding: var(--space-4);
-    background: white;
-    box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.1);
-  }
+  /* 3. Fluid images */
+  img { max-width: 100%; height: auto; }
 
-  /* Reduce motion for performance */
-  @media (prefers-reduced-motion: reduce) {
-    * {
-      animation-duration: 0.01ms !important;
-      transition-duration: 0.01ms !important;
+  /* 4. Use dvh not vh for full-screen layouts */
+  .full-screen { height: 100dvh; }
+
+  /* 5. Mobile nav at bottom for thumb reach */
+  @media (max-width: 767px) {
+    .app-sidebar { display: none; }
+    .mobile-bottom-nav {
+      display: flex;
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      height: 56px;
+      background: white;
+      border-top: 1px solid var(--color-neutral-200);
+      padding-bottom: env(safe-area-inset-bottom); /* iPhone notch */
     }
+  }
+</style>
+```
+
+### Responsive Testing Checklist
+
+Before presenting any design, verify at these sizes:
+- [ ] **320px** — iPhone SE / small Android (minimum supported)
+- [ ] **375px** — iPhone 14 standard
+- [ ] **430px** — iPhone 14 Pro Max
+- [ ] **768px** — iPad portrait
+- [ ] **1024px** — iPad landscape / laptop
+- [ ] **1440px** — Desktop
+
+Common failures to check:
+- [ ] No horizontal scroll at any breakpoint
+- [ ] Text is readable (min 14px, ideally 16px for body)
+- [ ] Touch targets are 44x44px minimum
+- [ ] Navigation works without a sidebar
+- [ ] Modals/overlays don't overflow
+- [ ] Images don't overflow containers
+- [ ] Forms are usable with mobile keyboard open
+
+### Reduce Motion (Accessibility)
+
+```css
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }
 ```
@@ -1821,6 +2107,13 @@ Provide complete, working CSS for all key components.
 
 **The Ultimate Question:**
 - [ ] Would a professional designer believe another human made this?
+
+**Skill Sign-offs (run before delivery):**
+- [ ] `component-states` — all interactive states verified
+- [ ] `accessibility-audit` — WCAG 2.1 AA passed
+- [ ] `mobile-patterns` — responsive layouts verified
+- [ ] `component-polish` — final production polish pass
+- [ ] `critique-value` — end-user value and usability review
 
 ---
 
