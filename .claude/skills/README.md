@@ -57,33 +57,50 @@ Each skill must be a directory with `SKILL.md` inside:
 ## Available Skills
 
 ### Development Workflow
-- **ship** - Complete end-of-session workflow (verify → commit → track)
-- **verify-work** - Comprehensive pre-commit verification (security, performance, standards)
+- **ship** - Complete end-of-session workflow (verify → commit → summarize)
+- **verify-work** - Pre-commit verification (security, best practices, code standards)
+- **verify-performance** - Performance anti-pattern analysis and performance tests
 - **organize-commits** - Group changes into logical commits with conventional format
 - **track-progress** - Record work to changelog and progress tracking
+- **summarize-session** - Capture structured session journal (decisions, state, next steps)
 
 ### Testing & Quality
 - **generate-tests** - Generate test files following project patterns
-- **performance-check** - Static analysis for performance anti-patterns
 - **browser-test** - Run Playwright browser tests across desktop, tablet, and mobile viewports
   - Auto-discovers routes and features from any web framework
   - Tests: navigation, forms, auth, CRUD, responsive, interactive, errors, user flows, performance
   - Generates reusable test scripts users can re-run
   - Captures screenshots at each viewport size
 
-### Git Workflow (NEW)
+### Git Workflow
 - **worktree-create** - Create git worktree for parallel development
 - **worktree-sync** - Sync worktree with base branch
 - **worktree-cleanup** - Remove completed worktrees
 
-### Planning (NEW)
+### Planning & Tracking
 - **create-plan** - Initialize feature plan with phases
 - **plan-status** - Show current plan progress
+- **pm-review** - Product manager perspective — assess progress vs plan, identify priorities
 
-### Mobile Design
+### Design System
+- **color-palette** - Transform generic colors into sophisticated, intentional palettes
+- **typography-system** - Font pairings, type scales, fluid `clamp()` responsive sizing
+- **spacing-system** - Hierarchical spacing with visual rhythm (not uniform gaps)
+- **layout-asymmetry** - 60/40 splits, focal points, intentional asymmetry patterns
+- **micro-interactions** - Hover, press, loading, and entrance animations
+- **component-states** - Complete interactive states (hover, focus, active, disabled, loading)
+- **component-polish** - Final production-quality polish pass on components
+- **style** - Transform UI into any of 10 aesthetic themes: aurora, brutalist, cyberpunk, dark-premium, glassmorphism, minimalist, neumorphism, organic, retro, swiss
+- **ui-transform** - Analyze existing UI for AI-generated patterns and transform to human-quality design
+
+### Accessibility
+- **accessibility-audit** - WCAG 2.1 AA compliance (contrast, semantics, keyboard, ARIA)
+- **mobile-accessibility** - VoiceOver/TalkBack, screen readers, and mobile a11y
+- **critique-value** - Evaluate work from end-user perspective (value, usability, completeness)
+
+### Mobile & Responsive
 - **mobile-patterns** - Mobile navigation, layout, and responsive patterns
 - **touch-interactions** - Touch targets, gestures, haptics, and swipe actions
-- **mobile-accessibility** - VoiceOver/TalkBack, screen readers, and mobile a11y
 
 ### Conversion Optimization
 - **conversion-audit** - Audit pages for conversion issues and drop-off points
@@ -91,32 +108,26 @@ Each skill must be a directory with `SKILL.md` inside:
 - **cta-optimizer** - CTA button design, placement, and copy psychology
 - **social-proof** - Testimonials, logos, trust signals, and review patterns
 
-### Design Enhancement
+### Design Enhancement (Chains)
 - **enhance-design** - Comprehensive design workflow that chains all design skills
   - Phases: Analyze → Mobile Optimize → Conversion Optimize → Visual Polish
-  - Chains: conversion-audit, mobile-patterns, touch-interactions, mobile-accessibility, copywriting-guide, cta-optimizer, social-proof, color-palette, typography-system, spacing-system, component-states, micro-interactions, component-polish
-  - Similar to `/ship` for design work - one command to enhance everything
+  - One command to enhance everything — like `/ship` for design work
 
-### Project Scaffolding (NEW)
+### Framework-Specific
+- **nextjs-optimization** - Server Components, loading states, image optimization, caching
+- **electron-nextjs** - Add Electron to an existing Next.js project for desktop apps
+
+### Project Scaffolding
 - **starter-project** - Generate starter projects with agents/skills pre-configured
   - Categories: SaaS app, API service, component library, CLI tool, e-commerce, browser game
-  - Each includes: CLAUDE.md, relevant agents, workflow skills, initial plan, working foundation
-
 - **enhance-project** - Add Claude Code resources and improvements to existing projects
-  - Options: Full enhancement, resources only, analysis only, code improvements, custom
-  - Analyzes codebase, fixes issues, adds tests, refactors code
-  - Recommended: Run on a git branch for safe experimentation
+- **find-skills** - Discover and install skills for specific tasks
 
-### Enterprise (NEW)
+### Enterprise
 - **enterprise-starter** - Scaffold a full enterprise Claude Code configuration layer for new projects
-  - Creates: 8 specialist agents, .claude/rules/ knowledge base, hooks, plans structure, marketplace.json, MCP stubs, enterprise CLAUDE.md
-  - Tech-stack agnostic — works with any framework
-  - Use for greenfield projects needing enterprise-grade Claude Code setup
-
+  - Creates: 8 specialist agents, .claude/rules/ knowledge base, hooks, plans, marketplace.json, MCP stubs
 - **enterprise-enhance** - Add enterprise modules to an existing project (pick and choose)
-  - Modules: agent-teams, rules, context-management, marketplace, hooks, MCP stubs, CLAUDE.md snippets
-  - Safely merges with existing .claude/settings.json — never overwrites
-  - Use for projects already using Claude Code that need enterprise capabilities
+  - Modules: agent-teams, rules, context-management, marketplace, hooks, MCP, CLAUDE.md snippets
 
 ## Usage
 
