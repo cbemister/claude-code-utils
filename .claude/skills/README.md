@@ -124,10 +124,9 @@ Each skill must be a directory with `SKILL.md` inside:
 - **find-skills** - Discover and install skills for specific tasks
 
 ### Enterprise
-- **enterprise-starter** - Scaffold a full enterprise Claude Code configuration layer for new projects
-  - Creates: 8 specialist agents, .claude/rules/ knowledge base, hooks, plans, marketplace.json, MCP stubs
-- **enterprise-enhance** - Add enterprise modules to an existing project (pick and choose)
-  - Modules: agent-teams, rules, context-management, marketplace, hooks, MCP, CLAUDE.md snippets
+- **prep-claude** - Prep any project with Claude Code config (new or existing)
+  - Scans existing config, installs what's missing: agents, rules, hooks, plans, MCP, CLAUDE.md
+  - Links shared files (agents, plan templates) from ~/.claude/shared/enterprise/ instead of duplicating
 
 ## Usage
 

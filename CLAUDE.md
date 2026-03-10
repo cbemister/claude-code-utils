@@ -15,8 +15,7 @@ This repository contains shareable Claude Code resources: sub-agents, skills, co
 
 templates/
 ├── claude-md/        # CLAUDE.md templates and authoring guide
-├── enterprise-starter/    # Full enterprise Claude Code scaffold
-└── enterprise-enhancement/ # Modular enterprise add-ons
+└── prep-claude/      # Enterprise Claude Code config (agents, rules, hooks, plans, MCP)
 
 docs/                 # Documentation and best practices
 scripts/              # install-skills.sh — copy skills to ~/.claude/skills/
@@ -95,7 +94,7 @@ Project-local skills in `.claude/skills/` work immediately — no install needed
 | Accessibility | accessibility-audit, mobile-accessibility, critique-value |
 | Mobile | mobile-patterns, touch-interactions |
 | Conversion | conversion-audit, copywriting-guide, cta-optimizer, social-proof |
-| Enterprise | enterprise-starter, enterprise-enhance |
+| Enterprise | prep-claude |
 | Scaffolding | starter-project, enhance-project, find-skills |
 | Framework | nextjs-optimization, electron-nextjs |
 | Planning | create-plan, plan-status, pm-review |
