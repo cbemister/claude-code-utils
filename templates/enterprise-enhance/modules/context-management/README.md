@@ -79,7 +79,38 @@ Context handoff: [paste context-handoff.md contents here]
 |---|---|
 | `plans/feature-plan.md` | New features (research → design → implement → test) |
 | `plans/bugfix-plan.md` | Bug investigation and fix |
+| `plans/stage-plan.md` | Sequential project stages for agent teams (TDD workflow) |
 | `plans/context-handoff.md` | Cross-thread context transfer |
+
+## Building a Project Plan for Agent Teams
+
+Stage plans break your project into sequential implementation stages that agent teams can execute autonomously. Each stage includes a goal, architecture context, tasks with specific files, TDD workflow, and deliverable verification.
+
+### How It Works
+
+1. **Plan:** Break your project into 5-15 sequential stages
+2. **Write:** Create `plans/active/stage-NN-name.md` for each stage using the template
+3. **Execute:** Paste a stage into Claude Code — it follows the plan task-by-task using `superpowers:executing-plans`
+4. **Archive:** Move completed stages to `plans/archive/`
+
+### Stage Plan Conventions
+
+- Each stage has explicit dependencies on prior stages
+- Tasks follow TDD: write failing tests → implement → verify → commit
+- Each task specifies exact files to create/modify
+- Each task ends with an atomic commit
+- Each stage ends with deliverable verification commands
+- Include the agent directive: `> **For Claude:** REQUIRED SUB-SKILL: Use superpowers:executing-plans`
+
+### Example Stage Breakdown
+
+```
+Stage 1: Foundation (monorepo, DB, config, health check)
+Stage 2: Auth (user model, JWT, login/register endpoints)
+Stage 3: Core API (CRUD endpoints, validation, error handling)
+Stage 4: Frontend (layout, pages, API integration)
+Stage 5: Testing & Polish (E2E tests, performance, docs)
+```
 
 ## Memory File Location
 

@@ -40,47 +40,29 @@ echo "CLAUDE.md:"
 [ -f CLAUDE.md ] && echo "  CLAUDE.md (exists, $(wc -l < CLAUDE.md) lines)" || echo "  (none)"
 ```
 
-### Step 2: Present Module Selection
+### Step 2: Auto-select Missing Modules
 
-Show the user what's available and pre-check modules that aren't yet installed:
+Based on the analysis in Step 1, **automatically select all modules that aren't already installed.** Do not ask the user to pick — just install everything missing.
+
+Display what will be installed:
 
 ```
 ================================================================
-Enterprise Enhancement Pack — Select Modules to Install
+Enterprise Enhancement — Installing Missing Modules
 ================================================================
 
-Which modules would you like to add? (those already present are noted)
+  ✓ agent-teams         — already installed, skipping
+  + rules               — installing
+  + context-management  — installing
+  + hooks               — installing
+  + mcp                 — installing
+  + claude-md-snippets  — installing
 
-[ ] agent-teams          — 8 enterprise specialist agents
-                           coordinator, backend-architect, frontend-architect,
-                           security-auditor, test-engineer, devops-engineer,
-                           code-reviewer, performance-analyst
-
-[ ] rules                — Project knowledge base (.claude/rules/)
-                           architecture, api-conventions, security-policy,
-                           code-standards, testing-standards, env
-
-[ ] context-management   — Plans + session memory workflow
-                           feature/bugfix/context-handoff plan templates,
-                           memory setup guide
-
-[ ] marketplace          — Plugin marketplace (marketplace.json)
-                           Publish your agents as installable plugins
-
-[ ] hooks                — Safety + automation hooks
-                           secret-scan, auto-format, type-check, audit-log
-
-[ ] mcp                  — MCP server stubs
-                           github, postgres, slack, filesystem
-
-[ ] claude-md-snippets   — CLAUDE.md sections to add
-                           agent-team-guide, rules-guide,
-                           context-management, enterprise-standards
-
-Select all that apply (or type 'all' for everything):
+  project-plans will run after modules are installed.
+================================================================
 ```
 
-Use AskUserQuestion if running in an interactive context, otherwise prompt for a comma-separated list.
+The `project-plans` module always runs last (after context-management creates the plans/ directory). If the project already has plans/active/ with stage files, skip project-plans.
 
 ### Step 3: Find Template Source
 
@@ -121,12 +103,22 @@ for rule in architecture api-conventions security-policy code-standards testing-
 done
 ```
 
+**After copying, auto-populate rules from codebase analysis.** Read the project's package.json, CLAUDE.md, README, and source files to fill in:
+- **architecture.md** — project structure, tech stack, data flow, key patterns (inferred from directory layout and dependencies)
+- **api-conventions.md** — REST/GraphQL/tRPC conventions (inferred from existing endpoints or framework)
+- **code-standards.md** — language standards, linting config, import conventions (inferred from tsconfig, eslint, prettier)
+- **testing-standards.md** — test framework, naming patterns, coverage expectations (inferred from test files)
+- **env.md** — environment variables (inferred from .env.example, .env.local, or code that reads process.env)
+- **security-policy.md** — auth approach, OWASP considerations (inferred from auth middleware/libraries)
+
+Write realistic, useful content using the Edit tool — not just variable names. These files should be immediately useful without manual editing.
+
 #### context-management module
 
 ```bash
 mkdir -p plans/active plans/archive plans/templates
 # Copy plan templates, skipping existing ones
-for template in feature-plan bugfix-plan context-handoff; do
+for template in feature-plan bugfix-plan stage-plan context-handoff; do
   if [ ! -f "plans/templates/$template.md" ]; then
     cp "$TEMPLATE_DIR/plans/templates/$template.md" plans/templates/ 2>/dev/null && echo "  + plans/templates/$template.md" || echo "  ! Not found"
   else
@@ -134,6 +126,124 @@ for template in feature-plan bugfix-plan context-handoff; do
   fi
 done
 ```
+
+#### project-plans module
+
+This module automatically generates a project plan for agent teams. It analyzes the existing codebase to understand what's already built, then creates stages for what comes next.
+
+```bash
+mkdir -p plans/active plans/archive plans/templates
+# Ensure stage-plan template exists
+if [ ! -f "plans/templates/stage-plan.md" ]; then
+  cp "$TEMPLATE_DIR/plans/templates/stage-plan.md" plans/templates/ 2>/dev/null && echo "  + plans/templates/stage-plan.md" || echo "  ! stage-plan.md template not found"
+fi
+```
+
+**Step 1: Analyze the existing codebase automatically**
+
+Before generating stages, understand what exists. Run these in parallel:
+
+```bash
+# Project structure
+find . -type f -name "*.ts" -o -name "*.tsx" -o -name "*.js" -o -name "*.jsx" -o -name "*.py" -o -name "*.go" -o -name "*.rs" | head -50
+
+# Package info
+cat package.json 2>/dev/null || cat Cargo.toml 2>/dev/null || cat go.mod 2>/dev/null || cat pyproject.toml 2>/dev/null
+
+# Existing tests
+find . -type f -name "*.test.*" -o -name "*.spec.*" -o -name "*_test.*" | head -20
+
+# Git log for recent work
+git log --oneline -20 2>/dev/null
+
+# CLAUDE.md for project context
+cat CLAUDE.md 2>/dev/null
+```
+
+Use Grep and Glob tools to understand:
+- What tech stack is in use
+- What features are already built
+- What patterns and conventions are established
+- What the project does (from README, CLAUDE.md, or code)
+
+**Step 2: Generate the stage breakdown automatically**
+
+Based on codebase analysis, determine what stages the project needs next. Do NOT ask the user to describe milestones — infer them from the code.
+
+For existing projects, typical stage patterns:
+
+**Adding features to an existing app:**
+- Stage N: [Feature name] data model + API
+- Stage N+1: [Feature name] UI + integration
+- Stage N+2: [Feature name] tests + polish
+
+**Hardening / production-readiness:**
+- Stage N: Error handling + validation
+- Stage N+1: Auth + authorization
+- Stage N+2: Performance + caching
+- Stage N+3: CI/CD + deployment
+- Stage N+4: Monitoring + observability
+
+**Major refactor:**
+- Stage N: Extract [module] interface
+- Stage N+1: Implement new [module]
+- Stage N+2: Migrate consumers
+- Stage N+3: Remove old code + verify
+
+Adapt based on what the codebase actually needs. Ask the user ONE question:
+
+```
+Based on your codebase, I can generate plans for:
+  (a) [inferred direction based on code analysis — e.g., "Adding user dashboard + admin panel"]
+  (b) [alternative direction — e.g., "Production hardening: auth, testing, deploy"]
+  (c) Something else — describe briefly
+
+Which direction? (a/b/c)
+```
+
+**Step 3: Write stage plan files directly**
+
+Write each stage plan file directly to `plans/active/`. Do not copy templates — write the full content.
+
+Each stage plan file must include:
+1. YAML frontmatter (title, type: stage, status: pending, created date, dependencies)
+2. Agent directive: `> **For Claude:** REQUIRED SUB-SKILL: Use superpowers:executing-plans to implement this plan task-by-task.`
+3. **Goal**, **Architecture**, **Tech Stack**, **Dependencies**
+4. Task breakdown
+
+For task breakdowns:
+- **First 3 stages:** FULL detail — specific files (using actual paths from the codebase), failing tests, implementation steps with code snippets, commit messages, deliverable verification
+- **Remaining stages:** Goal, Architecture, Dependencies, and task titles with brief descriptions
+
+Conventions to enforce:
+- **Match existing patterns:** Use the same test framework, file structure, and naming conventions already in the codebase
+- **Sequential dependencies:** Each stage builds on prior stages
+- **Test-driven:** Every task starts with failing tests, then implementation
+- **Atomic commits:** Each task ends with `git add [files]` + `git commit -m "..."`
+- **Deliverable verification:** Each stage ends with verification commands
+- **Realistic file paths:** Use actual paths from the codebase, not generic placeholders
+
+**Step 4: Display summary**
+
+```
+================================================================
+PROJECT PLAN GENERATED
+================================================================
+
+  plans/active/stage-01-[name].md        ★ full task breakdown
+  plans/active/stage-02-[name].md        ★ full task breakdown
+  plans/active/stage-03-[name].md        ★ full task breakdown
+  plans/active/stage-04-[name].md          outline
+  ...
+
+★ = ready to execute with superpowers:executing-plans
+
+To execute: open a stage plan and paste into a new Claude Code session.
+To archive: mv plans/active/stage-01-*.md plans/archive/
+================================================================
+```
+
+Do NOT ask for confirmation before writing — just generate the files. Speed over ceremony.
 
 #### marketplace module
 
@@ -169,15 +279,20 @@ Also merge permission deny rules if not already present.
 
 #### mcp module
 
-If `.mcp.json` doesn't exist, create it with selected servers.
-If it exists, show the user which servers are missing and let them choose which to add.
+If `.mcp.json` doesn't exist, create it. Auto-detect which MCP servers are relevant based on the codebase:
+- **github** — always include (every project uses git)
+- **filesystem** — always include
+- **postgres/sqlite** — include if the project uses a database (check dependencies for prisma, drizzle, better-sqlite3, pg, etc.)
+- **slack** — skip unless the project has slack-related code
 
 ```bash
 if [ ! -f .mcp.json ]; then
   echo '{ "mcpServers": {} }' > .mcp.json
 fi
-# Merge each selected server into mcpServers object
+# Merge each relevant server into mcpServers object
 ```
+
+Do not ask which servers to add — infer from the codebase and install relevant ones.
 
 #### claude-md-snippets module
 
@@ -212,42 +327,33 @@ Skipped (already existed):
 [list of what was skipped]
 
 ================================================================
-NEXT STEPS:
+READY TO GO:
 ================================================================
 
-[Show only relevant steps based on what was installed]
+1. Review .claude/rules/ — auto-populated from your codebase.
+   Refine if needed: architecture.md, env.md, security-policy.md
 
-IF rules were installed:
-  1. Customize .claude/rules/ files — replace [PLACEHOLDER] values
-     Start with: architecture.md, then env.md, then the rest
+2. Execute your first stage plan (if project-plans was installed):
+   - Open plans/active/stage-01-*.md
+   - Paste into a new Claude Code session
+   - Claude follows it task-by-task (TDD, commits, verification)
 
-IF agent-teams were installed:
-  2. Restart Claude Code to activate new agents
-
-IF marketplace was installed:
-  3. Update marketplace.json with your owner details
-     Validate: claude plugin validate .
-
-IF mcp was installed:
-  4. Set environment variables for MCP servers you enabled
-     Reference: .claude/rules/env.md
-
-IF hooks were installed:
-  5. Review .claude/settings.json hooks — adjust patterns as needed
-
-IF claude-md-snippets were installed:
-  6. Open CLAUDE.md and customize the new sections
+3. Restart Claude Code to activate new agents, rules, and hooks
 
 ================================================================
 ```
 
-### Step 6: Offer to Commit
+### Step 6: Git Commit
 
-```
-Commit these changes to git? (y/n)
-```
+Automatically commit the enhancement:
 
-If yes, create a commit with a summary of what was added.
+```bash
+git add .claude/ plans/ marketplace.json .mcp.json CLAUDE.md 2>/dev/null
+git commit -m "chore: add enterprise Claude Code enhancements
+
+Installed modules: [list of modules that were installed]
+Skipped modules: [list of modules that were already present]"
+```
 
 ---
 
