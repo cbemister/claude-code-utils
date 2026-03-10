@@ -103,37 +103,39 @@ mkdir -p .claude/agents plans/templates
 
 **Link each agent file** from the shared source. Use hardlinks on Windows, symlinks on Unix. Skip files that already exist in the project:
 
+**IMPORTANT — Windows (Git Bash / MSYS) hardlink quirk:**
+`cmd //c mklink /H` requires unquoted literal Windows-style paths. Variable interpolation
+with backslashes breaks in Git Bash. Use `cmd //c "mklink /H <literal-target> <literal-source>"`
+where paths have NO surrounding quotes and NO shell variable expansion with backslashes.
+
+For each file, run an individual `cmd //c mklink /H` command with the full literal Windows path:
+
 ```bash
-link_file() {
-  local source="$1"
-  local target="$2"
+# Example for a single agent file:
+cmd //c "mklink /H C:\Users\chris\ProjectDir\.claude\agents\coordinator.md C:\Users\chris\.claude\shared\enterprise\agents\coordinator.md"
+```
 
-  # Skip if target already exists
-  [ -f "$target" ] && return 0
+**On Unix**, use symlinks:
+```bash
+ln -s "$SHARED_AGENTS_DIR/coordinator.md" ".claude/agents/coordinator.md"
+```
 
-  # Windows: use mklink /H for hardlinks (no admin needed)
-  if [[ "$OSTYPE" == "msys" || "$OSTYPE" == "cygwin" ]]; then
-    local win_target=$(cygpath -w "$target")
-    local win_source=$(cygpath -w "$source")
-    cmd //c "mklink /H \"$win_target\" \"$win_source\"" > /dev/null 2>&1 && return 0
-  else
-    # Unix: try symlink first (preserves the reference)
-    ln -s "$source" "$target" 2>/dev/null && return 0
-    # Fallback: hardlink
-    ln "$source" "$target" 2>/dev/null && return 0
-  fi
+**Fallback:** If hardlink/symlink fails, copy the file instead.
 
-  # Final fallback: copy
-  cp "$source" "$target"
-}
+Link each agent file from the shared source. Skip files that already exist in the project:
 
-# Link agent files
+```bash
+# Link agent files (adapt paths for current project + OS)
 for agent_file in "$SHARED_AGENTS_DIR"/*.md; do
   [ -f "$agent_file" ] || continue
-  link_file "$agent_file" ".claude/agents/$(basename "$agent_file")"
+  target=".claude/agents/$(basename "$agent_file")"
+  [ -f "$target" ] && continue  # skip existing
+  # On Windows: use cmd //c mklink /H with literal Windows paths (see note above)
+  # On Unix: ln -s "$agent_file" "$target"
+  # Fallback: cp "$agent_file" "$target"
 done
 
-# Link plan template files
+# Link plan template files (same approach)
 for template_file in "$SHARED_PLANS_DIR"/*.md; do
   [ -f "$template_file" ] || continue
   link_file "$template_file" "plans/templates/$(basename "$template_file")"
