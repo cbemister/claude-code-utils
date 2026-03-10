@@ -2,6 +2,8 @@
 
 # Install Claude Code Skills
 # Copies skill sources from this repo to ~/.claude/skills/
+# Also creates ~/.claude/shared/enterprise/ with agents and plan templates
+# that projects can link to instead of duplicating.
 
 set -e
 
@@ -9,6 +11,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_DIR="$(dirname "$SCRIPT_DIR")"
 SKILLS_SRC="$REPO_DIR/.claude/skills"
 SKILLS_DEST="$HOME/.claude/skills"
+SHARED_DIR="$HOME/.claude/shared/enterprise"
 
 # Colors for output
 GREEN='\033[0;32m'
@@ -61,6 +64,39 @@ else
   SKILL_NAME="$1"
 fi
 
+# Function to set up shared enterprise files (agents + plan templates)
+# These are the canonical copies that projects link to instead of duplicating.
+setup_shared_enterprise() {
+  local starter_templates="$REPO_DIR/templates/prep-claude"
+
+  if [ ! -d "$starter_templates" ]; then
+    return  # No enterprise templates in this repo
+  fi
+
+  echo -e "${BLUE}Setting up shared enterprise files...${NC}"
+  echo ""
+
+  # Create shared directories
+  mkdir -p "$SHARED_DIR/agents"
+  mkdir -p "$SHARED_DIR/plan-templates"
+
+  # Copy agent files to shared location
+  if [ -d "$starter_templates/.claude/agents" ]; then
+    cp -r "$starter_templates/.claude/agents/." "$SHARED_DIR/agents/"
+    local agent_count=$(find "$SHARED_DIR/agents" -name "*.md" -not -name "README.md" | wc -l)
+    echo -e "  ${GREEN}✓${NC} Shared agents: $agent_count files → $SHARED_DIR/agents/"
+  fi
+
+  # Copy plan templates to shared location
+  if [ -d "$starter_templates/plans/templates" ]; then
+    cp -r "$starter_templates/plans/templates/." "$SHARED_DIR/plan-templates/"
+    local template_count=$(find "$SHARED_DIR/plan-templates" -name "*.md" | wc -l)
+    echo -e "  ${GREEN}✓${NC} Shared plan templates: $template_count files → $SHARED_DIR/plan-templates/"
+  fi
+
+  echo ""
+}
+
 # Function to install a single skill
 install_skill() {
   local skill_dir="$1"
@@ -79,7 +115,7 @@ install_skill() {
   # Copy skill file
   cp "$skill_dir/SKILL.md" "$dest_dir/SKILL.md"
 
-  # Copy bundled templates if they exist (e.g. templates/enterprise-starter/)
+  # Copy bundled templates if they exist (e.g. templates/prep-claude/)
   local template_src="$REPO_DIR/templates/$skill_name"
   if [ -d "$template_src" ]; then
     mkdir -p "$dest_dir/templates/$skill_name"
@@ -89,6 +125,9 @@ install_skill() {
     echo -e "  ${GREEN}✓${NC} Installed: $skill_name"
   fi
 }
+
+# Set up shared enterprise files first
+setup_shared_enterprise
 
 # Install skills
 if [ "$INSTALL_ALL" == true ]; then
@@ -128,4 +167,10 @@ echo "  1. Restart Claude Code (close and reopen VSCode)"
 echo "  2. Skills will appear as slash commands (e.g., /create-plan)"
 echo ""
 echo "Installed skills location: $SKILLS_DEST"
+if [ -d "$SHARED_DIR" ]; then
+  echo "Shared enterprise files:  $SHARED_DIR"
+  echo ""
+  echo "Enterprise skills will link to shared files instead of copying."
+  echo "Projects share agents and plan templates from this central location."
+fi
 echo ""
