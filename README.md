@@ -30,7 +30,21 @@ Specialized AI assistants that handle specific tasks:
 |----------|-------|---------|
 | **Explore** | Haiku | Fast, read-only codebase exploration |
 | **Plan** | Opus | Complex architecture and feature planning |
+| **Design** | Opus | UI/UX design, mobile UX, conversion optimization |
 | **Implement** | Sonnet | Code implementation and debugging |
+
+### Agent Teams (`templates/prep-claude/teams/`)
+Pre-configured teams optimized for different project types. Installed via `/prep-claude`.
+
+| Team | Agents | Best For |
+|------|--------|----------|
+| Enterprise Engineering | 8 | APIs, data pipelines, complex backends |
+| SaaS Product | 9 | SaaS apps, dashboards, subscription products |
+| Internal Tool | 9 | Admin panels, developer tools |
+| Game / Interactive | 7 | Games, creative tools, canvas apps |
+| Marketing Site | 7 | Landing pages, marketing sites |
+
+Use `/team-battle` to compare two teams on the same task side-by-side.
 
 ### Skills (`.claude/skills/`)
 Workflow automations invoked with `/skill-name`:
@@ -47,7 +61,8 @@ One-off tasks:
 ### Templates (`templates/`)
 - CLAUDE.md templates for different tech stacks
 - Skill and agent authoring templates
-- Plan templates
+- Plan templates (feature, bugfix, refactor, stage plan)
+- `prep-claude/` — Full project setup with agents, rules, hooks, and team presets
 
 ## Model Selection Guide
 
@@ -55,15 +70,17 @@ One-off tasks:
 |-------|----------|
 | **Haiku** | File searches, exploration, simple tasks |
 | **Sonnet** | Implementation, reviews, debugging |
-| **Opus** | Architecture, complex planning |
+| **Opus** | Architecture, complex planning, design |
 
 ## Documentation
 
 - [Getting Started](docs/guides/getting-started.md)
 - [Installation Guide](docs/guides/installation.md)
 - [Model Selection](docs/best-practices/model-selection.md)
-- [Creating Agents](docs/best-practices/agent-design.md)
+- [Creating Agents](docs/best-practices/agent-design.md) — includes team-based patterns
+- [Team Selection](templates/prep-claude/teams/README.md) — compare and choose agent teams
 - [Worktree Workflow](docs/best-practices/worktree-workflow.md)
+- [Plan Templates](plans/templates/README.md) — feature, bugfix, refactor, stage plans
 
 ## License
 

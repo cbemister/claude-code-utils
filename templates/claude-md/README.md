@@ -154,6 +154,204 @@ Template for Python projects with:
 
 ---
 
+### [react-native.md](./react-native.md) - React Native + Expo
+Template for mobile apps with:
+- Expo Router file-based navigation
+- React Query for data fetching
+- Zustand for state management
+- NativeWind utility styling
+- EAS build workflows
+
+**Use for:**
+- iOS and Android mobile apps
+- Cross-platform mobile projects
+- Expo-based apps
+
+**Example projects:**
+- Consumer mobile apps
+- B2B mobile tools
+- Companion apps for web platforms
+
+---
+
+### [flutter.md](./flutter.md) - Flutter + Dart
+Template for Flutter apps with:
+- Riverpod state management
+- go_router navigation
+- Dio HTTP client
+- Freezed data classes
+- Feature-sliced project structure
+
+**Use for:**
+- Cross-platform mobile apps
+- iOS, Android, and web from one codebase
+- Material 3 design apps
+
+**Example projects:**
+- Consumer mobile apps
+- Enterprise mobile clients
+- Cross-platform tools
+
+---
+
+### [django.md](./django.md) - Django + DRF + PostgreSQL
+Template for Django projects with:
+- Django REST Framework ViewSets
+- Celery background tasks
+- pytest-django testing patterns
+- Environment management with django-environ
+
+**Use for:**
+- Django web applications
+- REST APIs with Django
+- Python backends with admin panels
+
+**Example projects:**
+- Content platforms
+- SaaS backends
+- Internal tools with admin UIs
+
+---
+
+### [nestjs.md](./nestjs.md) - NestJS + TypeScript + TypeORM
+Template for NestJS projects with:
+- Module-based feature architecture
+- TypeORM entities and repositories
+- Swagger / OpenAPI documentation
+- class-validator DTOs
+- JWT authentication pattern
+
+**Use for:**
+- TypeScript backend APIs
+- Node.js microservices
+- Enterprise Node.js applications
+
+**Example projects:**
+- REST APIs
+- GraphQL services
+- Microservice backends
+
+---
+
+### [rails.md](./rails.md) - Rails 7 + Hotwire + PostgreSQL
+Template for Rails projects with:
+- Hotwire (Turbo + Stimulus) patterns
+- RSpec + FactoryBot testing
+- Sidekiq background jobs
+- Standard Rails conventions
+
+**Use for:**
+- Rails web applications
+- Full-stack Ruby projects
+- Rapid prototyping with Rails
+
+**Example projects:**
+- SaaS products
+- Marketplaces
+- Content platforms
+
+---
+
+### [go-api.md](./go-api.md) - Go + Chi/Gin + PostgreSQL
+Template for Go REST APIs with:
+- Standard Go project layout (cmd/, internal/, pkg/)
+- Chi or Gin router patterns with middleware
+- sqlx / pgx database access with repository pattern
+- Air hot reload setup
+- testify-based unit and integration tests
+
+**Use for:**
+- Go HTTP services and REST APIs
+- High-performance microservices
+- Go backends replacing Node/Python services
+
+**Example projects:**
+- Auth services
+- CRUD APIs
+- Data ingestion pipelines
+
+---
+
+### [rust-cli.md](./rust-cli.md) - Rust + clap + tokio
+Template for Rust CLI tools with:
+- Single-crate and multi-crate workspace layouts
+- clap derive API for subcommands and typed args
+- tokio async runtime with spawn_blocking for CPU work
+- thiserror / anyhow error handling strategy
+- assert_cmd CLI integration tests
+
+**Use for:**
+- Command-line tools and developer utilities
+- Multi-crate Rust workspaces
+- High-performance or systems CLI apps
+
+**Example projects:**
+- File processors and converters
+- Developer tooling
+- Build and deployment tools
+
+---
+
+### [svelte.md](./svelte.md) - SvelteKit + TypeScript
+Template for SvelteKit applications with:
+- File-based routing (+page.svelte / +page.server.ts)
+- Superforms + Zod for type-safe form handling
+- Drizzle ORM with PostgreSQL
+- Svelte stores and reactive state
+- Server-only code in $lib/server/
+
+**Use for:**
+- SvelteKit full-stack web apps
+- Content sites with dynamic data
+- SaaS products preferring Svelte
+
+**Example projects:**
+- Dashboards and admin panels
+- E-commerce storefronts
+- Content management tools
+
+---
+
+### [vue.md](./vue.md) - Nuxt 3 + Vue 3 + TypeScript
+Template for Nuxt 3 applications with:
+- Composition API with `<script setup>` throughout
+- Pinia stores with auto-imports
+- VueUse composables
+- Nuxt server API routes (Nitro engine)
+- Route middleware for auth guarding
+
+**Use for:**
+- Nuxt 3 full-stack applications
+- Vue 3 SSR / SSG sites
+- Vue-based SaaS products
+
+**Example projects:**
+- Marketing and content platforms
+- Dashboards
+- E-commerce sites
+
+---
+
+### [astro.md](./astro.md) - Astro + TypeScript + Tailwind
+Template for Astro sites with:
+- Content Collections with Zod schemas
+- Island architecture and client: hydration directives
+- MDX support and View Transitions API
+- Dynamic routes with getStaticPaths
+- Server endpoints for hybrid API routes
+
+**Use for:**
+- Static or hybrid Astro sites
+- Blogs and documentation sites
+- Performance-critical marketing sites
+
+**Example projects:**
+- Developer blogs
+- Documentation sites
+- Portfolio and landing pages
+
+---
+
 ### [minimal.md](./minimal.md) - Simple Projects
 Lightweight template for:
 - Simple projects
@@ -405,13 +603,10 @@ Have a template for a popular stack? Contributions welcome:
 5. Submit PR
 
 Popular stacks we'd love templates for:
-- React Native
 - Electron
-- Vue.js / Nuxt
-- Svelte / SvelteKit
-- Ruby on Rails
-- Go applications
-- Rust projects
+- Remix
+- Laravel / PHP
+- Android (Kotlin + Jetpack Compose)
 
 ---
 
