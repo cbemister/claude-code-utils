@@ -20,10 +20,10 @@ Run two agent teams head-to-head on the same task using git worktrees, then comp
 
 2. **Load available teams.** Find `teams.json` from:
    - `~/.claude/shared/enterprise/teams/teams.json`
-   - `~/.claude/skills/prep-claude/templates/prep-claude/teams/teams.json`
-   - Or relative to this skill's location: `../../skills/prep-claude/templates/prep-claude/teams/teams.json`
+   - `~/.claude/skills/enhance-app/templates/enhance-app/teams/teams.json`
+   - Or relative to this skill's location: `../../skills/enhance-app/templates/enhance-app/teams/teams.json`
 
-   If not found, check if `templates/prep-claude/teams/teams.json` exists in the current repo.
+   If not found, check if `templates/enhance-app/teams/teams.json` exists in the current repo.
 
 3. **Present team selection for Team A:**
    ```

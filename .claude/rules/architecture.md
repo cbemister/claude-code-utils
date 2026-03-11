@@ -17,7 +17,7 @@ claude-code-utils/
 │       └── <name>/SKILL.md
 ├── templates/
 │   ├── claude-md/        # CLAUDE.md templates per tech stack
-│   └── prep-claude/      # Enterprise project setup template
+│   └── enhance-app/      # Enterprise project setup template
 │       ├── .claude/agents/   # 11-agent team pool
 │       ├── teams/            # 5 team presets + team battle
 │       ├── modules/          # CLAUDE.md snippets
@@ -41,12 +41,12 @@ claude-code-utils/
 ### Two-Level Agent System
 
 - **Base library** (`.claude/agents/`) — Generic agents usable in any project (explore, plan, implement categories)
-- **Team pool** (`templates/prep-claude/.claude/agents/`) — 11 specialized agents selected by team presets
+- **Team pool** (`templates/enhance-app/.claude/agents/`) — 11 specialized agents selected by team presets
 
 ### Template vs. Installed
 
-- `templates/prep-claude/` is a **template** — it contains placeholder values (`[PROJECT_NAME]`, `[TEAM_NAME]`)
-- When `/prep-claude` runs, it copies and customizes these into the target project
+- `templates/enhance-app/` is a **template** — it contains placeholder values (`[PROJECT_NAME]`, `[TEAM_NAME]`)
+- When `/enhance-app` runs, it copies and customizes these into the target project
 - Skills in `.claude/skills/` work immediately when project-local — no install needed
 
 ## Conventions

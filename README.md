@@ -33,8 +33,8 @@ Specialized AI assistants that handle specific tasks:
 | **Design** | Opus | UI/UX design, mobile UX, conversion optimization |
 | **Implement** | Sonnet | Code implementation and debugging |
 
-### Agent Teams (`templates/prep-claude/teams/`)
-Pre-configured teams optimized for different project types. Installed via `/prep-claude`.
+### Agent Teams (`templates/enhance-app/teams/`)
+Pre-configured teams optimized for different project types. Installed via `/enhance-app`.
 
 | Team | Agents | Best For |
 |------|--------|----------|
@@ -62,7 +62,7 @@ One-off tasks:
 - CLAUDE.md templates for different tech stacks
 - Skill and agent authoring templates
 - Plan templates (feature, bugfix, refactor, stage plan)
-- `prep-claude/` — Full project setup with agents, rules, hooks, and team presets
+- `enhance-app/` — Full project setup with agents, rules, hooks, and team presets
 
 ## Model Selection Guide
 
@@ -78,7 +78,7 @@ One-off tasks:
 - [Installation Guide](docs/guides/installation.md)
 - [Model Selection](docs/best-practices/model-selection.md)
 - [Creating Agents](docs/best-practices/agent-design.md) — includes team-based patterns
-- [Team Selection](templates/prep-claude/teams/README.md) — compare and choose agent teams
+- [Team Selection](templates/enhance-app/teams/README.md) — compare and choose agent teams
 - [Worktree Workflow](docs/best-practices/worktree-workflow.md)
 - [Plan Templates](plans/templates/README.md) — feature, bugfix, refactor, stage plans
 

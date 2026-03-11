@@ -1,6 +1,6 @@
 # Agent Teams
 
-Choose a team preset when running `/prep-claude`. Each team is optimized for a specific application type with the right mix of design, engineering, and specialist agents.
+Choose a team preset when running `/enhance-app`. Each team is optimized for a specific application type with the right mix of design, engineering, and specialist agents.
 
 ## Quick Comparison
 

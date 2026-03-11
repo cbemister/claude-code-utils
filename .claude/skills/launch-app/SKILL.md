@@ -122,7 +122,7 @@ git init -q
 
 ### 2C: Copy Agent Team Configuration
 
-Based on the selected team preset, copy the appropriate agents from `templates/prep-claude/.claude/agents/`:
+Based on the selected team preset, copy the appropriate agents from `templates/enhance-app/.claude/agents/`:
 
 **Agent files to copy per team:**
 
@@ -133,14 +133,14 @@ Based on the selected team preset, copy the appropriate agents from `templates/p
 - `marketing-site`: `ui-ux-designer.md`, `mobile-designer.md`, `conversion-optimizer.md`, `frontend-architect.md`, `performance-analyst.md`, `code-reviewer.md`, `coordinator.md` (from `teams/marketing-site/coordinator.md`)
 
 Source paths:
-- Agent files: `[claude-code-utils]/templates/prep-claude/.claude/agents/[agent].md`
-- Team coordinator: `[claude-code-utils]/templates/prep-claude/teams/[team-preset]/coordinator.md`
+- Agent files: `[claude-code-utils]/templates/enhance-app/.claude/agents/[agent].md`
+- Team coordinator: `[claude-code-utils]/templates/enhance-app/teams/[team-preset]/coordinator.md`
 
 Destination: `$TARGET_DIR/.claude/agents/`
 
 ### 2D: Copy Rules Templates
 
-Copy all rule files from `templates/prep-claude/.claude/rules/` to `$TARGET_DIR/.claude/rules/`:
+Copy all rule files from `templates/enhance-app/.claude/rules/` to `$TARGET_DIR/.claude/rules/`:
 
 - `api-conventions.md`
 - `architecture.md`
@@ -151,14 +151,14 @@ Copy all rule files from `templates/prep-claude/.claude/rules/` to `$TARGET_DIR/
 
 ### 2E: Copy Settings
 
-Copy `templates/prep-claude/.claude/settings.json` to `$TARGET_DIR/.claude/settings.json`.
+Copy `templates/enhance-app/.claude/settings.json` to `$TARGET_DIR/.claude/settings.json`.
 
 ### 2F: Set Up Plans Directory
 
 ```
 $TARGET_DIR/plans/
   active/           (empty — stage plans go here)
-  templates/        (copy from templates/prep-claude/plans/templates/)
+  templates/        (copy from templates/enhance-app/plans/templates/)
     stage-plan.md
     feature-plan.md
     bugfix-plan.md
@@ -166,7 +166,7 @@ $TARGET_DIR/plans/
     master-plan-readme.md
 ```
 
-Source: `[claude-code-utils]/templates/prep-claude/plans/templates/`
+Source: `[claude-code-utils]/templates/enhance-app/plans/templates/`
 
 ---
 

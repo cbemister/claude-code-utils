@@ -17,9 +17,9 @@ Ready-to-use CLAUDE.md files for different tech stacks:
 - `python-app.md` — Python projects
 - `game-browser.md` — Browser games
 
-### Prep-Claude Template (`templates/prep-claude/`)
+### Enhance-App Template (`templates/enhance-app/`)
 
-Full enterprise project setup. Installed via `/prep-claude` skill.
+Full enterprise project setup. Installed via `/enhance-app` skill.
 
 Contains:
 - `.claude/agents/` — 11 agent definitions (the team pool)
@@ -53,7 +53,7 @@ Designed for multi-stage app builds. Key features:
 
 - `[PROJECT_NAME]` — Project name
 - `[TEAM_NAME]` — Agent team preset name
-- `[TEAM_TABLE]` — Agent roster table (filled by prep-claude)
-- `[TEAM_WORKFLOWS]` — Workflow diagrams (filled by prep-claude)
+- `[TEAM_TABLE]` — Agent roster table (filled by enhance-app)
+- `[TEAM_WORKFLOWS]` — Workflow diagrams (filled by enhance-app)
 - `YYYY-MM-DD` — Current date
 - `[CUSTOMIZE THIS FILE]` — Rule files that need project-specific content

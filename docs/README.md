@@ -78,13 +78,13 @@ Want to create your own resources?
 
 Setting up agent teams for a project?
 
-1. **[Agent Team Selection](../templates/prep-claude/teams/README.md)**
+1. **[Agent Team Selection](../templates/enhance-app/teams/README.md)**
    - Choose a team preset (Enterprise, SaaS, Internal Tool, Game, Marketing)
    - Compare agent compositions
    - Use `/team-battle` to compare teams head-to-head
 
-2. **[Prep Claude](../templates/prep-claude/)** - Full project setup
-   - Run `/prep-claude` to install agents, rules, hooks, plans
+2. **[Enhance App](../templates/enhance-app/)** - Full project setup
+   - Run `/enhance-app` to install agents, rules, hooks, plans
    - Customize team composition in `teams/teams.json`
 
 3. **[Worktree Workflow](./best-practices/worktree-workflow.md)** - Parallel development
@@ -114,11 +114,11 @@ Setting up agent teams for a project?
 
 ### Agent Teams
 
-**What:** Pre-configured teams of specialized agents optimized for different project types. Installed via `/prep-claude`.
+**What:** Pre-configured teams of specialized agents optimized for different project types. Installed via `/enhance-app`.
 
 **Learn:**
-- [Team Comparison & Selection](../templates/prep-claude/teams/README.md)
-- [Agent Pool (all 11 agents)](../templates/prep-claude/.claude/agents/README.md)
+- [Team Comparison & Selection](../templates/enhance-app/teams/README.md)
+- [Agent Pool (all 11 agents)](../templates/enhance-app/.claude/agents/README.md)
 
 **Team Presets:**
 
@@ -416,7 +416,7 @@ These docs cover:
 | Install | [Installation Guide](./guides/installation.md) |
 | First steps | [Getting Started](./guides/getting-started.md) |
 | Save money | [Model Selection](./best-practices/model-selection.md) |
-| Agent teams | [Team Selection](../templates/prep-claude/teams/README.md) |
+| Agent teams | [Team Selection](../templates/enhance-app/teams/README.md) |
 | Custom agent | [Agent Design](./best-practices/agent-design.md) |
 | Custom skill | [Skill Authoring](./best-practices/skill-authoring.md) |
 | Parallel dev | [Worktree Workflow](./best-practices/worktree-workflow.md) |

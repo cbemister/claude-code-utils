@@ -1,6 +1,6 @@
 # Agent Team Pool
 
-Eleven specialized agents available for team-based selection. When you run `/prep-claude`, you choose a team preset — only the agents for that team are installed in your project.
+Eleven specialized agents available for team-based selection. When you run `/enhance-app`, you choose a team preset — only the agents for that team are installed in your project.
 
 ## Available Agents
 

@@ -13,8 +13,8 @@ You receive: an app description, tech stack, agent team preset, and target direc
 
 ## What You Produce
 
-1. `plans/README.md` — Master plan overview (use template from `templates/prep-claude/plans/templates/master-plan-readme.md`)
-2. `plans/active/stage-N-[title].md` — One file per stage (use template from `templates/prep-claude/plans/templates/stage-plan.md`)
+1. `plans/README.md` — Master plan overview (use template from `templates/enhance-app/plans/templates/master-plan-readme.md`)
+2. `plans/active/stage-N-[title].md` — One file per stage (use template from `templates/enhance-app/plans/templates/stage-plan.md`)
 
 All output goes inside the target project directory. Never write outside it.
 
@@ -23,8 +23,8 @@ All output goes inside the target project directory. Never write outside it.
 ### Step 1: Read the Templates
 
 Before generating anything, read both templates:
-- `templates/prep-claude/plans/templates/master-plan-readme.md`
-- `templates/prep-claude/plans/templates/stage-plan.md`
+- `templates/enhance-app/plans/templates/master-plan-readme.md`
+- `templates/enhance-app/plans/templates/stage-plan.md`
 
 These define the exact structure and format to follow.
 

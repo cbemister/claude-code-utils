@@ -19,7 +19,7 @@ Supports 17 tech stacks (Next.js, SvelteKit, Nuxt, Express, NestJS, FastAPI, Dja
 templates/
 ├── claude-md/        # 17 CLAUDE.md templates for different tech stacks
 ├── stage-libraries/  # Stage progression references for 7 project archetypes
-└── prep-claude/      # Agent teams, rules, hooks, plans, MCP config
+└── enhance-app/      # Agent teams, rules, hooks, plans, MCP config
 
 docs/                 # Documentation and best practices
 scripts/              # install-skills.sh — copy skills to ~/.claude/skills/
@@ -98,7 +98,7 @@ Project-local skills in `.claude/skills/` work immediately — no install needed
 | Accessibility | accessibility-audit, mobile-accessibility, critique-value |
 | Mobile | mobile-patterns, touch-interactions |
 | Conversion | conversion-audit, copywriting-guide, cta-optimizer, social-proof |
-| Enterprise | prep-claude |
+| Enterprise | enhance-app |
 | Scaffolding | launch-app, starter-project, enhance-project, find-skills |
 | Framework | nextjs-optimization, electron-nextjs |
 | Planning | launch-app, plan-next-stage, create-plan, plan-status, pm-review |

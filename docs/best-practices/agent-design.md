@@ -620,7 +620,7 @@ coordinator (Opus)
 
 ### Team Presets
 
-Teams are defined in `teams/teams.json` and installed via `/prep-claude`:
+Teams are defined in `teams/teams.json` and installed via `/enhance-app`:
 
 | Team | Design | Engineering | Use Case |
 |------|--------|-------------|----------|
@@ -662,7 +662,7 @@ Edit `teams/teams.json` to create custom compositions. Each team needs:
 - A list of agents from the pool
 - A `coordinator.md` with the team-specific roster and workflow
 
-See [Team Selection Guide](../../templates/prep-claude/teams/README.md) for detailed comparison.
+See [Team Selection Guide](../../templates/enhance-app/teams/README.md) for detailed comparison.
 
 ---
 
@@ -915,8 +915,8 @@ Before deploying an agent:
 
 - [Template](../../templates/agents/agent-template.md) - Agent authoring template
 - [Examples](../../.claude/agents/) - Real agent implementations
-- [Agent Pool](../../templates/prep-claude/.claude/agents/README.md) - All 11 team agents
-- [Team Selection](../../templates/prep-claude/teams/README.md) - Team presets and comparison
+- [Agent Pool](../../templates/enhance-app/.claude/agents/README.md) - All 11 team agents
+- [Team Selection](../../templates/enhance-app/teams/README.md) - Team presets and comparison
 - [Model Selection](./model-selection.md) - Choosing the right model
 
 ---

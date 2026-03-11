@@ -20,7 +20,7 @@ The project provides a **pool of 11 agents** that are composed into **5 team pre
 | `code-reviewer` | Sonnet | Specialist |
 | `performance-analyst` | Sonnet | Specialist |
 
-### Team Presets (`templates/prep-claude/teams/teams.json`)
+### Team Presets (`templates/enhance-app/teams/teams.json`)
 
 | Team | Design Agents | Engineering Agents | Use Case |
 |---|---|---|---|
@@ -36,16 +36,16 @@ Compares two teams on the same task by creating isolated worktrees, running the 
 
 ## File Locations
 
-- Agent definitions: `templates/prep-claude/.claude/agents/`
-- Team config: `templates/prep-claude/teams/teams.json`
-- Team coordinators: `templates/prep-claude/teams/<team>/coordinator.md`
-- Team docs: `templates/prep-claude/teams/README.md`
-- CLAUDE.md snippet: `templates/prep-claude/modules/claude-md-snippets/agent-team-guide.md`
+- Agent definitions: `templates/enhance-app/.claude/agents/`
+- Team config: `templates/enhance-app/teams/teams.json`
+- Team coordinators: `templates/enhance-app/teams/<team>/coordinator.md`
+- Team docs: `templates/enhance-app/teams/README.md`
+- CLAUDE.md snippet: `templates/enhance-app/modules/claude-md-snippets/agent-team-guide.md`
 
 ## Adding Agents
 
-1. Create markdown file in `templates/prep-claude/.claude/agents/<name>.md`
+1. Create markdown file in `templates/enhance-app/.claude/agents/<name>.md`
 2. Add YAML frontmatter: name, description, tools, model, skills
 3. Add agent to relevant team(s) in `teams/teams.json`
 4. Create/update coordinator for affected teams
-5. Update `templates/prep-claude/.claude/agents/README.md`
+5. Update `templates/enhance-app/.claude/agents/README.md`

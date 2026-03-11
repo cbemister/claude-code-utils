@@ -1,11 +1,11 @@
 ---
-name: prep-claude
-description: Prep any project with Claude Code configuration — agents, rules, hooks, plans, MCP servers, and CLAUDE.md. Scans what exists, installs what's missing. Links shared files (agents, plan templates) from ~/.claude/shared/enterprise/ instead of duplicating. Works for both new and existing projects.
+name: enhance-app
+description: Enhance an existing project with Claude Code agents, teams, rules, hooks, plans, MCP servers, and CLAUDE.md. Scans what exists, installs what's missing. Links shared files (agents, plan templates) from ~/.claude/shared/enterprise/ instead of duplicating.
 ---
 
-# Prep Claude
+# Enhance App
 
-Prep any project with Claude Code configuration. Shared files (agents, plan templates) are linked from a central location — not duplicated per project.
+Enhance an existing project with Claude Code configuration. Shared files (agents, plan templates) are linked from a central location — not duplicated per project.
 
 ## Instructions
 
@@ -113,21 +113,21 @@ Locate the shared enterprise files. Check these locations in order:
 
 **For agents and plan templates (shared — linked, not copied):**
 1. `~/.claude/shared/enterprise/agents/` and `~/.claude/shared/enterprise/plan-templates/`
-2. `~/.claude/skills/prep-claude/templates/prep-claude/.claude/agents/` and `.../plans/templates/`
-3. The claude-code-utils repo: `templates/prep-claude/` relative to the skill location
+2. `~/.claude/skills/enhance-app/templates/enhance-app/.claude/agents/` and `.../plans/templates/`
+3. The claude-code-utils repo: `templates/enhance-app/` relative to the skill location
 
 Store as `SHARED_AGENTS_DIR` and `SHARED_PLANS_DIR`.
 
 **For team coordinators (team-specific):**
 1. `~/.claude/shared/enterprise/teams/$TEAM_ID/coordinator.md`
-2. `~/.claude/skills/prep-claude/templates/prep-claude/teams/$TEAM_ID/coordinator.md`
-3. The claude-code-utils repo: `templates/prep-claude/teams/$TEAM_ID/coordinator.md`
+2. `~/.claude/skills/enhance-app/templates/enhance-app/teams/$TEAM_ID/coordinator.md`
+3. The claude-code-utils repo: `templates/enhance-app/teams/$TEAM_ID/coordinator.md`
 
 Store as `TEAM_COORDINATOR_PATH`.
 
 **For templates that need per-project customization (rules, CLAUDE.md, hooks, etc.):**
-1. `~/.claude/skills/prep-claude/templates/prep-claude/`
-2. The claude-code-utils repo: `templates/prep-claude/` relative to the skill location
+1. `~/.claude/skills/enhance-app/templates/enhance-app/`
+2. The claude-code-utils repo: `templates/enhance-app/` relative to the skill location
 
 Store as `TEMPLATE_DIR`.
 

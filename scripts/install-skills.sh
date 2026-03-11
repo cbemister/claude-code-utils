@@ -67,7 +67,7 @@ fi
 # Function to set up shared enterprise files (agents + plan templates)
 # These are the canonical copies that projects link to instead of duplicating.
 setup_shared_enterprise() {
-  local starter_templates="$REPO_DIR/templates/prep-claude"
+  local starter_templates="$REPO_DIR/templates/enhance-app"
 
   if [ ! -d "$starter_templates" ]; then
     return  # No enterprise templates in this repo
@@ -123,7 +123,7 @@ install_skill() {
   # Copy skill file
   cp "$skill_dir/SKILL.md" "$dest_dir/SKILL.md"
 
-  # Copy bundled templates if they exist (e.g. templates/prep-claude/)
+  # Copy bundled templates if they exist (e.g. templates/enhance-app/)
   local template_src="$REPO_DIR/templates/$skill_name"
   if [ -d "$template_src" ]; then
     mkdir -p "$dest_dir/templates/$skill_name"

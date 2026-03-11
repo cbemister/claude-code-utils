@@ -1,5 +1,5 @@
 <!-- PASTE THIS SECTION INTO YOUR CLAUDE.md AFTER YOUR KEY COMMANDS SECTION -->
-<!-- Placeholders [TEAM_NAME], [TEAM_TABLE], [TEAM_WORKFLOWS] are replaced by prep-claude -->
+<!-- Placeholders [TEAM_NAME], [TEAM_TABLE], [TEAM_WORKFLOWS] are replaced by enhance-app -->
 
 ## Agent Team
 

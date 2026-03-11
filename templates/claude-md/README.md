@@ -371,7 +371,7 @@ Lightweight template for:
 
 For enterprise-grade projects that need a full Claude Code configuration layer (agent teams, rules, hooks, plugin marketplace, MCP, context management), use the enterprise templates instead of a standalone CLAUDE.md.
 
-### Enterprise (`templates/prep-claude/`)
+### Enterprise (`templates/enhance-app/`)
 Complete `.claude/` configuration for any project (new or existing). Scans what exists, installs what's missing. Includes:
 - 8 specialized agents (linked from shared source — not duplicated per project)
 - `.claude/rules/` knowledge base (auto-populated from codebase analysis)
@@ -380,7 +380,7 @@ Complete `.claude/` configuration for any project (new or existing). Scans what 
 - MCP server configuration
 - Plan templates (linked from shared source)
 
-**Use:** Run `/prep-claude` in your project directory.
+**Use:** Run `/enhance-app` in your project directory.
 
 ---
 
