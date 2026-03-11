@@ -118,6 +118,8 @@ Each skill must be a directory with `SKILL.md` inside:
 - **electron-nextjs** - Add Electron to an existing Next.js project for desktop apps
 
 ### Project Scaffolding
+- **launch-app** - Launch a new professional app from idea to staged build plan
+  - Gathers requirements, recommends tech stack and agent team, creates project folder with full Claude Code config, generates CLAUDE.md and all stage plans — ready for the team to build
 - **starter-project** - Generate starter projects with agents/skills pre-configured
   - Categories: SaaS app, API service, component library, CLI tool, e-commerce, browser game
 - **enhance-project** - Add Claude Code resources and improvements to existing projects

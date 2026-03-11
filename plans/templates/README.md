@@ -65,6 +65,33 @@ Template for code refactoring with 4 phases:
 
 ---
 
+### [stage-plan.md](./stage-plan.md)
+Template for app build stages with agent team assignments and parallel task execution.
+
+**Designed for:**
+- Multi-stage app builds with sequential stages
+- Parallel agent team coordination (Lead/Support/Review roles)
+- Tasks with tiered verification (compile → unit → E2E)
+- Explicit dependency graphs and parallelization maps
+- Porting work from legacy systems (optional section)
+- Quantified stage checkpoints as gates
+
+**Key features over other templates:**
+- Agent team assignments table per stage
+- ASCII parallelization diagrams
+- Per-task verification tiers with runnable commands
+- Code specification blocks (interfaces/signatures)
+- Commit sequence planning
+- Stage checkpoint with measurable thresholds
+
+**Example:**
+```bash
+/create-plan site-rebuild --template=build-phase
+# Creates: plans/active/site-rebuild/stage-1-foundation.md
+```
+
+---
+
 ### [subplan-template.md](./subplan-template.md)
 Template for individual phase sub-plans within a larger plan.
 
@@ -208,6 +235,7 @@ plans/
 │   ├── feature-plan.md
 │   ├── bugfix-plan.md
 │   ├── refactor-plan.md
+│   ├── stage-plan.md
 │   └── subplan-template.md
 ├── active/                 # Active plans
 │   └── feature-name/

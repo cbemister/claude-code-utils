@@ -79,6 +79,7 @@ setup_shared_enterprise() {
   # Create shared directories
   mkdir -p "$SHARED_DIR/agents"
   mkdir -p "$SHARED_DIR/plan-templates"
+  mkdir -p "$SHARED_DIR/teams"
 
   # Copy agent files to shared location
   if [ -d "$starter_templates/.claude/agents" ]; then
@@ -92,6 +93,13 @@ setup_shared_enterprise() {
     cp -r "$starter_templates/plans/templates/." "$SHARED_DIR/plan-templates/"
     local template_count=$(find "$SHARED_DIR/plan-templates" -name "*.md" | wc -l)
     echo -e "  ${GREEN}✓${NC} Shared plan templates: $template_count files → $SHARED_DIR/plan-templates/"
+  fi
+
+  # Copy team configurations to shared location
+  if [ -d "$starter_templates/teams" ]; then
+    cp -r "$starter_templates/teams/." "$SHARED_DIR/teams/"
+    local team_count=$(find "$SHARED_DIR/teams" -maxdepth 1 -type d -not -name "teams" | wc -l)
+    echo -e "  ${GREEN}✓${NC} Team configurations: $team_count teams → $SHARED_DIR/teams/"
   fi
 
   echo ""

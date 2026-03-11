@@ -582,6 +582,90 @@ permissionMode: acceptEdits
 
 ---
 
+### Design Agents
+
+**Characteristics:**
+```yaml
+model: opus
+tools: Read, Grep, Glob, Bash, Write, Edit
+skills:
+  - color-palette
+  - typography-system
+  # ... domain-specific design skills
+```
+
+**Purpose:** Visual design, UX patterns, and conversion optimization
+
+**Examples:**
+- `ui-ux-designer` — 14 design skills, creates design systems and polished interfaces
+- `mobile-designer` — 5 skills, mobile-first UX with thumb zone ergonomics
+- `conversion-optimizer` — 5 skills, psychology-driven copywriting and CTAs
+
+Design agents use Opus because design decisions require complex reasoning about aesthetics, usability, and psychology. They carry many preloaded skills because design work spans multiple domains (color, typography, spacing, accessibility).
+
+---
+
+## 13. Agent Teams
+
+Beyond individual agents, you can compose **teams** — curated groups of agents optimized for a project type. Each team includes a coordinator that orchestrates the other agents.
+
+### Team Structure
+
+```
+coordinator (Opus)
+├── Design agents (Opus) — 0-3 depending on team
+├── Architect agents (Sonnet) — backend + frontend
+└── Specialist agents (Sonnet) — security, test, devops, review, perf
+```
+
+### Team Presets
+
+Teams are defined in `teams/teams.json` and installed via `/prep-claude`:
+
+| Team | Design | Engineering | Use Case |
+|------|--------|-------------|----------|
+| Enterprise Engineering | None | Full stack + DevOps | APIs, data pipelines |
+| SaaS Product | UI/UX + Conversion | Full stack | Revenue-driven products |
+| Internal Tool | UI/UX (practical) | Full stack + DevOps | Admin panels, dev tools |
+| Game / Interactive | UI/UX + Mobile | Backend + Frontend + Perf | Games, creative tools |
+| Marketing Site | All 3 designers | Frontend + Perf + Review | Landing pages |
+
+### Team Workflows
+
+Each team has a recommended agent sequence:
+
+**Design-first (SaaS Product):**
+```
+coordinator → ui-ux-designer → conversion-optimizer
+            → backend + frontend (parallel, from design specs)
+            → security → test → code-reviewer
+```
+
+**Engineering-first (Enterprise):**
+```
+coordinator → backend + frontend (parallel)
+            → security (if auth changes)
+            → test → code-reviewer
+```
+
+### Team Battle
+
+Use `/team-battle` to compare two teams on the same task:
+```
+/team-battle "Build a user settings page"
+```
+Creates two worktrees with different teams, runs the same task, and presents side-by-side results.
+
+### Custom Teams
+
+Edit `teams/teams.json` to create custom compositions. Each team needs:
+- A list of agents from the pool
+- A `coordinator.md` with the team-specific roster and workflow
+
+See [Team Selection Guide](../../templates/prep-claude/teams/README.md) for detailed comparison.
+
+---
+
 ## Common Patterns
 
 ### Pattern 1: Explorer Agent
@@ -831,6 +915,8 @@ Before deploying an agent:
 
 - [Template](../../templates/agents/agent-template.md) - Agent authoring template
 - [Examples](../../.claude/agents/) - Real agent implementations
+- [Agent Pool](../../templates/prep-claude/.claude/agents/README.md) - All 11 team agents
+- [Team Selection](../../templates/prep-claude/teams/README.md) - Team presets and comparison
 - [Model Selection](./model-selection.md) - Choosing the right model
 
 ---

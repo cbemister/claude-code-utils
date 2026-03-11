@@ -73,6 +73,40 @@ Store as variables:
 - PROJECT_NAME, PROJECT_TYPE, STACK, DESCRIPTION, TEAM
 - CMD_INSTALL, CMD_DEV, CMD_TEST, CMD_BUILD, CMD_LINT
 
+### Step 2.5: Team Selection
+
+Read `teams/teams.json` from the template directory (found in Step 3, or check the known locations now). Present the available teams:
+
+```
+Available agent teams:
+
+  1. Enterprise Engineering (default)
+     7 agents: backend, frontend, security, test, devops, review, perf
+     Best for: Complex apps, internal tools
+
+  2. SaaS Product
+     8 agents: + ui-ux-designer, conversion-optimizer
+     Best for: SaaS products, dashboards, subscription products
+
+  3. Internal Tool
+     8 agents: + ui-ux-designer (practical focus)
+     Best for: Admin panels, developer tools, back-office apps
+
+  4. Game / Interactive
+     6 agents: + ui-ux-designer, mobile-designer
+     Best for: Games, interactive experiences, creative tools
+
+  5. Marketing Site
+     6 agents: + all 3 designers, frontend only
+     Best for: Landing pages, marketing sites, pricing pages
+
+Select a team (1-5, default 1):
+```
+
+Store the selection as `TEAM_ID` (one of: `enterprise`, `saas-product`, `internal-tool`, `game-interactive`, `marketing-site`).
+Store the team's display name as `TEAM_DISPLAY_NAME`.
+Store the team's agent list from teams.json as `TEAM_AGENTS`.
+
 ### Step 3: Find Shared Source
 
 Locate the shared enterprise files. Check these locations in order:
@@ -84,6 +118,13 @@ Locate the shared enterprise files. Check these locations in order:
 
 Store as `SHARED_AGENTS_DIR` and `SHARED_PLANS_DIR`.
 
+**For team coordinators (team-specific):**
+1. `~/.claude/shared/enterprise/teams/$TEAM_ID/coordinator.md`
+2. `~/.claude/skills/prep-claude/templates/prep-claude/teams/$TEAM_ID/coordinator.md`
+3. The claude-code-utils repo: `templates/prep-claude/teams/$TEAM_ID/coordinator.md`
+
+Store as `TEAM_COORDINATOR_PATH`.
+
 **For templates that need per-project customization (rules, CLAUDE.md, hooks, etc.):**
 1. `~/.claude/skills/prep-claude/templates/prep-claude/`
 2. The claude-code-utils repo: `templates/prep-claude/` relative to the skill location
@@ -92,7 +133,7 @@ Store as `TEMPLATE_DIR`.
 
 If nothing found, print an error with instructions to install from the claude-code-utils repository.
 
-### Step 4: Link Shared Files (Agents + Plan Templates)
+### Step 4: Link Shared Files (Team Agents + Plan Templates)
 
 **These files are identical across projects — link them, don't copy.**
 
@@ -101,7 +142,7 @@ Create the project directories:
 mkdir -p .claude/agents plans/templates
 ```
 
-**Link each agent file** from the shared source. Use hardlinks on Windows, symlinks on Unix. Skip files that already exist in the project:
+**Link each agent file** from the shared source. Use hardlinks on Windows, symlinks on Unix. Skip files that already exist in the project.
 
 **IMPORTANT — Windows (Git Bash / MSYS) hardlink quirk:**
 `cmd //c mklink /H` requires unquoted literal Windows-style paths. Variable interpolation
@@ -122,20 +163,35 @@ ln -s "$SHARED_AGENTS_DIR/coordinator.md" ".claude/agents/coordinator.md"
 
 **Fallback:** If hardlink/symlink fails, copy the file instead.
 
-Link each agent file from the shared source. Skip files that already exist in the project:
+#### 4a: Link the team-specific coordinator
+
+Link the coordinator from `$TEAM_COORDINATOR_PATH` (the team-specific coordinator for the selected `$TEAM_ID`):
 
 ```bash
-# Link agent files (adapt paths for current project + OS)
-for agent_file in "$SHARED_AGENTS_DIR"/*.md; do
-  [ -f "$agent_file" ] || continue
-  target=".claude/agents/$(basename "$agent_file")"
+target=".claude/agents/coordinator.md"
+[ -f "$target" ] || link_or_copy "$TEAM_COORDINATOR_PATH" "$target"
+```
+
+#### 4b: Link only the agents in the selected team
+
+Read the `TEAM_AGENTS` list from `teams.json` for the selected `$TEAM_ID`. Only link agents that appear in this list — do NOT link all agents from the pool:
+
+```bash
+# Link only the agents listed in the selected team's "agents" array
+for agent_name in $TEAM_AGENTS; do
+  source="$SHARED_AGENTS_DIR/${agent_name}.md"
+  target=".claude/agents/${agent_name}.md"
+  [ -f "$source" ] || continue
   [ -f "$target" ] && continue  # skip existing
   # On Windows: use cmd //c mklink /H with literal Windows paths (see note above)
-  # On Unix: ln -s "$agent_file" "$target"
-  # Fallback: cp "$agent_file" "$target"
+  # On Unix: ln -s "$source" "$target"
+  # Fallback: cp "$source" "$target"
 done
+```
 
-# Link plan template files (same approach)
+#### 4c: Link plan template files (same for all teams)
+
+```bash
 for template_file in "$SHARED_PLANS_DIR"/*.md; do
   [ -f "$template_file" ] || continue
   link_file "$template_file" "plans/templates/$(basename "$template_file")"
@@ -144,9 +200,11 @@ done
 
 Report what was linked vs skipped:
 ```
+  Team: [TEAM_DISPLAY_NAME] ($TEAM_ID)
   Agents:
-    → coordinator.md (linked)
+    → coordinator.md (linked from teams/$TEAM_ID/)
     → backend-architect.md (linked)
+    → ui-ux-designer.md (linked)
     ~ frontend-architect.md (already exists, skipped)
     ...
   Plan templates:
@@ -255,6 +313,30 @@ for file in $TARGET_FILES; do
 done
 ```
 
+**Replace team placeholders** — generate team-specific content from `teams.json`:
+
+For `[TEAM_NAME]`: Replace with `$TEAM_DISPLAY_NAME` (e.g., "SaaS Product").
+
+For `[TEAM_TABLE]`: Generate a markdown table from the team's agent list:
+```markdown
+| Agent | When to Use |
+|---|---|
+| `coordinator` | Complex multi-layer tasks, parallel work coordination |
+| `ui-ux-designer` | Visual design, design system, brand identity |
+...
+```
+Each agent's "When to Use" description comes from the agent's `description` field in its frontmatter.
+
+For `[TEAM_WORKFLOWS]`: Generate team-specific workflow recommendations based on the team's coordinator. Read the coordinator's Workflow section and produce a condensed version:
+```markdown
+**New feature:**
+\`\`\`
+coordinator → ui-ux-designer (design) → backend + frontend (parallel) → test-engineer → code-reviewer
+\`\`\`
+```
+
+Replace in CLAUDE.md and any snippet files that were appended.
+
 Remove the placeholder notice from CLAUDE.md:
 ```bash
 sed -i '/Replace all.*PLACEHOLDER.*values/d' CLAUDE.md
@@ -314,18 +396,20 @@ Conventions:
 
 ```
 ================================================================
-Enterprise Claude Code configuration installed!
+[TEAM_DISPLAY_NAME] Claude Code configuration installed!
 ================================================================
 
+Team: [TEAM_DISPLAY_NAME] ($TEAM_ID)
+
 Linked (shared — update once, all projects get it):
-  .claude/agents/      — 8 enterprise specialist agents
+  .claude/agents/      — [N] specialist agents (team: $TEAM_ID)
   plans/templates/     — Feature, bugfix, stage, and context-handoff templates
 
 Copied (project-specific):
   .claude/rules/       — Project knowledge base (auto-populated)
   .claude/settings.json — Hooks + permission rules
   plans/active/        — Stage plans (if generated)
-  CLAUDE.md            — Enterprise project instructions
+  CLAUDE.md            — Project instructions
   .mcp.json            — MCP server configuration
   marketplace.json     — Plugin marketplace catalog
 
@@ -333,17 +417,11 @@ Skipped (already existed):
   [list of what was skipped]
 
 ================================================================
-AGENT TEAM:
+AGENT TEAM: [TEAM_DISPLAY_NAME]
 ================================================================
 
-  coordinator          — orchestrates complex multi-layer tasks (Opus)
-  backend-architect    — API, database, service layer (Sonnet)
-  frontend-architect   — UI components, state, accessibility (Sonnet)
-  security-auditor     — OWASP, auth/authz, secrets review (Sonnet)
-  test-engineer        — test strategy, coverage, automation (Sonnet)
-  devops-engineer      — CI/CD, containers, infrastructure (Sonnet)
-  code-reviewer        — quality, standards, pre-merge review (Sonnet)
-  performance-analyst  — query optimization, bundle analysis (Sonnet)
+  coordinator          — orchestrates the team (Opus)
+  [for each agent in TEAM_AGENTS, list name and brief description]
 
 ================================================================
 NEXT STEPS:
@@ -359,6 +437,8 @@ NEXT STEPS:
 
 3. Restart Claude Code to activate agents, rules, and hooks
 
+4. Try /team-battle to compare different team compositions
+
 ================================================================
 ```
 
@@ -366,13 +446,13 @@ NEXT STEPS:
 
 ```bash
 git add .claude/ plans/ marketplace.json .mcp.json CLAUDE.md
-git commit -m "chore: add enterprise Claude Code configuration
+git commit -m "chore: add $TEAM_DISPLAY_NAME Claude Code configuration
 
-- 8 specialist agents (linked from shared source)
+- [N] specialist agents: $TEAM_ID team (linked from shared source)
 - .claude/rules/ knowledge base (auto-populated)
 - Hooks: secret scan, auto-format, TypeScript check
 - plans/ structure with templates (linked from shared source)
-- marketplace.json, .mcp.json, enterprise CLAUDE.md"
+- marketplace.json, .mcp.json, CLAUDE.md"
 ```
 
 ---
