@@ -5,6 +5,8 @@ description: Generate starter projects pre-configured with Claude Code agents an
 
 # Starter Project Generator
 
+> **Tip:** For a full app launch workflow with staged build plans and agent team assignments, use `/launch-app` instead. This skill is for quick scaffolding without detailed planning.
+
 ## Instructions
 
 **IMPORTANT: Execute immediately. If the user provided a category argument, start building. If not, ask the user to choose a template using AskUserQuestion - do NOT print a menu and wait.**
