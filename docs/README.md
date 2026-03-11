@@ -1,6 +1,6 @@
 # Documentation
 
-Comprehensive documentation for Claude Code Shared Resources.
+Comprehensive documentation for the Claude Code App Launchpad.
 
 ## Quick Links
 
@@ -76,16 +76,20 @@ Want to create your own resources?
 
 ## For Teams
 
-Setting up for a team?
+Setting up agent teams for a project?
 
-1. **[Installation Guide](./guides/installation.md)** - Team setup section
-   - Per-project installation
-   - Shared resources
-   - Version control
+1. **[Agent Team Selection](../templates/prep-claude/teams/README.md)**
+   - Choose a team preset (Enterprise, SaaS, Internal Tool, Game, Marketing)
+   - Compare agent compositions
+   - Use `/team-battle` to compare teams head-to-head
 
-2. **[Worktree Workflow](./best-practices/worktree-workflow.md)** - Team usage section
-   - Sharing conventions
-   - Plan templates
+2. **[Prep Claude](../templates/prep-claude/)** - Full project setup
+   - Run `/prep-claude` to install agents, rules, hooks, plans
+   - Customize team composition in `teams/teams.json`
+
+3. **[Worktree Workflow](./best-practices/worktree-workflow.md)** - Parallel development
+   - Feature isolation with worktrees
+   - Plan templates for stage-based builds
    - Collaboration patterns
 
 ---
@@ -101,10 +105,37 @@ Setting up for a team?
 - [Agent Design Best Practices](./best-practices/agent-design.md)
 - [Model Selection Guide](./best-practices/model-selection.md)
 
-**Examples:**
+**Base Library:**
 - `.claude/agents/explore/` - Exploration agents
 - `.claude/agents/plan/` - Planning agents
 - `.claude/agents/implement/` - Implementation agents
+
+---
+
+### Agent Teams
+
+**What:** Pre-configured teams of specialized agents optimized for different project types. Installed via `/prep-claude`.
+
+**Learn:**
+- [Team Comparison & Selection](../templates/prep-claude/teams/README.md)
+- [Agent Pool (all 11 agents)](../templates/prep-claude/.claude/agents/README.md)
+
+**Team Presets:**
+
+| Team | Agents | Best For |
+|------|--------|----------|
+| Enterprise Engineering | 8 (no design) | APIs, data pipelines, complex backends |
+| SaaS Product | 9 (UI/UX + Conversion) | SaaS apps, dashboards, subscription products |
+| Internal Tool | 9 (UI/UX practical) | Admin panels, developer tools |
+| Game / Interactive | 7 (UI/UX + Mobile) | Games, creative tools, canvas apps |
+| Marketing Site | 7 (all 3 designers) | Landing pages, marketing sites |
+
+**Design Agents (Opus):**
+- `ui-ux-designer` — Visual design systems, brand-driven interfaces (14 skills)
+- `mobile-designer` — Mobile-first UX, thumb zones, platform patterns (5 skills)
+- `conversion-optimizer` — Conversion psychology, copywriting, CTAs (5 skills)
+
+**Team Battle:** `/team-battle` runs two teams on the same task in separate worktrees for side-by-side comparison.
 
 ---
 
@@ -131,14 +162,24 @@ Setting up for a team?
 - [CLAUDE.md Authoring Best Practices](./best-practices/claude-md-authoring.md)
 - [Templates](../templates/claude-md/README.md)
 
-**Templates:**
-- `templates/claude-md/minimal.md` - Simple projects
-- `templates/claude-md/nextjs-app.md` - Next.js applications
+**Templates (17 tech stacks):**
+- `templates/claude-md/nextjs-app.md` - Next.js / T3 / Electron
+- `templates/claude-md/api-service.md` - Express APIs
+- `templates/claude-md/python-app.md` - FastAPI / Python
+- `templates/claude-md/cli-tool.md` - Node.js CLI
 - `templates/claude-md/node-library.md` - npm packages
-- `templates/claude-md/api-service.md` - REST APIs
-- `templates/claude-md/cli-tool.md` - CLI applications
-- `templates/claude-md/python-app.md` - Python projects
-- `templates/claude-md/game-browser.md` - Browser games
+- `templates/claude-md/game-browser.md` - Phaser / browser games
+- `templates/claude-md/minimal.md` - Simple projects
+- `templates/claude-md/react-native.md` - React Native + Expo
+- `templates/claude-md/flutter.md` - Flutter + Dart
+- `templates/claude-md/django.md` - Django + PostgreSQL
+- `templates/claude-md/nestjs.md` - NestJS + TypeORM
+- `templates/claude-md/rails.md` - Rails 7 + Ruby
+- `templates/claude-md/go-api.md` - Go + Chi/Gin
+- `templates/claude-md/rust-cli.md` - Rust + clap
+- `templates/claude-md/svelte.md` - SvelteKit
+- `templates/claude-md/vue.md` - Nuxt 3 + Vue 3
+- `templates/claude-md/astro.md` - Astro + Tailwind
 
 **Quality Metrics:**
 - Completeness (25%) - Has required sections
@@ -151,16 +192,31 @@ Setting up for a team?
 
 ### Planning System
 
-**What:** Structured feature planning with templates
+**What:** Staged build planning for launching professional apps
+
+**Core workflow:**
+1. `/launch-app` — Go from idea to fully planned project with stage plans and agent assignments
+2. `/plan-next-stage` — Refresh a stage plan to account for codebase changes from prior stages
 
 **Learn:**
 - [Getting Started - Workflow Examples](./guides/getting-started.md#common-workflows)
 - [Worktree Workflow](./best-practices/worktree-workflow.md)
 
-**Templates:**
-- `plans/templates/feature-plan.md`
-- `plans/templates/bugfix-plan.md`
-- `plans/templates/refactor-plan.md`
+**Plan Templates:**
+- `plans/templates/master-plan-readme.md` - Master plan orchestrator with dependency graphs and parallelization maps
+- `plans/templates/stage-plan.md` - Build stage with agent teams, parallelization, and tiered verification
+- `plans/templates/feature-plan.md` - New feature development
+- `plans/templates/bugfix-plan.md` - Bug investigation and fix
+- `plans/templates/context-handoff.md` - Cross-session continuity
+
+**Stage Libraries** (reference material for the project-planner agent):
+- `templates/stage-libraries/web-fullstack.md` - Next.js, SvelteKit, Nuxt
+- `templates/stage-libraries/api-backend.md` - Express, NestJS, FastAPI, Rails, Go
+- `templates/stage-libraries/mobile-app.md` - React Native, Flutter
+- `templates/stage-libraries/cli-tool.md` - Node, Rust, Go CLIs
+- `templates/stage-libraries/desktop-app.md` - Electron
+- `templates/stage-libraries/marketing-site.md` - Astro, static sites
+- `templates/stage-libraries/game.md` - Phaser, browser games
 
 ---
 
@@ -360,9 +416,11 @@ These docs cover:
 | Install | [Installation Guide](./guides/installation.md) |
 | First steps | [Getting Started](./guides/getting-started.md) |
 | Save money | [Model Selection](./best-practices/model-selection.md) |
+| Agent teams | [Team Selection](../templates/prep-claude/teams/README.md) |
 | Custom agent | [Agent Design](./best-practices/agent-design.md) |
 | Custom skill | [Skill Authoring](./best-practices/skill-authoring.md) |
 | Parallel dev | [Worktree Workflow](./best-practices/worktree-workflow.md) |
+| Stage plans | [Plan Templates](../plans/templates/README.md) |
 
 ---
 

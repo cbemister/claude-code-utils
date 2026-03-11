@@ -1,21 +1,25 @@
-# Claude Code Shared Resources
+# Claude Code App Launchpad
 
 ## Overview
-This repository contains shareable Claude Code resources: sub-agents, skills, commands, templates, and documentation. Resources work immediately when project-local, or can be installed globally via the install scripts.
+This repository is a launchpad for building professional apps with agent teams. Run `/launch-app` to go from an idea to a fully planned project with staged build plans, agent team assignments, and parallelization maps — ready for the team to build stage by stage.
+
+Supports 17 tech stacks (Next.js, SvelteKit, Nuxt, Express, NestJS, FastAPI, Django, Rails, Go, React Native, Flutter, Electron, Rust CLI, Node CLI, Astro, Phaser, T3) and 5 agent team presets.
 
 ## Project Structure
 ```
 .claude/
 ├── agents/           # Sub-agents by category
-│   ├── design/       # ui-ux-designer (Opus, 14 skills)
-│   ├── explore/      # Codebase exploration agents
-│   └── implement/    # Implementation agents
+│   ├── design/       # ui-ux-designer, mobile-designer, conversion-optimizer (Opus)
+│   ├── explore/      # Codebase exploration agents (Haiku)
+│   ├── plan/         # project-planner, architecture-planner, feature-planner (Opus)
+│   └── implement/    # Implementation agents (Sonnet)
 ├── commands/         # Slash commands (git, plan, project)
-└── skills/           # 40+ project-local skills (work immediately!)
+└── skills/           # 40+ skills including launch-app, plan-next-stage
 
 templates/
-├── claude-md/        # CLAUDE.md templates and authoring guide
-└── prep-claude/      # Enterprise Claude Code config (agents, rules, hooks, plans, MCP)
+├── claude-md/        # 17 CLAUDE.md templates for different tech stacks
+├── stage-libraries/  # Stage progression references for 7 project archetypes
+└── prep-claude/      # Agent teams, rules, hooks, plans, MCP config
 
 docs/                 # Documentation and best practices
 scripts/              # install-skills.sh — copy skills to ~/.claude/skills/
@@ -95,6 +99,6 @@ Project-local skills in `.claude/skills/` work immediately — no install needed
 | Mobile | mobile-patterns, touch-interactions |
 | Conversion | conversion-audit, copywriting-guide, cta-optimizer, social-proof |
 | Enterprise | prep-claude |
-| Scaffolding | starter-project, enhance-project, find-skills |
+| Scaffolding | launch-app, starter-project, enhance-project, find-skills |
 | Framework | nextjs-optimization, electron-nextjs |
-| Planning | create-plan, plan-status, pm-review |
+| Planning | launch-app, plan-next-stage, create-plan, plan-status, pm-review |
