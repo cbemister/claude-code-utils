@@ -1,552 +1,339 @@
 # Getting Started
 
-Welcome to the Claude Code Shared Resources! This guide will help you get up and running quickly.
+Welcome to the Claude Code App Launchpad — a toolkit for launching professional apps with AI agent teams.
 
 ## What is This?
 
-A collection of shareable resources for Claude Code including:
-- **Sub-agents** - Specialized AI assistants for specific tasks
-- **Skills** - Reusable workflow automations
-- **Plan templates** - Structured feature planning
-- **CLAUDE.md templates** - Project documentation templates
-- **Best practices** - Guides for effective development
+You come here with an app idea. An agent scaffolds your project folder, generates staged build plans, configures an agent team, and hands everything off so the team can start building immediately. Two primary workflows:
+
+- **`/launch-app`** — Start a new app from scratch (idea to fully planned project)
+- **`/enhance-app`** — Add agents, teams, rules, and plans to an existing project
 
 ---
 
-## Quick Start (5 Minutes)
+## Launch a New App
 
-### 1. Choose Installation Method
+This is the primary workflow. Run it from the claude-code-utils directory:
 
-**Option A: Per-Project** (Recommended for teams)
-```bash
-cd your-project
-git clone https://github.com/username/claude-code-shared .claude
+```
+/launch-app
 ```
 
-**Option B: Central** (Recommended for personal use)
-```bash
-git clone https://github.com/username/claude-code-shared ~/.claude
+### What Happens
+
+1. **Describe your idea** — What you're building, who it's for, must-have features
+2. **Answer 2-3 questions** — Target users, key features, tech preferences
+3. **Review recommendation** — Claude recommends a tech stack and agent team
+4. **Project gets created** — Folder, CLAUDE.md, agents, rules, and all stage plans
+
+### What You Get
+
 ```
+your-app/
+  CLAUDE.md                    # Filled in for your stack (not placeholders)
+  .claude/
+    agents/                    # Your agent team (5-9 agents)
+    rules/                     # Architecture, API, security, testing standards
+    settings.json              # Safety hooks
+  plans/
+    README.md                  # Master plan with dependency graph
+    active/
+      stage-0-foundation.md    # Every stage fully detailed
+      stage-1-data-layer.md
+      stage-2-api.md
+      ...
+    templates/                 # Reusable plan templates
+```
+
+No starter code is generated — Stage 0 handles scaffolding. This keeps the project clean and lets the agent team make real decisions during implementation.
+
+### Supported Tech Stacks (17)
+
+| Stack | Best For |
+|-------|----------|
+| Next.js / T3 Stack | SaaS apps, dashboards, full-stack web |
+| SvelteKit | Performance-first web apps |
+| Nuxt 3 | Vue-based full-stack apps |
+| Express | REST APIs, microservices |
+| NestJS | Enterprise Node.js APIs |
+| FastAPI | Python APIs, ML services |
+| Django | Python web apps with ORM |
+| Rails | Ruby full-stack apps |
+| Go API | High-performance Go services |
+| React Native | Cross-platform mobile apps |
+| Flutter | Cross-platform mobile/desktop |
+| Electron | Desktop apps with web tech |
+| Rust CLI | High-performance CLI tools |
+| Node CLI | Developer tools, automation |
+| Astro | Content sites, landing pages |
+| Phaser Game | Browser games |
 
 ---
 
-### 2. Try Your First Agent
+## Build Stage by Stage
 
-```bash
-# Open Claude Code in your project
-claude
-
-# Ask Claude to explore the codebase
-> Explore the codebase structure and find all API endpoints
-```
-
-Claude will automatically delegate to the **codebase-explorer** agent (Haiku, fast, cheap).
-
----
-
-### 3. Create Your First Plan
-
-```bash
-# Create a plan for a new feature
-/create-plan user-authentication
-
-# Edit the plan
-# Fill in:
-# - Title
-# - Success criteria
-# - Tasks for each phase
-
-# Check status
-/plan-status user-authentication
-```
-
----
-
-### 4. Create a Worktree
-
-```bash
-# Create worktree + branch + plan (if not exists)
-/worktree-create user-authentication
-
-# Navigate to worktree
-cd worktrees/user-authentication
-
-# Start working
-# ... code ...
-
-# Sync with main when needed
-/worktree-sync
-```
-
----
-
-### 5. Use a Skill
+After `/launch-app` creates your project, open it and start building:
 
 ```bash
-# Organize your commits
-/organize-commits
-
-# Check plan status
-/plan-status
-
-# Create a PR
-/commit-push-pr
+cd ../your-app
 ```
 
----
-
-## Understanding the Resources
-
-### Sub-Agents
-
-Located in `.claude/agents/`, organized by purpose:
-
-**Explore Agents (Haiku - Fast & Cheap):**
-- `codebase-explorer` - Explore and analyze codebase structure
-- `dependency-analyzer` - Analyze dependency tree
-- `pattern-finder` - Find code patterns and conventions
-
-**Plan Agents (Opus - Complex Reasoning):**
-- `architecture-planner` - Design system architecture
-- `feature-planner` - Break down features into tasks
-- `refactor-planner` - Plan refactoring strategy
-- `ui-ux-designer` - Design unique, polished interfaces
-
-**Implement Agents (Sonnet - Balanced):**
-- `api-developer` - Implement REST API endpoints
-- `component-builder` - Build UI components
-- `test-writer` - Write comprehensive tests
-- `debugger` - Investigate and fix bugs
-
-**Usage:**
-Agents are invoked automatically when tasks match their description. You can also explicitly request them:
-```
-> Use the api-developer agent to create a POST /users endpoint
-```
-
----
-
-### Skills
-
-Located in `.claude/skills/`, invoke with `/skill-name`:
-
-**Git Worktree Workflow:**
-- `/worktree-create` - Create worktree + branch + plan
-- `/worktree-sync` - Sync worktree with main branch
-- `/worktree-cleanup` - Remove completed worktrees
-
-**Plan Management:**
-- `/create-plan` - Initialize feature plan
-- `/plan-status` - Show plan progress
-
-**Existing Skills (from agile-toolkit):**
-- `/organize-commits` - Organize staged changes into logical commits
-- `/ship` - Complete end-of-session workflow
-- `/track-progress` - Track development progress
-
-**Usage:**
-```bash
-/worktree-create new-feature
-/plan-status
-/organize-commits
-```
-
----
-
-### Plan Templates
-
-Located in `plans/templates/`:
-- `feature-plan.md` - Standard feature development
-- `bugfix-plan.md` - Bug investigation and resolution
-- `refactor-plan.md` - Code refactoring
-- `subplan-template.md` - Phase sub-plans
-
-**Usage:**
-```bash
-/create-plan user-auth
-# or
-/create-plan login-fix --template=bugfix
-```
-
----
-
-### CLAUDE.md Templates
-
-Located in `templates/claude-md/`:
-- `nextjs-app.md` - Next.js applications
-- `node-library.md` - npm packages
-- `minimal.md` - Simple projects
-
-**Usage:**
-```bash
-# Copy template to your project
-cp templates/claude-md/nextjs-app.md CLAUDE.md
-
-# Customize for your project
-# Edit CLAUDE.md and replace placeholders
-```
-
----
-
-## Common Workflows
-
-### Workflow 1: New Feature Development
+### 1. Open the First Stage
 
 ```bash
-# 1. Create plan and worktree
-/create-plan user-authentication
-/worktree-create user-authentication
+# Check the master plan
+cat plans/README.md
 
-# 2. Navigate and start work
-cd worktrees/user-authentication
-# ... code ...
-
-# 3. Track progress
-/plan-status user-authentication
-
-# 4. Sync periodically
-/worktree-sync
-
-# 5. Create PR when done
-git push -u origin feature/user-authentication
-gh pr create
-
-# 6. Clean up after merge
-cd ~/project
-/worktree-cleanup user-authentication
+# Open stage 0
+cat plans/active/stage-0-foundation.md
 ```
 
----
+Each stage plan contains:
+- **Why this stage** — Business context, not just technical deliverables
+- **Architecture** — How pieces fit together (with ASCII diagrams)
+- **Tasks** — Numbered (0A, 0B, 0C), each with assigned agent, file list, steps, tests, and verification
+- **Parallelization** — Which tasks can run simultaneously
+- **Deliverable verification** — Unit tests, integration tests, regression checks, checklist
 
-### Workflow 2: Bug Fix
+### 2. Work Through Tasks
+
+Each task follows this flow:
+
+```
+Steps → Test → Verify → Commit
+```
+
+Tasks are designed to be handed to agents. For example:
+
+```
+Use the backend-architect agent to implement Task 1A (database schema setup)
+```
+
+Or use the coordinator agent to delegate across the team:
+
+```
+Use the coordinator agent to work through Stage 1 tasks
+```
+
+### 3. Complete the Stage
+
+After all tasks pass their verification steps, run the **Stage Deliverable Verification** at the bottom of each stage plan:
+
+- All unit tests pass
+- Integration test works end-to-end
+- No regressions in the full test suite
+- Checklist items checked off
+
+### 4. Archive and Move On
 
 ```bash
-# 1. Create bug fix plan
-/create-plan login-failure --template=bugfix
+# Move completed stage to archive
+mv plans/active/stage-0-foundation.md plans/archive/
 
-# 2. Create worktree
-/worktree-create login-failure
+# Update the master plan README (mark stage as complete)
 
-# 3. Debug with agent
-cd worktrees/login-failure
-> Use the debugger agent to investigate the login failure
-
-# 4. Fix and test
-# ... fix code ...
-npm test
-
-# 5. Create PR
-/commit-push-pr
-
-# 6. Clean up
-cd ~/project
-/worktree-cleanup login-failure
+# Open the next stage
+cat plans/active/stage-1-data-layer.md
 ```
 
 ---
 
-### Workflow 3: Code Exploration
+## Refresh Plans for Codebase Drift
 
-```bash
-# Explore patterns
-> Find all API endpoints in the codebase
+As you build stages, the codebase may diverge from what was planned — different file paths, new patterns, architectural decisions. Use `/plan-next-stage` to update a future stage plan:
 
-# Analyze dependencies
-> Analyze the dependency tree and find unused dependencies
-
-# Find patterns
-> What patterns are used for error handling?
-
-# These automatically use fast Haiku agents
 ```
+/plan-next-stage stage-4-ui-shell
+```
+
+This:
+1. Reads the existing stage plan
+2. Scans what was actually built in prior stages
+3. Updates file paths, imports, and code snippets to match reality
+4. Adjusts for architectural decisions made during earlier stages
+5. Writes the updated plan back
+
+This is optional but useful when earlier stages introduced changes that affect later plans.
 
 ---
 
-### Workflow 4: Architecture Design
+## Add to an Existing Project
 
-```bash
-# Plan complex features
-> Design the architecture for a real-time notification system
+Already have a project? Use `/enhance-app` to add Claude Code configuration:
 
-# This uses Opus agent for complex reasoning
-# Returns detailed architecture recommendation
-
-# Create plan from recommendation
-/create-plan notification-system
-# Paste architecture details into plan
-
-# Create worktree and start
-/worktree-create notification-system
 ```
+/enhance-app
+```
+
+This scans your project and installs what's missing:
+- **Agent team** — Choose from 5 presets (enterprise, saas-product, internal-tool, game-interactive, marketing-site)
+- **Rules** — Architecture, API conventions, security policy, testing standards, code standards, environment variables
+- **Hooks** — Safety hooks for secrets, formatting, type checking
+- **Plan templates** — Stage plans, feature plans, bugfix plans, context handoffs
+- **CLAUDE.md** — Generated from a template matched to your stack
 
 ---
 
-### Workflow 5: UI Design
+## Agent Teams
 
-```bash
-# Design interface
-> Design the UI for the dashboard with a playful, modern aesthetic
+Every project gets a team of specialized agents. Each team has a **coordinator** that delegates work.
 
-# UI/UX designer agent (Opus) will:
-# 1. Ask about brand personality
-# 2. Present 2-3 visual directions
-# 3. Provide complete design system
+| Team | Agents | Best For |
+|------|--------|----------|
+| Enterprise Engineering | 8 (no designers) | APIs, data pipelines, complex backends |
+| SaaS Product | 9 (UI/UX + Conversion) | SaaS apps, dashboards, subscription products |
+| Internal Tool | 9 (UI/UX practical) | Admin panels, developer tools |
+| Game / Interactive | 7 (UI/UX + Mobile) | Games, creative tools, mobile apps |
+| Marketing Site | 7 (all 3 designers) | Landing pages, marketing sites |
 
-# Implement the design
-cd worktrees/dashboard-redesign
-# ... implement CSS ...
-```
+### Agent Roster
+
+| Agent | Model | Specialty |
+|-------|-------|-----------|
+| `coordinator` | Opus | Orchestrates task delegation and synthesis |
+| `backend-architect` | Sonnet | System design, database schema, API architecture |
+| `frontend-architect` | Sonnet | UI architecture, component design, state management |
+| `security-auditor` | Sonnet | Auth, input validation, dependency audits |
+| `test-engineer` | Sonnet | Test strategy, coverage, TDD |
+| `devops-engineer` | Sonnet | CI/CD, Docker, infrastructure |
+| `code-reviewer` | Sonnet | Code quality, patterns, best practices |
+| `performance-analyst` | Sonnet | Profiling, optimization, load testing |
+| `ui-ux-designer` | Opus | Design systems, visual design, brand-driven interfaces |
+| `mobile-designer` | Opus | Mobile-first UX, thumb zones, platform patterns |
+| `conversion-optimizer` | Opus | Conversion psychology, copywriting, CTAs |
+
+See [Team Selection Guide](../../templates/enhance-app/teams/README.md) for detailed comparison.
 
 ---
 
-## Model Selection Strategy
+## Key Skills Reference
 
-Choose the right model for cost/quality balance:
+### App Lifecycle
+| Skill | Purpose |
+|-------|---------|
+| `/launch-app` | New app: idea to fully planned project |
+| `/enhance-app` | Add agents, teams, rules to existing project |
+| `/plan-next-stage` | Refresh a stage plan for codebase drift |
 
-**Haiku ($0.25/$1.25 per M tokens) - Fast & Cheap:**
-- File searching
-- Code exploration
-- Pattern finding
-- High-volume tasks
+### Planning
+| Skill | Purpose |
+|-------|---------|
+| `/create-plan` | Initialize a feature plan |
+| `/plan-status` | Show plan progress |
+| `/pm-review` | Product manager assessment |
 
-**Sonnet ($3/$15 per M tokens) - Balanced:**
-- Implementation
-- Code reviews
-- Bug fixing
-- Most development work
+### Development
+| Skill | Purpose |
+|-------|---------|
+| `/worktree-create` | Create worktree + branch for parallel development |
+| `/worktree-sync` | Sync worktree with main branch |
+| `/worktree-cleanup` | Remove completed worktrees |
+| `/generate-tests` | Generate test suites for code |
+| `/verify-work` | Pre-commit quality and security check |
+| `/verify-performance` | Performance audit |
 
-**Opus ($15/$75 per M tokens) - Maximum Quality:**
-- Architecture design
-- Complex planning
-- UI/UX design
-- Critical decisions
+### Ship
+| Skill | Purpose |
+|-------|---------|
+| `/organize-commits` | Group changes into logical commits |
+| `/ship` | End-of-session workflow (verify, commit, track) |
+| `/summarize-session` | Capture context for next session |
 
-**Typical Distribution:**
-- 50-70% Haiku
-- 25-40% Sonnet
-- 5-10% Opus
+### Design (Opus agents)
+| Skill | Purpose |
+|-------|---------|
+| `/color-palette` | Professional color schemes |
+| `/typography-system` | Font pairings and hierarchy |
+| `/spacing-system` | Visual rhythm and spacing |
+| `/ui-transform` | Full UI analysis and transformation |
+| `/conversion-audit` | Conversion optimization review |
+
+---
+
+## Model Selection
+
+Agents use different models based on task complexity:
+
+| Model | Cost | Use For | Agents |
+|-------|------|---------|--------|
+| **Haiku** | Cheapest | Exploration, search, pattern finding | codebase-explorer, dependency-analyzer, pattern-finder |
+| **Sonnet** | Balanced | Implementation, reviews, testing | Most engineering agents |
+| **Opus** | Premium | Architecture, design, complex planning | coordinator, designers, project-planner |
+
+**Target distribution:** 50-70% Haiku, 25-40% Sonnet, 5-10% Opus
 
 See [Model Selection Guide](../best-practices/model-selection.md) for details.
 
 ---
 
-## Customization
+## Common Workflows
 
-### Add Your Own Agent
+### New Feature (During a Build)
 
-1. Copy template:
 ```bash
-cp templates/agents/agent-template.md .claude/agents/my-agent.md
+/worktree-create user-notifications
+cd worktrees/user-notifications
+
+# Work on the feature using agents
+# Use the backend-architect to design the notification system
+# Use the test-engineer to write tests
+
+/worktree-sync          # Sync with main periodically
+/ship                   # When done
+/worktree-cleanup user-notifications  # After merge
 ```
 
-2. Customize:
-- Set name and description
-- Choose model (haiku/sonnet/opus)
-- Select tools
-- Define workflow
+### Bug Fix
 
-3. Test:
-```
-> Use my-agent to [task description]
-```
-
-See [Agent Design Best Practices](../best-practices/agent-design.md).
-
----
-
-### Add Your Own Skill
-
-1. Copy template:
 ```bash
-cp templates/skills/skill-template.md .claude/skills/my-skill.md
+/create-plan login-fix --template=bugfix
+
+# Use the debugger agent to investigate
+# Fix and test
+/verify-work
+/ship
 ```
 
-2. Customize:
-- Set name and description
-- Write step-by-step instructions
-- Add examples
+### Compare Agent Teams
 
-3. Test:
 ```bash
-/my-skill argument
+/team-battle
+# Runs two teams on the same task in separate worktrees
+# Side-by-side comparison of results
 ```
-
-See [Skill Authoring Best Practices](../best-practices/skill-authoring.md).
-
----
-
-### Customize for Your Stack
-
-1. Copy CLAUDE.md template:
-```bash
-cp templates/claude-md/nextjs-app.md CLAUDE.md
-```
-
-2. Update for your project:
-- Replace placeholders
-- Add project-specific patterns
-- Document your conventions
-
-3. Use with Claude:
-```bash
-claude
-# Claude now understands your project structure
-```
-
----
-
-## Tips for Success
-
-### 1. Start Small
-
-Don't try to use everything at once:
-1. Week 1: Use agents (automatic)
-2. Week 2: Try worktrees for one feature
-3. Week 3: Add planning workflow
-4. Week 4: Create custom agent/skill
-
----
-
-### 2. Monitor Costs
-
-Track which agents you use most:
-- Haiku agents are cheap (use freely)
-- Sonnet agents are balanced (main workhorse)
-- Opus agents are expensive (use strategically)
-
----
-
-### 3. Keep Plans Updated
-
-Plans are most useful when current:
-- Update after each work session
-- Check off completed tasks
-- Add notes about decisions
-
----
-
-### 4. Clean Up Regularly
-
-Prevent clutter:
-- Remove completed worktrees weekly
-- Archive old plans
-- Delete unused branches
-
----
-
-### 5. Share with Team
-
-If using per-project installation:
-- Commit agents to git
-- Commit skills to git
-- Share plan templates
-- Document team conventions
 
 ---
 
 ## Troubleshooting
 
-### Agent Not Invoked
+### `/launch-app` Creates Empty Plans
 
-**Problem:** Claude doesn't delegate to your agent
+The project-planner agent needs access to the stage library files in `templates/stage-libraries/`. Make sure you're running `/launch-app` from the claude-code-utils directory.
 
-**Solution:**
-- Make description more specific
-- Use action verbs ("Analyze", "Build", "Design")
-- Match user's likely language
+### Agents Not Delegating
 
----
+Make sure `.claude/agents/` contains the agent files and `.claude/settings.json` exists in your project. Run `/enhance-app` to fix missing configuration.
 
-### Skill Not Found
+### Stage Plan References Wrong Paths
 
-**Problem:** `/my-skill` gives error
+Run `/plan-next-stage stage-N-title` to refresh the stage plan against the actual codebase.
 
-**Solution:**
+### Skills Not Found
+
+Skills require the `.claude/skills/` directory. Run the install script to make skills available globally:
+
 ```bash
-# Check file exists
-ls .claude/skills/my-skill.md
-
-# Check name matches filename
-grep "name:" .claude/skills/my-skill.md
+./scripts/install-skills.sh
 ```
 
----
-
-### Worktree Already Exists
-
-**Problem:** Can't create worktree
-
-**Solution:**
-```bash
-# Use existing worktree
-cd worktrees/feature-name
-
-# OR remove and recreate
-/worktree-cleanup feature-name
-/worktree-create feature-name
-```
-
----
-
-### High Costs
-
-**Problem:** Usage costs are too high
-
-**Solution:**
-- Use Haiku agents for exploration
-- Limit Opus use to critical tasks
-- Monitor agent usage
-- See [Model Selection Guide](../best-practices/model-selection.md)
+Restart Claude Code after installing new skills.
 
 ---
 
 ## Next Steps
 
-### Learn More
-
-- [Model Selection](../best-practices/model-selection.md) - Choose the right model
-- [Agent Design](../best-practices/agent-design.md) - Create custom agents
-- [Skill Authoring](../best-practices/skill-authoring.md) - Create custom skills
-- [Worktree Workflow](../best-practices/worktree-workflow.md) - Master git worktrees
-
----
-
-### Get Help
-
-- Read documentation in `docs/`
-- Check examples in `.claude/agents/` and `.claude/skills/`
-- Review templates in `templates/`
-
----
-
-### Contribute
-
-Have a useful agent or skill?
-1. Test thoroughly
-2. Document well
-3. Share with community
-
----
-
-## Summary
-
-**You now have:**
-- 12 specialized sub-agents
-- 12+ reusable skills
-- Planning system with templates
-- Git worktree workflow
-- CLAUDE.md templates
-
-**Start using:**
-1. Let agents work automatically
-2. Try `/worktree-create` for next feature
-3. Use `/plan-status` to track progress
-4. Explore with Haiku, implement with Sonnet, design with Opus
-
-**Remember:**
-- Agents are invoked automatically (or explicitly)
-- Skills are invoked with `/skill-name`
-- Plans track your progress
-- Worktrees enable parallel work
-
-Happy coding with Claude! 🎉
+- [Model Selection Guide](../best-practices/model-selection.md) — Optimize costs
+- [Agent Design](../best-practices/agent-design.md) — Create custom agents
+- [Skill Authoring](../best-practices/skill-authoring.md) — Create custom skills
+- [Worktree Workflow](../best-practices/worktree-workflow.md) — Parallel development
+- [Team Selection](../../templates/enhance-app/teams/README.md) — Compare agent teams
