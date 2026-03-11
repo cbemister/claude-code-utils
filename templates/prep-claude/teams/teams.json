@@ -1,0 +1,75 @@
+{
+  "default": "enterprise",
+  "teams": {
+    "enterprise": {
+      "name": "Enterprise Engineering",
+      "description": "Full engineering team. No design agents.",
+      "agents": [
+        "backend-architect",
+        "frontend-architect",
+        "security-auditor",
+        "test-engineer",
+        "devops-engineer",
+        "code-reviewer",
+        "performance-analyst"
+      ],
+      "best_for": "Complex apps, internal tools needing no design polish"
+    },
+    "saas-product": {
+      "name": "SaaS Product",
+      "description": "Engineering + UI/UX designer (14 skills) + conversion optimizer. For products where design quality drives revenue.",
+      "agents": [
+        "ui-ux-designer",
+        "conversion-optimizer",
+        "backend-architect",
+        "frontend-architect",
+        "security-auditor",
+        "test-engineer",
+        "code-reviewer",
+        "performance-analyst"
+      ],
+      "best_for": "SaaS products, B2B/B2C apps, dashboards, subscription products"
+    },
+    "internal-tool": {
+      "name": "Internal Tool",
+      "description": "Engineering-focused with practical design. UI/UX designer for usable interfaces without over-polishing.",
+      "agents": [
+        "ui-ux-designer",
+        "backend-architect",
+        "frontend-architect",
+        "security-auditor",
+        "test-engineer",
+        "devops-engineer",
+        "code-reviewer",
+        "performance-analyst"
+      ],
+      "best_for": "Admin panels, internal dashboards, developer tools, back-office apps"
+    },
+    "game-interactive": {
+      "name": "Game / Interactive",
+      "description": "UI/UX + mobile designer for rich interactions, touch zones, animations. For highly interactive frontends.",
+      "agents": [
+        "ui-ux-designer",
+        "mobile-designer",
+        "backend-architect",
+        "frontend-architect",
+        "test-engineer",
+        "performance-analyst"
+      ],
+      "best_for": "Games, interactive experiences, creative tools, canvas-heavy apps"
+    },
+    "marketing-site": {
+      "name": "Marketing Site",
+      "description": "Conversion-driven design. All 3 designers + frontend only. No backend.",
+      "agents": [
+        "ui-ux-designer",
+        "mobile-designer",
+        "conversion-optimizer",
+        "frontend-architect",
+        "performance-analyst",
+        "code-reviewer"
+      ],
+      "best_for": "Landing pages, marketing sites, pricing pages, product launches"
+    }
+  }
+}

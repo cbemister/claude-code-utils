@@ -1,11 +1,16 @@
-# Enterprise Agent Team
+# Agent Team Pool
 
-Eight specialized agents for enterprise-grade development. Each agent focuses on a specific domain and works within the project's established rules and conventions.
+Eleven specialized agents available for team-based selection. When you run `/prep-claude`, you choose a team preset — only the agents for that team are installed in your project.
 
-## Team Structure
+## Available Agents
 
 ### Coordinator (Opus)
-- **`coordinator`** — Orchestrates multi-agent tasks, decomposes complex features, resolves conflicts
+- **`coordinator`** — Orchestrates multi-agent tasks, decomposes complex features, resolves conflicts. Each team has its own coordinator variant with a tailored roster and workflow.
+
+### Design Agents (Opus)
+- **`ui-ux-designer`** — Visual design, design systems, brand-driven interfaces (14 design skills)
+- **`mobile-designer`** — Mobile-first UX, thumb zone ergonomics, platform-aware patterns (5 skills)
+- **`conversion-optimizer`** — Conversion psychology, copywriting, CTAs, social proof (5 skills)
 
 ### Architects (Sonnet)
 - **`backend-architect`** — API design, database schema, service layer, data validation
@@ -18,49 +23,29 @@ Eight specialized agents for enterprise-grade development. Each agent focuses on
 - **`code-reviewer`** — Quality, standards, correctness, maintainability
 - **`performance-analyst`** — Query optimization, bundle analysis, caching
 
-## When to Use Each Agent
+## Team Presets
 
-| Task | Agent |
-|---|---|
-| Complex feature spanning multiple layers | `coordinator` |
-| New API endpoint or database change | `backend-architect` |
-| New page, component, or UI flow | `frontend-architect` |
-| Any auth/permission change | `security-auditor` |
-| Adding test coverage | `test-engineer` |
-| CI/CD or deployment change | `devops-engineer` |
-| Pre-merge review | `code-reviewer` |
-| Slow queries or page load times | `performance-analyst` |
+Teams are defined in `teams/teams.json`. Each team includes a subset of agents from this pool plus a custom coordinator.
 
-## Recommended Workflows
+| Team | Agents | Design | Best For |
+|------|--------|--------|----------|
+| Enterprise Engineering | 8 | None | Complex apps, internal tools |
+| SaaS Product | 9 | UI/UX + Conversion | SaaS products, dashboards |
+| Internal Tool | 9 | UI/UX (practical) | Admin panels, developer tools |
+| Game / Interactive | 7 | UI/UX + Mobile | Games, creative tools |
+| Marketing Site | 7 | All 3 designers | Landing pages, marketing |
 
-### Feature Development
-```
-coordinator → backend-architect + frontend-architect (parallel)
-           → security-auditor (auth review if needed)
-           → test-engineer
-           → code-reviewer
-```
-
-### Bug Investigation
-```
-performance-analyst or code-reviewer → backend-architect or frontend-architect → test-engineer
-```
-
-### Pre-Launch Review
-```
-security-auditor + performance-analyst (parallel) → code-reviewer
-```
+See `teams/README.md` for detailed comparison and selection guide.
 
 ## Agent + Rules Integration
 
 All agents reference `.claude/rules/` files automatically. Keep rules updated as the project evolves — agents perform better with accurate, current documentation.
 
-## Customizing This Team
+## Adding Custom Agents
 
 Add agents for your specific domain needs:
 - `data-engineer` — ETL pipelines, analytics, data warehouse
 - `ml-engineer` — Model integration, inference optimization, data pipelines
-- `mobile-architect` — React Native, mobile-specific patterns
 - `accessibility-specialist` — Deep WCAG review beyond basics
 
-Follow the agent format in `templates/agents/agent-template.md`.
+Agent format: Markdown files with YAML frontmatter (name, description, tools, model, skills).
