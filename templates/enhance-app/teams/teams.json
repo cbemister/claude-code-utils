@@ -3,7 +3,7 @@
   "teams": {
     "enterprise": {
       "name": "Enterprise Engineering",
-      "description": "Full engineering team. No design agents.",
+      "description": "Full engineering team for complex backends and full-stack apps.",
       "agents": [
         "backend-architect",
         "frontend-architect",
@@ -13,14 +13,12 @@
         "code-reviewer",
         "performance-analyst"
       ],
-      "best_for": "Complex apps, internal tools needing no design polish"
+      "best_for": "Complex apps, APIs, data pipelines, internal tools"
     },
     "saas-product": {
       "name": "SaaS Product",
-      "description": "Engineering + UI/UX designer (14 skills) + conversion optimizer. For products where design quality drives revenue.",
+      "description": "Full-stack engineering optimized for product development. Security, testing, and performance built in.",
       "agents": [
-        "ui-ux-designer",
-        "conversion-optimizer",
         "backend-architect",
         "frontend-architect",
         "security-auditor",
@@ -32,9 +30,8 @@
     },
     "internal-tool": {
       "name": "Internal Tool",
-      "description": "Engineering-focused with practical design. UI/UX designer for usable interfaces without over-polishing.",
+      "description": "Full engineering with DevOps for internal deployment. Reliability and maintainability focused.",
       "agents": [
-        "ui-ux-designer",
         "backend-architect",
         "frontend-architect",
         "security-auditor",
@@ -47,10 +44,8 @@
     },
     "game-interactive": {
       "name": "Game / Interactive",
-      "description": "UI/UX + mobile designer for rich interactions, touch zones, animations. For highly interactive frontends.",
+      "description": "Engineering focused on performance-critical interactive experiences. 60fps target.",
       "agents": [
-        "ui-ux-designer",
-        "mobile-designer",
         "backend-architect",
         "frontend-architect",
         "test-engineer",
@@ -60,11 +55,8 @@
     },
     "marketing-site": {
       "name": "Marketing Site",
-      "description": "Conversion-driven design. All 3 designers + frontend only. No backend.",
+      "description": "Frontend-only engineering for static sites. Performance and code quality focused.",
       "agents": [
-        "ui-ux-designer",
-        "mobile-designer",
-        "conversion-optimizer",
         "frontend-architect",
         "performance-analyst",
         "code-reviewer"

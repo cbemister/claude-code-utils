@@ -2,16 +2,16 @@
 
 ## Team System
 
-The project provides a **pool of 11 agents** that are composed into **5 team presets**. Each preset is optimized for a different project type.
+The project provides a **pool of 11 agents** that are composed into **5 team presets**. All teams are build-focused — design agents are available as standalone skills but not included in team builds.
 
 ### Agent Pool
 
 | Agent | Model | Category |
 |---|---|---|
 | `coordinator` | Opus | Orchestration |
-| `ui-ux-designer` | Opus | Design — 14 skills (color, typography, spacing, components, etc.) |
-| `mobile-designer` | Opus | Design — 5 skills (mobile patterns, touch, accessibility) |
-| `conversion-optimizer` | Opus | Design — 5 skills (conversion, copywriting, CTAs, social proof) |
+| `ui-ux-designer` | Opus | Design — available via design skills, not in teams |
+| `mobile-designer` | Opus | Design — available via design skills, not in teams |
+| `conversion-optimizer` | Opus | Design — available via design skills, not in teams |
 | `backend-architect` | Sonnet | Architecture |
 | `frontend-architect` | Sonnet | Architecture |
 | `security-auditor` | Sonnet | Specialist |
@@ -22,13 +22,21 @@ The project provides a **pool of 11 agents** that are composed into **5 team pre
 
 ### Team Presets (`templates/enhance-app/teams/teams.json`)
 
-| Team | Design Agents | Engineering Agents | Use Case |
-|---|---|---|---|
-| Enterprise Engineering | None | All 7 | APIs, data pipelines, complex backends |
-| SaaS Product | UI/UX + Conversion | 6 (no devops) | Revenue-driven SaaS products |
-| Internal Tool | UI/UX (practical) | All 7 | Admin panels, developer tools |
-| Game / Interactive | UI/UX + Mobile | 4 (backend, frontend, test, perf) | Games, creative tools |
-| Marketing Site | All 3 designers | 3 (frontend, perf, review) | Landing pages, marketing |
+| Team | Engineering Agents | Use Case |
+|---|---|---|
+| Enterprise Engineering | All 7 | APIs, data pipelines, complex backends |
+| SaaS Product | 6 (no devops) | SaaS products on managed platforms |
+| Internal Tool | All 7 | Admin panels, developer tools |
+| Game / Interactive | 4 (backend, frontend, test, perf) | Games, creative tools |
+| Marketing Site | 3 (frontend, perf, review) | Landing pages, marketing |
+
+### Design After Build
+
+Design agents are not included in team builds. Apply design as a separate pass using skills:
+- `/style <theme>` — Apply themed aesthetic
+- `/color-palette` — Refine colors
+- `/typography-system` — Font hierarchy
+- `/enhance-design` — Full design pass (chains all design skills)
 
 ### Team Battle (`/team-battle`)
 
