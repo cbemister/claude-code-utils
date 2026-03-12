@@ -120,6 +120,8 @@ Each skill must be a directory with `SKILL.md` inside:
 ### Project Scaffolding
 - **launch-app** - Launch a new professional app from idea to staged build plan
   - Gathers requirements, recommends tech stack and agent team, creates project folder with full Claude Code config, generates CLAUDE.md and all stage plans — ready for the team to build
+- **design-app** - Generate multiple design concepts for an app, compare side-by-side, implement the chosen direction
+  - Creates detailed design documents (color palette, typography, spacing, components) + interactive HTML mockups for each concept, then implements the selected design into the codebase
 - **starter-project** - Generate starter projects with agents/skills pre-configured
   - Categories: SaaS app, API service, component library, CLI tool, e-commerce, browser game
 - **enhance-project** - Add Claude Code resources and improvements to existing projects

@@ -48,6 +48,7 @@ Skills are workflow automations invoked with `/skill-name`. Each skill is a dire
 | Skill | Purpose |
 |---|---|
 | `enhance-app` | Full project setup (agents, rules, hooks, plans, MCP) |
+| `design-app` | Generate multiple design concepts, compare, and implement chosen direction |
 | `starter-project` | Generate new projects with Claude Code config |
 | `enhance-project` | Add Claude Code features to existing projects |
 | `find-skills` | Discover and install skills |
