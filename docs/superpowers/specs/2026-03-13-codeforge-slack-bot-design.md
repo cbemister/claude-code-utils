@@ -77,8 +77,8 @@ Single slash command with subcommand routing:
 | Command | Action | Response Type |
 |---------|--------|---------------|
 | `/factory launch <idea>` | Spawn `claude --print -p "/factory launch <idea>"` in claude-code-utils dir | Thread with progress |
-| `/factory build <project>` | Spawn `build-app-runner.sh <project-path>` | Thread with per-stage updates |
-| `/factory evolve <project>` | Spawn `evolution-runner.sh <project-path>` | Thread with per-cycle updates |
+| `/factory build <project>` | Resolve path via registry, spawn `build-app-runner.sh <resolved-path>` | Thread with per-stage updates |
+| `/factory evolve <project>` | Resolve path via registry, spawn `evolution-runner.sh <resolved-path>` | Thread with per-cycle updates |
 | `/factory status [project]` | Read state files, format summary | Ephemeral message |
 | `/factory list` | Read `factory/registry.json` | Ephemeral message |
 
@@ -88,16 +88,38 @@ Attached to notification messages, eliminating the need for CLI commands:
 
 | Context | Buttons | Action |
 |---------|---------|--------|
-| Evolution gate (preview deployed) | Approve / Reject | Write to `factory/evolution-state.json`, re-spawn evolution-runner |
+| Evolution gate (preview deployed) | Approve / Reject | Write gate decision to state, spawn fresh evolution-runner (see Gate Mutation below) |
 | Build failed | Resume / View Error | Run `/build-app resume` via runner, or post error detail |
 | Stage complete | View Preview | Link button to preview URL (no backend action) |
 | Build complete | Start Evolution | Trigger `/factory evolve` for the project |
+
+### Gate State Mutation
+
+When the user clicks **Approve** or **Reject**, the bot writes directly to `factory/evolution-state.json`:
+
+**Approve:**
+```json
+{ "status": "approved" }
+```
+This causes the evolution runner (on next spawn) to invoke `/evaluate-product` — starting a new cycle with a fresh evaluation of the now-improved product. This is correct: approval merges the preview, then the next cycle evaluates the merged result.
+
+**Reject:**
+```json
+{ "status": "rejected" }
+```
+This causes the evolution runner to invoke `/generate-hypotheses` — discarding the current approach and generating new optimization proposals.
+
+The bot uses `JSON.parse()` → mutate `status` field → `JSON.stringify()` → `fs.writeFileSync()`. No other fields are modified.
+
+After writing, the bot spawns a **fresh** `evolution-runner.sh` process (the old one already exited at the human gate with code 0).
+
+**Double-click prevention:** On first button click, the bot immediately calls `ack()` and updates the Slack message to replace the Approve/Reject buttons with a confirmation text (e.g., "Approved by @user"). This prevents duplicate payload delivery if the user clicks twice. The state file write happens after the message update.
 
 ## Threaded Progress Updates
 
 Each `/factory build` or `/factory evolve` creates a parent message. Progress is posted as thread replies.
 
-**Mechanism:** `fs.watch()` on state files with 1-second debounce. On change, read new state, diff against last snapshot, post only what changed.
+**Mechanism:** `fs.watchFile()` (polling-based, 2-second interval) on state files. `fs.watch()` is unreliable on Windows for files written by child shell processes — `fs.watchFile()` uses stat polling, which is slower but works consistently. On change, read new state, diff against last snapshot, post only what changed.
 
 | State change | Thread message |
 |-------------|----------------|
@@ -128,16 +150,20 @@ interface ManagedProcess {
 **Rules:**
 - One active process per project (can't build and evolve the same project simultaneously)
 - Multiple projects can run in parallel (build project A while evolving project B)
-- If the bot restarts, it reads state files to detect orphaned processes and posts catch-up summary
 - Runner scripts handle their own restartability — bot just re-spawns them
+- All runner spawns include `--skip-permissions` since the bot is an unattended execution path
 
-**`launch` is special:** Spawns `claude --print -p "/factory launch <idea>"` with `--dangerously-skip-permissions` since it runs non-interactively.
+**On bot restart:** The in-memory process map is lost. The bot does NOT attempt to detect or re-adopt live runner processes. Instead, on startup it scans `factory/registry.json` and reads each project's state files. If any project has status `in_progress` or `building`, the bot posts a catch-up message: "Bot restarted. Project X was in progress — run `/factory build X` to resume." The runner script may still be alive (it's a detached child), but the bot cannot track it. If the user re-triggers, the runner's state file and no-progress detection will handle the conflict safely.
+
+**`launch` is special:** Spawns `claude --print -p "/factory launch <idea>"` with `--dangerously-skip-permissions` since it runs non-interactively. There is no state file for launch — the bot streams stdout to the Slack thread as periodic updates (batched every 5 seconds to avoid rate limits).
+
+**Project name resolution:** All commands that accept `<project>` resolve the name to a filesystem path by reading `factory/registry.json` in `FACTORY_ROOT` and matching the `name` field. If no match, the bot responds with "Project not found" and lists registered projects. This mirrors the resolution logic in `/factory` skill Step 2.
 
 ## Notification Coexistence
 
 The runner scripts currently send their own Slack notifications via webhook/curl. With the bot:
 
-- **Bot running** → bot sets `SLACK_WEBHOOK_URL=""` when spawning runners, handles all Slack communication (rich, interactive, threaded)
+- **Bot running** → bot spawns runners with `SLACK_WEBHOOK_URL=""` in the child process env AND does not pass `--slack-webhook` as a CLI argument. This disables the runner's own notification system. The bot handles all Slack communication (rich, interactive, threaded).
 - **Bot not running** → runner scripts use webhooks directly (basic, one-way, works as before)
 - **Zero changes** to the runner scripts themselves
 
@@ -157,7 +183,7 @@ Bot config via `scripts/factory-bot/.env`:
 ```bash
 SLACK_BOT_TOKEN=xoxb-...          # Bot User OAuth Token
 SLACK_APP_TOKEN=xapp-...          # App-Level Token (Socket Mode)
-SLACK_SIGNING_SECRET=...          # Request verification
+SLACK_SIGNING_SECRET=...          # Not required for Socket Mode, but kept for future HTTP mode
 FACTORY_ROOT=/c/Users/cbemister/Development/claude-code-utils
 SLACK_CHANNEL=#codeforge          # Default notification channel
 ```
@@ -192,6 +218,13 @@ pm2 start scripts/factory-bot/dist/index.js --name codeforge
 }
 ```
 
+## Channel Behavior
+
+- **Slash commands** respond in the channel where they were typed (Slack default)
+- **Progress threads** are posted to the channel where the command originated
+- **`SLACK_CHANNEL`** env var is only used for bot-initiated messages (e.g., startup catch-up after restart)
+- Button callbacks post to the same thread they belong to
+
 ## Error Handling
 
 | Scenario | Handling |
@@ -203,6 +236,7 @@ pm2 start scripts/factory-bot/dist/index.js --name codeforge
 | Unknown project | Bot reads registry, posts "not found — did you mean X?" |
 | Machine sleeps/wakes | Runner resumes from state file on next invocation. Bot posts "resumed after pause" |
 | Slack disconnects | Bolt auto-reconnects Socket Mode. Missed state changes caught on reconnect via file read |
+| Launch process fails | Bot detects non-zero exit, posts "Launch failed" with last stdout chunk to thread. Thread parent updated to "Failed" |
 
 ## Testing Plan
 
