@@ -6,6 +6,11 @@ Skills are workflow automations invoked with `/skill-name`. Each skill is a dire
 
 ## Skill Categories
 
+### Autonomous Build
+| Skill | Purpose |
+|---|---|
+| `build-app` | Autonomously build app from staged plans (loops across context windows, Slack notifications) |
+
 ### Workflow Skills
 | Skill | Purpose |
 |---|---|

@@ -117,6 +117,14 @@ Each skill must be a directory with `SKILL.md` inside:
 - **nextjs-optimization** - Server Components, loading states, image optimization, caching
 - **electron-nextjs** - Add Electron to an existing Next.js project for desktop apps
 
+### Autonomous Building
+- **build-app** - Autonomously build an app from staged plans created by `/launch-app`
+  - Reads stage plans, executes tasks in dependency order, runs verification, commits each task
+  - Tracks progress in `plans/build-state.json` — resume anytime after interruptions or rate limits
+  - Slack notifications for stage start/complete/failed/build complete
+  - Companion `build-app-runner.sh` re-invokes across context windows for fully unattended builds
+  - Run locally, via GitHub Actions, or Docker — all with Slack updates
+
 ### Project Scaffolding
 - **launch-app** - Launch a new professional app from idea to staged build plan
   - Gathers requirements, recommends tech stack and agent team, creates project folder with full Claude Code config, generates CLAUDE.md and all stage plans — ready for the team to build
@@ -145,6 +153,7 @@ Skills are invoked with `/skill-name`:
 ## Skill Chaining
 
 Some skills automatically invoke others in sequence or parallel:
+- `/build-app` → `/plan-next-stage` → build tasks → `/verify-work` → commit (per stage)
 - `/ship` → `/verify-work` → `/organize-commits` → `/track-progress`
 - `/enhance-design` → 4 phases with parallel execution (see below)
 - `/enhance-project` → Analysis agents run in parallel

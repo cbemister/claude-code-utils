@@ -99,6 +99,7 @@ Project-local skills in `.claude/skills/` work immediately — no install needed
 | Mobile | mobile-patterns, touch-interactions |
 | Conversion | conversion-audit, copywriting-guide, cta-optimizer, social-proof |
 | Enterprise | enhance-app |
+| Autonomous Build | build-app |
 | Scaffolding | launch-app, design-app, starter-project, enhance-project, find-skills |
 | Framework | nextjs-optimization, electron-nextjs |
 | Planning | launch-app, plan-next-stage, create-plan, plan-status, pm-review |
