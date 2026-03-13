@@ -1,0 +1,94 @@
+name: Evolution Cycle
+
+on:
+  workflow_dispatch:
+    inputs:
+      project_dir:
+        description: 'Path to project directory (relative to repo root)'
+        required: true
+        type: string
+      model:
+        description: 'Model to use (sonnet, opus, haiku)'
+        default: 'sonnet'
+        type: choice
+        options:
+          - sonnet
+          - opus
+          - haiku
+      max_cycles:
+        description: 'Maximum evolution cycles to run'
+        default: '1'
+        type: string
+      max_iterations:
+        description: 'Maximum loop iterations per cycle'
+        default: '20'
+        type: string
+      budget_per_iter:
+        description: 'Max USD per claude invocation'
+        default: '5'
+        type: string
+      total_budget:
+        description: 'Max total USD budget'
+        default: '100'
+        type: string
+      auto_retry:
+        description: 'Auto-retry on rate limits'
+        default: false
+        type: boolean
+
+jobs:
+  evolve:
+    runs-on: ubuntu-latest
+    timeout-minutes: 360  # 6 hours max
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Claude Code CLI
+        run: npm install -g @anthropic-ai/claude-code
+
+      - name: Run evolution cycle
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          EVOLUTION_MODEL: ${{ inputs.model }}
+          EVOLUTION_MAX_CYCLES: ${{ inputs.max_cycles }}
+          EVOLUTION_MAX_ITERATIONS: ${{ inputs.max_iterations }}
+          EVOLUTION_BUDGET_PER_ITER: ${{ inputs.budget_per_iter }}
+          EVOLUTION_TOTAL_BUDGET: ${{ inputs.total_budget }}
+        run: |
+          chmod +x ./scripts/evolution-runner.sh
+          ./scripts/evolution-runner.sh \
+            --skip-permissions \
+            ${{ inputs.auto_retry && '--auto-retry' || '' }} \
+            "${{ inputs.project_dir }}"
+
+      - name: Upload evolution state
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: evolution-state
+          path: |
+            ${{ inputs.project_dir }}/factory/evolution-state.json
+            ${{ inputs.project_dir }}/factory/evaluations/
+            ${{ inputs.project_dir }}/factory/hypotheses/
+          if-no-files-found: ignore
+
+      - name: Commit and push changes
+        if: success()
+        run: |
+          cd "${{ inputs.project_dir }}"
+          git config user.name "evolution[bot]"
+          git config user.email "evolution[bot]@users.noreply.github.com"
+          git add -A
+          # Only commit if there are changes
+          git diff --staged --quiet || git commit -m "feat(evolution): autonomous evolution cycle
+
+          Co-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>"
+          git push
