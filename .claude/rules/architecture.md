@@ -22,9 +22,17 @@ claude-code-utils/
 │       ├── teams/            # 5 team presets + team battle
 │       ├── modules/          # CLAUDE.md snippets
 │       └── plans/templates/  # Plan templates
-├── plans/templates/      # Plan templates (feature, bugfix, refactor, stage)
+├── factory/              # Software factory project registry (created at runtime)
+│   └── registry.json     # Tracks all factory-managed projects
+├── plans/templates/      # Plan templates (feature, bugfix, refactor, stage, optimization)
 ├── docs/                 # Documentation and best practices
-├── scripts/              # Installation scripts
+├── scripts/              # Installation and runner scripts
+│   ├── install-skills.sh
+│   ├── build-app-runner.sh
+│   └── evolution-runner.sh
+├── .github/workflows/    # CI/CD workflows
+│   ├── build-app.yml
+│   └── evolution.yml
 └── CLAUDE.md             # Project instructions
 ```
 
@@ -37,6 +45,7 @@ claude-code-utils/
 3. **Agent teams** — Curated groups of agents optimized for project types (defined in `teams/teams.json`)
 4. **Plan templates** — Structured planning documents for features, bugs, refactors, and staged builds
 5. **Rules** — Project knowledge files auto-loaded by Claude (`.claude/rules/*.md`)
+6. **Evolution state** — JSON/markdown files tracking product evaluation scores, optimization hypotheses, and evolution cycles (`factory/` directory in target projects)
 
 ### Two-Level Agent System
 

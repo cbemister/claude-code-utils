@@ -64,6 +64,43 @@ One-off tasks:
 - Plan templates (feature, bugfix, refactor, stage plan)
 - `enhance-app/` — Full project setup with agents, rules, hooks, and team presets
 
+## VS Code: Install All Skills Easily
+
+You can now install all skills with a single click using VS Code Tasks:
+
+1. Open the Command Palette (`Ctrl+Shift+P` or `Cmd+Shift+P`)
+2. Type `Run Task` and select it
+3. Choose **Install Claude Code Skills (Windows)** or **Install Claude Code Skills (Unix)**
+
+This will run the install script and set up all skills for you.
+
+> **Note:** The VS Code task is defined in `.vscode/tasks.json`. You can edit this file to customize the install command or add more tasks for your workflow.
+
+> **Sample `.vscode/tasks.json` for Install Skills:**
+```json
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Install Claude Code Skills (Windows)",
+      "type": "shell",
+      "command": "./scripts/install-skills.bat",
+      "group": { "kind": "build", "isDefault": false },
+      "presentation": { "reveal": "always" },
+      "problemMatcher": []
+    },
+    {
+      "label": "Install Claude Code Skills (Unix)",
+      "type": "shell",
+      "command": "./scripts/install-skills.sh",
+      "group": { "kind": "build", "isDefault": false },
+      "presentation": { "reveal": "always" },
+      "problemMatcher": []
+    }
+  ]
+}
+```
+
 ## Model Selection Guide
 
 | Model | Use When |

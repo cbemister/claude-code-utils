@@ -117,6 +117,14 @@ Each skill must be a directory with `SKILL.md` inside:
 - **nextjs-optimization** - Server Components, loading states, image optimization, caching
 - **electron-nextjs** - Add Electron to an existing Next.js project for desktop apps
 
+### Autonomous Building
+- **build-app** - Autonomously build an app from staged plans created by `/launch-app`
+  - Reads stage plans, executes tasks in dependency order, runs verification, commits each task
+  - Tracks progress in `plans/build-state.json` — resume anytime after interruptions or rate limits
+  - Slack notifications for stage start/complete/failed/build complete
+  - Companion `build-app-runner.sh` re-invokes across context windows for fully unattended builds
+  - Run locally, via GitHub Actions, or Docker — all with Slack updates
+
 ### Project Scaffolding
 - **launch-app** - Launch a new professional app from idea to staged build plan
   - Gathers requirements, recommends tech stack and agent team, creates project folder with full Claude Code config, generates CLAUDE.md and all stage plans — ready for the team to build
@@ -126,6 +134,31 @@ Each skill must be a directory with `SKILL.md` inside:
   - Categories: SaaS app, API service, component library, CLI tool, e-commerce, browser game
 - **enhance-project** - Add Claude Code resources and improvements to existing projects
 - **find-skills** - Discover and install skills for specific tasks
+
+### Evolution & Software Factory
+- **factory** - Top-level orchestrator for the software factory lifecycle
+  - Launch new products, build them, evolve for revenue, check factory-wide status
+  - Manages project registry across all factory-managed products
+  - Subcommands: `launch`, `build`, `evolve`, `status`, `list`
+- **evaluate-product** - Composite product evaluation (0-100 score)
+  - Chains conversion-audit, critique-value, verify-performance, accessibility-audit, pm-review, verify-work
+  - Adds revenue path analysis and AI-simulated user journey walkthroughs
+  - 7 weighted dimensions: conversion, revenue, UX, performance, accessibility, completeness, code quality
+- **generate-hypotheses** - Generate ranked optimization proposals from evaluation data
+  - Analyzes scores and user journey drop-off points
+  - Batches top 2-3 hypotheses per evolution cycle
+  - Deduplicates against prior attempts and rejected proposals
+- **plan-optimization** - Convert hypotheses into executable stage plans
+  - Outputs standard stage plans that `/build-app` executes unchanged
+  - Integrates with `/plan-next-stage` for codebase refresh
+- **preview-deploy** - Create preview deployment for human review
+  - Pushes preview branch → Vercel/Netlify auto-deploys
+  - Pre-flight verification via `/verify-work` and `/verify-performance`
+- **evolution-gate** - Human approval/rejection gate
+  - `approve` merges to production, tags release, advances cycle
+  - `reject` records reason, discards preview, retries with next hypotheses
+- Companion `evolution-runner.sh` drives the loop unattended across context windows
+- GitHub Actions workflow for cloud-based evolution cycles
 
 ### Enterprise
 - **enhance-app** - Enhance any project with Claude Code config (new or existing)
@@ -145,9 +178,11 @@ Skills are invoked with `/skill-name`:
 ## Skill Chaining
 
 Some skills automatically invoke others in sequence or parallel:
+- `/build-app` → `/plan-next-stage` → build tasks → `/verify-work` → commit (per stage)
 - `/ship` → `/verify-work` → `/organize-commits` → `/track-progress`
 - `/enhance-design` → 4 phases with parallel execution (see below)
 - `/enhance-project` → Analysis agents run in parallel
+- `/factory evolve` → `/evaluate-product` → `/generate-hypotheses` → `/plan-optimization` → `/build-app` → `/preview-deploy` → `/evolution-gate` (evolution loop)
 
 ### Parallel Execution
 
