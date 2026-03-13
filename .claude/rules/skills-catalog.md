@@ -11,6 +11,16 @@ Skills are workflow automations invoked with `/skill-name`. Each skill is a dire
 |---|---|
 | `build-app` | Autonomously build app from staged plans (loops across context windows, Slack notifications) |
 
+### Evolution & Software Factory
+| Skill | Purpose |
+|---|---|
+| `factory` | Top-level orchestrator — launch, build, evolve, status, list. Manages project registry |
+| `evaluate-product` | Composite 0-100 score across 7 dimensions (conversion, revenue, UX, perf, a11y, completeness, code quality) |
+| `generate-hypotheses` | Ranked optimization proposals from evaluation data, batched 2-3 per cycle |
+| `plan-optimization` | Convert hypotheses into standard stage plans for `/build-app` |
+| `preview-deploy` | Create preview branch → Vercel/Netlify auto-deploys for human review |
+| `evolution-gate` | Human approve/reject gate (merge to production or discard and retry) |
+
 ### Workflow Skills
 | Skill | Purpose |
 |---|---|

@@ -1,7 +1,9 @@
-# Claude Code App Launchpad
+# Claude Code Software Factory
 
 ## Overview
-This repository is a launchpad for building professional apps with agent teams. Run `/launch-app` to go from an idea to a fully planned project with staged build plans, agent team assignments, and parallelization maps — ready for the team to build stage by stage.
+This repository is a software factory that builds professional apps and evolves them for revenue. Run `/factory launch` to go from an idea to a deployed product, then `/factory evolve` to continuously optimize it with AI-driven evaluation, hypothesis generation, and autonomous implementation.
+
+The factory pipeline: **idea → plan → build → evaluate → hypothesize → optimize → preview → human approve → deploy → repeat**.
 
 Supports 17 tech stacks (Next.js, SvelteKit, Nuxt, Express, NestJS, FastAPI, Django, Rails, Go, React Native, Flutter, Electron, Rust CLI, Node CLI, Astro, Phaser, T3) and 5 agent team presets.
 
@@ -22,7 +24,8 @@ templates/
 └── enhance-app/      # Agent teams, rules, hooks, plans, MCP config
 
 docs/                 # Documentation and best practices
-scripts/              # install-skills.sh — copy skills to ~/.claude/skills/
+scripts/              # install-skills.sh, build-app-runner.sh, evolution-runner.sh
+.github/workflows/    # build-app.yml, evolution.yml
 ```
 
 ## Key Conventions
@@ -93,6 +96,7 @@ Project-local skills in `.claude/skills/` work immediately — no install needed
 
 | Category | Skills |
 |----------|--------|
+| Evolution | factory, evaluate-product, generate-hypotheses, plan-optimization, preview-deploy, evolution-gate |
 | Workflow | ship, verify-work, verify-performance, organize-commits, summarize-session |
 | Design System | color-palette, typography-system, spacing-system, layout-asymmetry, micro-interactions, component-states, component-polish, style, ui-transform |
 | Accessibility | accessibility-audit, mobile-accessibility, critique-value |

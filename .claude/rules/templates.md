@@ -37,6 +37,7 @@ Contains:
 | `bugfix-plan.md` | Bug investigation and fix with 3 phases |
 | `refactor-plan.md` | Code refactoring with 4 phases |
 | `stage-plan.md` | Build stage with agent teams, task parallelization, tiered verification |
+| `optimization-plan.md` | Evolution optimization with hypothesis reference, score prediction, rollback |
 | `subplan-template.md` | Phase sub-plan within a larger plan |
 
 ### Stage Plan Template (`plans/templates/stage-plan.md`)

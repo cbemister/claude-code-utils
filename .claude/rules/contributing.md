@@ -33,6 +33,16 @@
 3. Update `templates/enhance-app/teams/README.md`
 4. Update `.claude/rules/agent-teams.md` in this project
 
+## Adding an Evolution Skill
+
+Evolution skills follow the same format as other skills but must additionally:
+1. Read/write `factory/evolution-state.json` using the established state schema
+2. Be non-interactive (never ask questions — read state and act)
+3. Support resumption (check state on startup, continue from where left off)
+4. Use the Slack notification pattern with temp files for Windows Git Bash compatibility
+5. Update relevant rule files: `skills-catalog.md`, `architecture.md`
+6. Add to the Skills README under "Evolution & Software Factory"
+
 ## Commit Conventions
 
 - `feat` — New agent, skill, template, or team
