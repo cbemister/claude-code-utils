@@ -22,17 +22,10 @@ claude-code-utils/
 │       ├── teams/            # 5 team presets + team battle
 │       ├── modules/          # CLAUDE.md snippets
 │       └── plans/templates/  # Plan templates
-├── factory/              # Software factory project registry (created at runtime)
-│   └── registry.json     # Tracks all factory-managed projects
 ├── plans/templates/      # Plan templates (feature, bugfix, refactor, stage, optimization)
 ├── docs/                 # Documentation and best practices
-├── scripts/              # Installation and runner scripts
-│   ├── install-skills.sh
-│   ├── build-app-runner.sh
-│   └── evolution-runner.sh
-├── .github/workflows/    # CI/CD workflows
-│   ├── build-app.yml
-│   └── evolution.yml
+├── scripts/              # Installation scripts
+│   └── install-skills.sh
 └── CLAUDE.md             # Project instructions
 ```
 
@@ -46,6 +39,10 @@ claude-code-utils/
 4. **Plan templates** — Structured planning documents for features, bugs, refactors, and staged builds
 5. **Rules** — Project knowledge files auto-loaded by Claude (`.claude/rules/*.md`)
 6. **Evolution state** — JSON/markdown files tracking product evaluation scores, optimization hypotheses, and evolution cycles (`factory/` directory in target projects)
+
+### CodeForge Bot (Separate Repo)
+
+The Slack bot (CodeForge Bot) has been split into its own repository at `C:\Users\chris\Code-Projects\CodeForge`. It provides a conversational Slack interface to the software factory. The bot invokes Claude CLI with factory skills — no code-level dependency on this repo.
 
 ### Two-Level Agent System
 

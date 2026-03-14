@@ -24,8 +24,7 @@ templates/
 └── enhance-app/      # Agent teams, rules, hooks, plans, MCP config
 
 docs/                 # Documentation and best practices
-scripts/              # install-skills.sh, build-app-runner.sh, evolution-runner.sh
-.github/workflows/    # build-app.yml, evolution.yml
+scripts/              # install-skills.sh
 ```
 
 ## Key Conventions
