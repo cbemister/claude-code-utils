@@ -1,0 +1,127 @@
+# ============================================
+# .claudeignore — Example Best Practices
+# ============================================
+# Works like .gitignore syntax. Prevents Claude
+# from reading matched files during sessions.
+# Place at your project root as `.claudeignore`.
+# ============================================
+
+# ---------------------------
+# Secrets & credentials
+# ---------------------------
+.env
+.env.*
+*.pem
+*.key
+*.p12
+*.pfx
+credentials.json
+secrets/
+**/service-account*.json
+
+# ---------------------------
+# Dependencies
+# ---------------------------
+node_modules/
+vendor/
+.venv/
+venv/
+__pycache__/
+.pip/
+bower_components/
+
+# ---------------------------
+# Build output & artifacts
+# ---------------------------
+dist/
+build/
+out/
+.next/
+.nuxt/
+.svelte-kit/
+.vercel/
+.netlify/
+*.min.js
+*.min.css
+*.bundle.js
+*.chunk.js
+*.map
+
+# ---------------------------
+# Lock files (large, low signal)
+# ---------------------------
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+Cargo.lock
+poetry.lock
+Gemfile.lock
+composer.lock
+
+# ---------------------------
+# Test & coverage reports
+# ---------------------------
+coverage/
+.nyc_output/
+htmlcov/
+*.lcov
+test-results/
+playwright-report/
+
+# ---------------------------
+# IDE & editor files
+# ---------------------------
+.idea/
+.vscode/settings.json
+*.swp
+*.swo
+*~
+
+# ---------------------------
+# OS files
+# ---------------------------
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ---------------------------
+# Logs
+# ---------------------------
+*.log
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# ---------------------------
+# Binary & media assets
+# ---------------------------
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.ico
+*.svg
+*.mp4
+*.mp3
+*.woff
+*.woff2
+*.ttf
+*.eot
+*.zip
+*.tar.gz
+*.pdf
+
+# ---------------------------
+# Database files
+# ---------------------------
+*.sqlite
+*.sqlite3
+*.db
+
+# ---------------------------
+# Docker volumes & local data
+# ---------------------------
+.docker/
+docker-data/
+*.sql.gz
