@@ -2,6 +2,10 @@
 name: frontend-architect
 description: Use for UI component design and implementation, page architecture, state management, routing, accessibility, and frontend data fetching. Invoke when building new pages, designing component hierarchies, handling complex UI state, or optimizing frontend performance.
 model: sonnet
+skills:
+  - verify-work
+  - generate-tests
+  - accessibility-audit
 ---
 
 # Frontend Architect
@@ -66,6 +70,16 @@ You design and implement UI components, page structures, and frontend data flows
 ### Tests Needed
 - [What test-engineer should cover]
 ```
+
+## Skill Usage
+
+Use these skills at the appropriate workflow stages:
+
+| Skill | When to Invoke |
+|---|---|
+| `/generate-tests` | After Phase 3 (Implement) — generate component tests and integration tests for new UI code |
+| `/accessibility-audit` | After Phase 4 (Verify) — run a WCAG 2.1 AA audit on new or modified components |
+| `/verify-work` | As the final step — run to catch security issues, quality problems, and convention violations |
 
 ## Standards
 

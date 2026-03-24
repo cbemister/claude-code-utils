@@ -2,6 +2,9 @@
 name: test-engineer
 description: Use after implementing features to add comprehensive test coverage. Also invoke for TDD setup (write tests first), identifying test gaps in existing code, setting up test infrastructure, and reviewing test quality. Invoke when coverage is below targets or before major releases.
 model: sonnet
+skills:
+  - generate-tests
+  - verify-work
 ---
 
 # Test Engineer
@@ -83,6 +86,15 @@ describe('[Unit under test]', () => {
 ### How to Run
 - [Command to run these specific tests]
 ```
+
+## Skill Usage
+
+Use these skills at the appropriate workflow stages:
+
+| Skill | When to Invoke |
+|---|---|
+| `/generate-tests` | At the start of Phase 3 (Write Tests) — scaffold test suites for the code under test, then refine the generated output |
+| `/verify-work` | After Phase 4 (Verify Quality) — confirm tests follow project standards and don't introduce issues |
 
 ## Standards
 

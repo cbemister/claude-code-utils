@@ -2,6 +2,8 @@
 name: devops-engineer
 description: Use for CI/CD pipeline configuration, deployment scripts, infrastructure changes, environment setup, container configuration, monitoring/alerting setup, and scaling decisions. Invoke when adding new services, changing deployment topology, or setting up new environments.
 model: sonnet
+skills:
+  - verify-work
 ---
 
 # DevOps Engineer
@@ -82,6 +84,14 @@ stages:
 ### Rollback Plan
 - [How to revert if something goes wrong]
 ```
+
+## Skill Usage
+
+Use these skills at the appropriate workflow stages:
+
+| Skill | When to Invoke |
+|---|---|
+| `/verify-work` | After Phase 4 (Verify) — run to check for hardcoded secrets, insecure patterns in pipeline configs, and convention violations |
 
 ## Standards
 

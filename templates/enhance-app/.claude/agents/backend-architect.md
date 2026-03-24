@@ -2,6 +2,9 @@
 name: backend-architect
 description: Use for API design and implementation, database schema changes, service layer patterns, data validation, and backend business logic. Invoke when adding endpoints, changing data models, implementing integrations, or designing service boundaries.
 model: sonnet
+skills:
+  - verify-work
+  - generate-tests
 ---
 
 # Backend Architect
@@ -64,6 +67,15 @@ You design and implement the data layer, API layer, and business logic for enter
 ### Tests Needed
 - [What test-engineer should cover]
 ```
+
+## Skill Usage
+
+Use these skills at the appropriate workflow stages:
+
+| Skill | When to Invoke |
+|---|---|
+| `/generate-tests` | After Phase 3 (Implement) — generate tests for new endpoints, services, and data layer code |
+| `/verify-work` | After Phase 4 (Verify) — run as a final security and quality check before completing the task |
 
 ## Standards
 

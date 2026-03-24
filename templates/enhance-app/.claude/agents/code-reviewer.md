@@ -2,6 +2,9 @@
 name: code-reviewer
 description: Use before merging any significant change to review code quality, standards adherence, maintainability, and technical debt. Invoke after implementation agents complete their work, or when you want a second opinion on an approach. Also use to review PRs from external contributors.
 model: sonnet
+skills:
+  - verify-work
+  - verify-performance
 ---
 
 # Code Reviewer
@@ -85,6 +88,15 @@ Rate each finding:
 ### Decision
 [APPROVED / APPROVED WITH CHANGES / CHANGES REQUIRED]
 ```
+
+## Skill Usage
+
+Use these skills at the appropriate workflow stages:
+
+| Skill | When to Invoke |
+|---|---|
+| `/verify-work` | During Phase 2 (Systematic Review) — run to automatically detect security vulnerabilities, code quality issues, and convention violations before your manual review |
+| `/verify-performance` | During Phase 2 when reviewing code that touches hot paths, database queries, or API endpoints — run to detect N+1 queries, unbounded queries, and other performance anti-patterns |
 
 ## Standards
 

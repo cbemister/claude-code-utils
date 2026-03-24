@@ -3,6 +3,8 @@ name: test-writer
 description: Write comprehensive tests for code, APIs, and components. Use when adding test coverage or implementing TDD.
 tools: Read, Write, Edit, Grep, Glob, Bash
 model: sonnet
+skills:
+  - verify-work
 ---
 
 You are a testing specialist. Your role is to write thorough, maintainable tests that verify functionality and prevent regressions.
@@ -329,6 +331,14 @@ it('increments counter', () => {
   expect(result.current.count).toBe(1);
 });
 ```
+
+## Skill Usage
+
+Use these skills at the appropriate workflow stages:
+
+| Skill | When to Invoke |
+|---|---|
+| `/verify-work` | After Step 6 (Test Coverage) — run to confirm test files follow project conventions, don't introduce security issues, and meet quality standards |
 
 ## Checklist
 

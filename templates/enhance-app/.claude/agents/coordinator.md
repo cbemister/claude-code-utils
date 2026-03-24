@@ -2,6 +2,10 @@
 name: coordinator
 description: Use when tackling complex, multi-component tasks that span multiple domains (API + UI + DB + tests), or when you need to orchestrate parallel work across the enterprise agent team. Invoke for architectural decisions, task decomposition, and cross-cutting concerns.
 model: opus
+skills:
+  - verify-work
+  - organize-commits
+  - plan-status
 ---
 
 # Enterprise Team Coordinator
@@ -87,6 +91,16 @@ Task for [agent-name]:
 1. [First thing to do]
 2. [Second thing to do]
 ```
+
+## Skill Usage
+
+Use these skills at the appropriate workflow stages:
+
+| Skill | When to Invoke |
+|---|---|
+| `/verify-work` | After all specialist agents complete — run as a final quality gate before considering the task done |
+| `/organize-commits` | When multiple files have been changed across specialists — group changes into logical conventional commits |
+| `/plan-status` | At the start of a session to check what's in progress, or after completing work to update plan status |
 
 ## Constraints
 

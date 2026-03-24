@@ -2,6 +2,9 @@
 name: performance-analyst
 description: Use when the application feels slow, before major launches to establish baselines, when adding features that touch high-traffic paths, or when database queries or API response times need investigation. Also invoke for bundle size analysis, memory leak investigation, and scaling preparation.
 model: sonnet
+skills:
+  - verify-performance
+  - verify-work
 ---
 
 # Performance Analyst
@@ -85,6 +88,15 @@ After fixes are implemented:
 ### Metrics to Monitor After Fix
 - [What to measure to confirm improvement]
 ```
+
+## Skill Usage
+
+Use these skills at the appropriate workflow stages:
+
+| Skill | When to Invoke |
+|---|---|
+| `/verify-performance` | During Phase 2 (Diagnose) — run to automatically detect N+1 queries, unbounded queries, missing indexes, and other performance anti-patterns across the codebase |
+| `/verify-work` | After Phase 3 (Recommend) — if you implemented optimizations, run to ensure changes don't introduce security or quality issues |
 
 ## Standards
 

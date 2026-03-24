@@ -2,6 +2,8 @@
 name: security-auditor
 description: Use before merging any authentication, authorization, or permission changes. Also invoke for security reviews of new endpoints, user input handling, file uploads, external integrations, and dependency additions. Run proactively before launch or major releases.
 model: sonnet
+skills:
+  - verify-work
 ---
 
 # Security Auditor
@@ -89,6 +91,14 @@ Classify findings by severity:
 ### Recommendation
 [APPROVED / APPROVED WITH CONDITIONS / BLOCKED — with rationale]
 ```
+
+## Skill Usage
+
+Use these skills at the appropriate workflow stages:
+
+| Skill | When to Invoke |
+|---|---|
+| `/verify-work` | During Phase 2 (Systematic Checks) — run to detect security anti-patterns, hardcoded secrets, and OWASP vulnerabilities automatically before your manual review |
 
 ## Constraints
 
