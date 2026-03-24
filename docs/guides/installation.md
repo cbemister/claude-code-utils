@@ -176,11 +176,11 @@ cp -r ~/claude-code-shared/.claude/agents/* .claude/agents/
 ```bash
 # Use the install script
 cd ~/claude-code-shared
-./scripts/install-skills.sh
+./scripts/install-resources.sh
 
 # Or install specific skills
-./scripts/install-skills.sh worktree-create
-./scripts/install-skills.sh worktree-sync
+./scripts/install-resources.sh worktree-create
+./scripts/install-resources.sh worktree-sync
 ```
 
 **Example: Only Templates**
@@ -481,10 +481,10 @@ ls ~/.claude/skills/
 
 # Install from this repo using the script:
 cd /path/to/claude-code-shared
-./scripts/install-skills.sh
+./scripts/install-resources.sh
 
 # Or install specific skill:
-./scripts/install-skills.sh skill-name
+./scripts/install-resources.sh skill-name
 
 # Restart Claude Code (close and reopen VSCode)
 ```
@@ -654,7 +654,7 @@ If you have skills from agile-toolkit:
 - plan-status.md
 
 # Install them all:
-./scripts/install-skills.sh
+./scripts/install-resources.sh
 ```
 
 ---

@@ -15,201 +15,94 @@ Claude Code discovers skills from three locations:
 
 This repo's skills are already in `.claude/skills/` and will work in any project that includes this repo. Just restart Claude Code.
 
-**Use when:**
-- Working on a team project
-- Want skills version-controlled with your project
-- Skills are project-specific
-
 ### Option 2: Personal Installation (Recommended for Individual Use)
 
 Install skills to your personal `~/.claude/skills/` to use across ALL projects.
 
 ```bash
 # Install all skills globally
-./scripts/install-skills.sh
+./scripts/install-resources.sh
 
 # Or install specific skill
-./scripts/install-skills.sh create-plan
+./scripts/install-resources.sh create-plan
 ```
-
-**Use when:**
-- Want skills available in all your projects
-- Personal workflow preferences
-- Skills are general-purpose
 
 ### Required Structure
 
 Each skill must be a directory with `SKILL.md` inside:
 ```
-.claude/skills/           # Project-local
-└── create-plan/
-    └── SKILL.md
-
-~/.claude/skills/         # Personal (global)
+.claude/skills/
 └── create-plan/
     └── SKILL.md
 ```
 
-> **Note:** After adding skills or changing their location, restart Claude Code (close and reopen VSCode).
+> **Note:** After adding skills or changing their location, restart Claude Code.
 
 ---
 
-## Available Skills
-
-### Development Workflow
-- **ship** - Complete end-of-session workflow (verify → commit → summarize)
-- **verify-work** - Pre-commit verification (security, best practices, code standards)
-- **verify-performance** - Performance anti-pattern analysis and performance tests
-- **organize-commits** - Group changes into logical commits with conventional format
-- **track-progress** - Record work to changelog and progress tracking
-- **summarize-session** - Capture structured session journal (decisions, state, next steps)
-
-### Testing & Quality
-- **generate-tests** - Generate test files following project patterns
-- **browser-test** - Run Playwright browser tests across desktop, tablet, and mobile viewports
-  - Auto-discovers routes and features from any web framework
-  - Tests: navigation, forms, auth, CRUD, responsive, interactive, errors, user flows, performance
-  - Generates reusable test scripts users can re-run
-  - Captures screenshots at each viewport size
-
-### Git Workflow
-- **worktree-create** - Create git worktree for parallel development
-- **worktree-sync** - Sync worktree with base branch
-- **worktree-cleanup** - Remove completed worktrees
-
-### Planning & Tracking
-- **create-plan** - Initialize feature plan with phases
-- **plan-status** - Show current plan progress
-- **pm-review** - Product manager perspective — assess progress vs plan, identify priorities
-
-### Design System
-- **color-palette** - Transform generic colors into sophisticated, intentional palettes
-- **typography-system** - Font pairings, type scales, fluid `clamp()` responsive sizing
-- **spacing-system** - Hierarchical spacing with visual rhythm (not uniform gaps)
-- **layout-asymmetry** - 60/40 splits, focal points, intentional asymmetry patterns
-- **micro-interactions** - Hover, press, loading, and entrance animations
-- **component-states** - Complete interactive states (hover, focus, active, disabled, loading)
-- **component-polish** - Final production-quality polish pass on components
-- **style** - Transform UI into any of 10 aesthetic themes: aurora, brutalist, cyberpunk, dark-premium, glassmorphism, minimalist, neumorphism, organic, retro, swiss
-- **ui-transform** - Analyze existing UI for AI-generated patterns and transform to human-quality design
-
-### Accessibility
-- **accessibility-audit** - WCAG 2.1 AA compliance (contrast, semantics, keyboard, ARIA)
-- **mobile-accessibility** - VoiceOver/TalkBack, screen readers, and mobile a11y
-- **critique-value** - Evaluate work from end-user perspective (value, usability, completeness)
-
-### Mobile & Responsive
-- **mobile-patterns** - Mobile navigation, layout, and responsive patterns
-- **touch-interactions** - Touch targets, gestures, haptics, and swipe actions
-
-### Conversion Optimization
-- **conversion-audit** - Audit pages for conversion issues and drop-off points
-- **copywriting-guide** - Headlines, body copy, and microcopy frameworks
-- **cta-optimizer** - CTA button design, placement, and copy psychology
-- **social-proof** - Testimonials, logos, trust signals, and review patterns
-
-### Design Enhancement (Chains)
-- **enhance-design** - Comprehensive design workflow that chains all design skills
-  - Phases: Analyze → Mobile Optimize → Conversion Optimize → Visual Polish
-  - One command to enhance everything — like `/ship` for design work
-
-### Framework-Specific
-- **nextjs-optimization** - Server Components, loading states, image optimization, caching
-- **electron-nextjs** - Add Electron to an existing Next.js project for desktop apps
-
-### Autonomous Building
-- **build-app** - Autonomously build an app from staged plans created by `/launch-app`
-  - Reads stage plans, executes tasks in dependency order, runs verification, commits each task
-  - Tracks progress in `plans/build-state.json` — resume anytime after interruptions or rate limits
-  - Slack notifications for stage start/complete/failed/build complete
-  - Companion `build-app-runner.sh` re-invokes across context windows for fully unattended builds
-  - Run locally, via GitHub Actions, or Docker — all with Slack updates
-
-### Project Scaffolding
-- **launch-app** - Launch a new professional app from idea to staged build plan
-  - Gathers requirements, recommends tech stack and agent team, creates project folder with full Claude Code config, generates CLAUDE.md and all stage plans — ready for the team to build
-- **design-app** - Generate multiple design concepts for an app, compare side-by-side, implement the chosen direction
-  - Creates detailed design documents (color palette, typography, spacing, components) + interactive HTML mockups for each concept, then implements the selected design into the codebase
-- **starter-project** - Generate starter projects with agents/skills pre-configured
-  - Categories: SaaS app, API service, component library, CLI tool, e-commerce, browser game
-- **enhance-project** - Add Claude Code resources and improvements to existing projects
-- **find-skills** - Discover and install skills for specific tasks
+## Available Skills (29)
 
 ### Evolution & Software Factory
-- **factory** - Top-level orchestrator for the software factory lifecycle
-  - Launch new products, build them, evolve for revenue, check factory-wide status
-  - Manages project registry across all factory-managed products
-  - Subcommands: `launch`, `build`, `evolve`, `status`, `list`
-- **evaluate-product** - Composite product evaluation (0-100 score)
-  - Chains conversion-audit, critique-value, verify-performance, accessibility-audit, pm-review, verify-work
-  - Adds revenue path analysis and AI-simulated user journey walkthroughs
-  - 7 weighted dimensions: conversion, revenue, UX, performance, accessibility, completeness, code quality
-- **generate-hypotheses** - Generate ranked optimization proposals from evaluation data
-  - Analyzes scores and user journey drop-off points
-  - Batches top 2-3 hypotheses per evolution cycle
-  - Deduplicates against prior attempts and rejected proposals
+- **factory** - Top-level orchestrator: launch, build, evolve, status, list
+- **evaluate-product** - Composite 0-100 score across 7 dimensions
+- **generate-hypotheses** - Ranked optimization proposals from evaluation data
 - **plan-optimization** - Convert hypotheses into executable stage plans
-  - Outputs standard stage plans that `/build-app` executes unchanged
-  - Integrates with `/plan-next-stage` for codebase refresh
-- **preview-deploy** - Create preview deployment for human review
-  - Pushes preview branch → Vercel/Netlify auto-deploys
-  - Pre-flight verification via `/verify-work` and `/verify-performance`
-- **evolution-gate** - Human approval/rejection gate
-  - `approve` merges to production, tags release, advances cycle
-  - `reject` records reason, discards preview, retries with next hypotheses
-- Companion `evolution-runner.sh` drives the loop unattended across context windows
-- GitHub Actions workflow for cloud-based evolution cycles
+- **evolution-gate** - Deploy preview + human approve/reject gate (`deploy`, `approve`, `reject`)
 
-### Enterprise
-- **enhance-app** - Enhance any project with Claude Code config (new or existing)
-  - Scans existing config, installs what's missing: agents, rules, hooks, plans, MCP, CLAUDE.md
-  - Links shared files (agents, plan templates) from ~/.claude/shared/enterprise/ instead of duplicating
+### Autonomous Build
+- **build-app** - Autonomously build an app from staged plans (loops across context windows, Slack notifications)
 
-## Usage
+### Project Scaffolding
+- **launch-app** - Go from idea to staged build plan + full Claude Code config
+- **design-app** - Generate multiple design concepts, compare, implement chosen direction
+- **starter-project** - Generate starter projects pre-configured with agents and skills
+- **enhance-app** - Add agents, rules, hooks, plans, MCP to any project
 
-Skills are invoked with `/skill-name`:
+### Workflow
+- **ship** - End-of-session workflow (verify → commit → summarize)
+- **verify-work** - Pre-commit verification: security, code standards, performance patterns
+- **organize-commits** - Group changes into logical conventional commits
+- **summarize-session** - Capture structured session journal (decisions, state, next steps)
 
-```
-/ship
-/verify-work
-/organize-commits
-```
+### Git
+- **worktree** - Manage git worktrees (`create`, `sync`, `cleanup`)
+
+### Planning
+- **create-plan** - Initialize a feature plan with phases and task tracking
+- **plan-status** - Show plan progress; `refresh <stage-file>` to sync against codebase
+- **pm-review** - Product manager perspective — assess progress, identify gaps
+
+### Design
+- **enhance-design** - Full design pass: audit → mobile → conversion → visual polish (`quick`, `mobile`, `conversion`)
+- **design-system** - Colors, typography, spacing, layout (`colors`, `typography`, `spacing`, `layout`)
+- **component-polish** - States, interactions, and final refinement (`states`, `interactions`)
+- **style** - Transform UI into a visual theme (aurora, brutalist, cyberpunk, dark-premium, glassmorphism, minimalist, neumorphism, organic, retro, swiss)
+- **ui-transform** - Analyze and transform AI-generated UI patterns
+
+### Conversion & Marketing
+- **conversion-audit** - Audit and optimize for conversion (`copy`, `cta`, `social-proof`, or full)
+- **critique-value** - Evaluate from end-user perspective (value, usability, completeness)
+
+### Accessibility & Mobile
+- **accessibility-audit** - WCAG 2.1 AA audit + mobile screen reader support (VoiceOver/TalkBack)
+- **mobile-design** - Mobile-first patterns and touch interactions (`patterns`, `touch`)
+- **browser-test** - Playwright tests across desktop, tablet, mobile
+
+### Testing
+- **generate-tests** - Generate comprehensive test files following project patterns
+
+---
 
 ## Skill Chaining
 
-Some skills automatically invoke others in sequence or parallel:
-- `/build-app` → `/plan-next-stage` → build tasks → `/verify-work` → commit (per stage)
-- `/ship` → `/verify-work` → `/organize-commits` → `/track-progress`
-- `/enhance-design` → 4 phases with parallel execution (see below)
-- `/enhance-project` → Analysis agents run in parallel
-- `/factory evolve` → `/evaluate-product` → `/generate-hypotheses` → `/plan-optimization` → `/build-app` → `/preview-deploy` → `/evolution-gate` (evolution loop)
+Some skills automatically invoke others:
 
-### Parallel Execution
+- `/ship` → `/verify-work` → `/organize-commits` → `/summarize-session`
+- `/enhance-design` → `/conversion-audit` → `/mobile-design` → `/conversion-audit copy/cta/social-proof` → `/design-system` → `/component-polish`
+- `/factory evolve` → `/evaluate-product` → `/generate-hypotheses` → `/plan-optimization` → `/build-app` → `/evolution-gate`
+- `/build-app` → stage plans → `/verify-work` → commit (per stage)
 
-Chaining skills now support parallel execution for independent operations:
-
-**enhance-design:**
-- Phase 2: `mobile-patterns`, `touch-interactions`, `mobile-accessibility` run in parallel
-- Phase 3: `copywriting-guide`, `cta-optimizer`, `social-proof` run in parallel
-- Phase 4: Three batches of parallel execution for visual polish
-
-**enhance-project:**
-- Analysis: `codebase-explorer`, `dependency-analyzer`, `pattern-finder` run in parallel
-- Quality checks: `verify-work` and `performance-check` run in parallel
-
-### Hooks Integration
-
-Chaining skills now include hooks for better visibility and quality gates:
-
-**Agent Notifications:**
-- `SubagentStart` hooks show which agent is running
-- `SubagentStop` hooks confirm completion
-- Provides real-time visibility into background operations
-
-**Quality Gates:**
-- `Stop` hooks verify all phases completed successfully
-- Prevents incomplete skill execution
-- Validates that all required steps ran
+---
 
 ## Creating Custom Skills
 

@@ -109,10 +109,10 @@ To use across all your projects without a plugin:
 cd /path/to/claude-code-shared
 
 # Install to personal directory
-./scripts/install-skills.sh
+./scripts/install-resources.sh
 
 # Or install specific skill
-./scripts/install-skills.sh create-plan
+./scripts/install-resources.sh create-plan
 ```
 
 **Trade-off:** Skills available everywhere, but updates require manual reinstall.
@@ -213,7 +213,7 @@ cp .claude/plugins/claude-code-shared/.claude/skills/ship .claude/skills/
 **Option B:** Install personally (no namespace needed):
 ```bash
 cd .claude/plugins/claude-code-shared
-./scripts/install-skills.sh
+./scripts/install-resources.sh
 ```
 
 ### Plugin Updates Not Showing

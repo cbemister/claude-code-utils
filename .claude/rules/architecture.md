@@ -9,23 +9,23 @@ This is a **resource library**, not an application. It contains shareable Claude
 ```
 claude-code-utils/
 ├── .claude/
-│   ├── agents/           # Base agent library (explore, plan, implement)
-│   │   ├── design/       # Design agents (ui-ux-designer)
-│   │   ├── explore/      # Exploration agents (haiku)
-│   │   └── implement/    # Implementation agents (sonnet)
-│   └── skills/           # 40+ project-local skills
+│   ├── agents/           # Base agent library (7 agents)
+│   │   ├── design/       # designer (Opus, skill-driven)
+│   │   ├── explore/      # explorer (Haiku, read-only)
+│   │   ├── plan/         # planner, project-planner (Opus, read-only)
+│   │   └── implement/    # feature-builder, test-writer, debugger (Sonnet)
+│   └── skills/           # 29 project-local skills
 │       └── <name>/SKILL.md
 ├── templates/
 │   ├── claude-md/        # CLAUDE.md templates per tech stack
 │   └── enhance-app/      # Enterprise project setup template
-│       ├── .claude/agents/   # 11-agent team pool
+│       ├── .claude/agents/   # 8-agent team pool (no design agents)
 │       ├── teams/            # 5 team presets + team battle
-│       ├── modules/          # CLAUDE.md snippets
-│       └── plans/templates/  # Plan templates
-├── plans/templates/      # Plan templates (feature, bugfix, refactor, stage, optimization)
+│       └── modules/          # CLAUDE.md snippets
+├── plans/templates/      # Plan templates (feature, bugfix, refactor, stage, optimization, context-handoff, master-plan)
 ├── docs/                 # Documentation and best practices
 ├── scripts/              # Installation scripts
-│   └── install-skills.sh
+│   └── install-resources.sh
 └── CLAUDE.md             # Project instructions
 ```
 
@@ -46,8 +46,8 @@ The Slack bot (CodeForge Bot) has been split into its own repository at `C:\User
 
 ### Two-Level Agent System
 
-- **Base library** (`.claude/agents/`) — Generic agents usable in any project (explore, plan, implement categories)
-- **Team pool** (`templates/enhance-app/.claude/agents/`) — 11 specialized agents selected by team presets
+- **Base library** (`.claude/agents/`) — 7 generic agents: `explorer`, `planner`, `project-planner`, `designer`, `feature-builder`, `test-writer`, `debugger`
+- **Team pool** (`templates/enhance-app/.claude/agents/`) — 8 specialized build agents (coordinator + 7 engineering specialists); design is applied via skills
 
 ### Template vs. Installed
 

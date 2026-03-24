@@ -2,16 +2,13 @@
 
 ## Team System
 
-The project provides a **pool of 11 agents** that are composed into **5 team presets**. All teams are build-focused — design agents are available as standalone skills but not included in team builds.
+The project provides a **pool of 8 agents** that are composed into **5 team presets**. All teams are build-focused — design is applied as a separate pass using skills.
 
 ### Agent Pool
 
 | Agent | Model | Category |
 |---|---|---|
 | `coordinator` | Opus | Orchestration |
-| `ui-ux-designer` | Opus | Design — available via design skills, not in teams |
-| `mobile-designer` | Opus | Design — available via design skills, not in teams |
-| `conversion-optimizer` | Opus | Design — available via design skills, not in teams |
 | `backend-architect` | Sonnet | Architecture |
 | `frontend-architect` | Sonnet | Architecture |
 | `security-auditor` | Sonnet | Specialist |
@@ -24,19 +21,18 @@ The project provides a **pool of 11 agents** that are composed into **5 team pre
 
 | Team | Engineering Agents | Use Case |
 |---|---|---|
-| Enterprise Engineering | All 7 | APIs, data pipelines, complex backends |
-| SaaS Product | 6 (no devops) | SaaS products on managed platforms |
-| Internal Tool | All 7 | Admin panels, developer tools |
-| Game / Interactive | 4 (backend, frontend, test, perf) | Games, creative tools |
-| Marketing Site | 3 (frontend, perf, review) | Landing pages, marketing |
+| Enterprise Engineering | coordinator + all 7 | APIs, data pipelines, complex backends |
+| SaaS Product | coordinator + 6 (no devops) | SaaS products on managed platforms |
+| Internal Tool | coordinator + all 7 | Admin panels, developer tools |
+| Game / Interactive | coordinator + 4 (backend, frontend, test, perf) | Games, creative tools |
+| Marketing Site | coordinator + 3 (frontend, perf, review) | Landing pages, marketing |
 
 ### Design After Build
 
-Design agents are not included in team builds. Apply design as a separate pass using skills:
-- `/style <theme>` — Apply themed aesthetic
-- `/color-palette` — Refine colors
-- `/typography-system` — Font hierarchy
-- `/enhance-design` — Full design pass (chains all design skills)
+Design is not part of team builds. Apply design as a separate pass using skills:
+- `/style <theme>` — Apply a visual theme
+- `/design-system` — Color, typography, spacing, layout
+- `/enhance-design` — Full design pass (all phases)
 
 ### Team Battle (`/team-battle`)
 

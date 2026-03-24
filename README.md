@@ -84,7 +84,7 @@ This will run the install script and set up all skills for you.
     {
       "label": "Install Claude Code Skills (Windows)",
       "type": "shell",
-      "command": "./scripts/install-skills.bat",
+      "command": "./scripts/install-resources.bat",
       "group": { "kind": "build", "isDefault": false },
       "presentation": { "reveal": "always" },
       "problemMatcher": []
@@ -92,7 +92,7 @@ This will run the install script and set up all skills for you.
     {
       "label": "Install Claude Code Skills (Unix)",
       "type": "shell",
-      "command": "./scripts/install-skills.sh",
+      "command": "./scripts/install-resources.sh",
       "group": { "kind": "build", "isDefault": false },
       "presentation": { "reveal": "always" },
       "problemMatcher": []

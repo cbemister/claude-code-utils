@@ -323,7 +323,7 @@ Run `/plan-next-stage stage-N-title` to refresh the stage plan against the actua
 Skills require the `.claude/skills/` directory. Run the install script to make skills available globally:
 
 ```bash
-./scripts/install-skills.sh
+./scripts/install-resources.sh
 ```
 
 Restart Claude Code after installing new skills.
