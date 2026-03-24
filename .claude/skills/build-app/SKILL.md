@@ -1,7 +1,7 @@
 ---
 name: build-app
 description: Autonomously build an app from staged plans created by /launch-app. Reads plans/active/ stage files and builds each stage with verification, commits, and Slack notifications. Designed for unattended execution via build-app-runner.sh.
-args: "[command] - Optional: 'status' to show progress, 'resume' to continue after failure, 'reset' to clear state"
+argument-hint: "[command] - Optional: 'status' to show progress, 'resume' to continue after failure, 'reset' to clear state"
 ---
 
 # Build App

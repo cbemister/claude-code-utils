@@ -1,7 +1,7 @@
 ---
 name: factory
 description: Use when managing the software factory lifecycle — launching new products, building them, evolving them for revenue, or checking factory-wide status.
-args: "[command] [project|idea] - Commands: launch, build, evolve, status, list"
+argument-hint: "[command] [project|idea] - Commands: launch, build, evolve, status, list"
 ---
 
 # Factory

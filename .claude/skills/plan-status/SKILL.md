@@ -1,6 +1,7 @@
 ---
 name: plan-status
-description: Show current status and progress of active feature plans
+description: Show current status and progress of active feature plans. Pass a stage filename to refresh it against the current codebase.
+argument-hint: "[feature-name] | refresh <stage-file>"
 ---
 
 # Plan Status
@@ -18,13 +19,37 @@ Use this when:
 ## Usage
 
 ```
-/plan-status [feature-name]
+/plan-status                          — show all active plans
+/plan-status <feature-name>           — show details for specific plan
+/plan-status refresh <stage-file>     — refresh a stage plan against current codebase
 ```
 
-**Arguments:**
-- `feature-name` - Optional: Show details for specific plan
-
 ## Instructions
+
+If first argument is `refresh`, run the **Refresh Stage Plan** flow below.
+Otherwise, run the standard plan status display.
+
+### Refresh Stage Plan (when `refresh <stage-file>` is passed)
+
+Refreshes a stage plan to account for decisions and changes made during prior stages.
+
+1. Find and read the stage plan file at `plans/active/$STAGE_FILE.md` (add `.md` if not present; also check `plans/archive/`)
+2. Read the master plan at `plans/README.md`
+3. Read completed stage plans from `plans/archive/` to understand what was actually built
+4. Read project conventions: `CLAUDE.md`, `.claude/rules/architecture.md`, `.claude/rules/api-conventions.md`
+5. Scan the actual codebase: list key source directories, grep for exported interfaces/types/functions this stage depends on, look at established patterns and test utilities
+6. Compare the stage plan against reality — identify drift in file paths, imports, interfaces, dependencies, and architectural decisions
+7. Rewrite the stage plan file with corrections: update file paths, imports, code snippets, test code, and verification commands to reflect the real codebase
+8. Display summary of what changed:
+   ```
+   Stage [N] plan refreshed:
+   Updated:
+     - [task]: [what changed]
+   Architecture notes:
+     - [any decisions from prior stages that affect this stage]
+   ```
+
+---
 
 ### Without Feature Name: Show All Plans
 

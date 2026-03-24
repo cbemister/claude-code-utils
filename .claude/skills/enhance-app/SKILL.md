@@ -463,14 +463,14 @@ If shared files cannot be found:
 ```
 ERROR: Enterprise shared files not found.
 
-Install them first by running install-skills.sh from the claude-code-utils repo:
+Install them first by running install-resources.sh from the claude-code-utils repo:
 
   cd claude-code-utils
-  ./scripts/install-skills.sh enterprise
+  ./scripts/install-resources.sh enterprise
 
 Or clone the repo:
   git clone https://github.com/[owner]/claude-code-utils
-  cd claude-code-utils && ./scripts/install-skills.sh
+  cd claude-code-utils && ./scripts/install-resources.sh
 ```
 
 If linking fails (falls back to copy):

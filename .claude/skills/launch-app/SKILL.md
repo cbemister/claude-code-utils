@@ -1,7 +1,7 @@
 ---
 name: launch-app
 description: Launch a new professional app from idea to staged build plan. Creates the project folder, configures the agent team, and generates all stage plans — ready for the team to build.
-args: "[idea] - Optional: describe your app idea inline"
+argument-hint: "[idea] - Optional: describe your app idea inline"
 ---
 
 # Launch App

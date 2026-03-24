@@ -1,7 +1,7 @@
 ---
 name: team-battle
 description: Run two agent teams head-to-head on the same task. Creates parallel worktrees, installs different team agents in each, runs the task, and compares results side-by-side.
-args: "[task] - The task description both teams will execute"
+argument-hint: "[task] - The task description both teams will execute"
 ---
 
 # Team Battle

@@ -1,11 +1,112 @@
 ---
 name: conversion-audit
-description: Audit pages for conversion optimization opportunities. Analyzes value props, CTAs, social proof, friction points, and mobile conversion to identify drop-off causes.
+description: Audit and optimize pages for conversion — value props, CTAs, copy, social proof, and friction points. Run a full audit or target a specific area.
+argument-hint: "[copy | cta | social-proof | full] — Optional: target one area. Default: full audit."
 ---
 
-# Conversion Audit Skill
+# Conversion Audit
 
-Comprehensive audit of landing pages, pricing pages, or any conversion-critical interface to identify optimization opportunities ranked by estimated impact.
+Audit and optimize conversion-critical interfaces. Runs a full audit by default, or targets a specific area when an argument is provided.
+
+## Usage
+
+```
+/conversion-audit              — full audit (value props, friction, CTAs, copy, social proof)
+/conversion-audit copy         — copywriting optimization only
+/conversion-audit cta          — CTA design and psychology only
+/conversion-audit social-proof — social proof elements only
+```
+
+## Instructions
+
+Parse the argument and run the specified area. If no argument or `full`, run all areas in order.
+
+---
+
+## Area: copy
+
+Write conversion-focused copy using proven frameworks.
+
+**Frameworks to apply:**
+- **PAS (Problem → Agitate → Solution)** — identify the problem, amplify the pain, present the solution
+- **AIDA (Attention → Interest → Desire → Action)** — hook with headline, build interest, create desire, drive action
+- **BAB (Before → After → Bridge)** — current situation, desired future, how to get there
+
+**Headline formulas:**
+- "[Number] ways to [achieve outcome] without [undesired constraint]"
+- "How [target persona] [achieved result] in [timeframe]"
+- "[Do X] like [aspirational reference]"
+- "The [type] that [specific benefit]"
+
+**Microcopy improvements:**
+- CTA buttons: use outcome language ("Start building" not "Submit")
+- Error messages: explain what happened and how to fix it
+- Empty states: tell users what they'll see and how to add content
+- Tooltips: answer the question the user is about to ask
+- Form labels: be specific about format expectations
+
+**Process:** Audit existing copy → identify generic/weak messaging → rewrite using frameworks → ensure consistency of voice across page.
+
+---
+
+## Area: cta
+
+Design and optimize call-to-action buttons for maximum conversion.
+
+**Psychology principles:**
+- Specificity beats generic: "Start my free trial" > "Get started"
+- Value before commitment: show what they get, then ask for the click
+- Reduce perceived risk: "No credit card required", "Cancel anytime"
+- Use first-person language: "Start my free trial" > "Start your free trial"
+
+**Visual design:**
+- Primary CTA: high-contrast color, full-width on mobile, prominent on desktop
+- One primary CTA per section — avoid competing actions
+- Size: minimum 44×44px touch target, padding at least 12px 24px
+- Placement: above the fold on key pages; repeat at bottom of long pages
+
+**Common fixes:**
+- Too many CTAs → pick one primary per section
+- Generic text ("Click here") → specific outcome text
+- Low contrast → ensure 3:1 contrast ratio for UI components
+- No secondary action → add "or [lower-commitment action]" as text link
+
+---
+
+## Area: social-proof
+
+Design and implement social proof elements that build credibility and reduce purchase anxiety.
+
+**Types and when to use:**
+- **Testimonials** — specific outcomes, include name/photo/company
+- **Case studies** — for high-consideration purchases, show before/after metrics
+- **Logo bar** — "Trusted by" section with recognizable brand logos
+- **Stats counters** — animated numbers (customers, reviews, uptime)
+- **Review widgets** — aggregate star ratings from third-party sources
+- **Trust badges** — security certifications, payment logos, guarantees
+
+**Placement strategy:**
+- Logo bar: immediately below hero (reduces anxiety early)
+- Testimonials: near primary CTA (answers objections at decision point)
+- Stats: in features section (supports claims with data)
+- Trust badges: at checkout/signup (addresses final objections)
+
+**Quality over quantity:** 2-3 excellent testimonials beat 20 generic ones. Specifics are credible: "Increased revenue 43%" beats "Really helpful tool".
+
+---
+
+## Full Audit (default)
+
+When no argument is provided, perform a comprehensive conversion audit:
+
+1. **Value proposition audit** — Is the core value clear above the fold? Can a new visitor understand what it does and who it's for in 5 seconds?
+2. **Friction analysis** — Map the conversion path. Where do users have to make decisions, fill forms, or wait? Rank friction points by severity.
+3. **CTA audit** — Apply the `cta` area above to all CTAs on the page
+4. **Copy audit** — Apply the `copy` area above to headlines, subheads, and body copy
+5. **Social proof audit** — Apply the `social-proof` area above
+6. **Mobile conversion** — Are all conversion paths functional on mobile? Are touch targets large enough? Does the value prop work on small screens?
+
+Output a prioritized list: **High Impact** (fix first), **Medium Impact**, **Low Impact**.
 
 ## When to Use
 

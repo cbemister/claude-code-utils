@@ -1,6 +1,6 @@
 ---
 name: verify-work
-description: Comprehensive pre-commit verification for security, best practices, and code standards. Checks for vulnerabilities, efficiency issues, and convention adherence.
+description: Comprehensive pre-commit verification for security, best practices, code standards, and performance. Checks for vulnerabilities, efficiency issues, N+1 queries, and convention adherence.
 ---
 
 # Verify Work Skill
@@ -227,6 +227,50 @@ git diff HEAD -- '**/*.ts' | grep -nE "SELECT.*FROM" | grep -v "LIMIT|WHERE.*id\
 
 **Flag if found**:
 - BLOCKING: Unbounded queries without LIMIT (add pagination or ID filter)
+
+#### 4.5.3 Missing Index Patterns [WARNING]
+
+```bash
+# Leading wildcard LIKE (full table scan)
+git diff HEAD -- '*.ts' '*.tsx' | grep -nE "LIKE\s*['\"]%|LIKE\s*\\\$"
+
+# Functions on indexed columns (prevents index use)
+git diff HEAD -- '*.ts' '*.tsx' | grep -nE "WHERE\s*(LOWER|UPPER|TRIM|DATE)\("
+```
+
+**Flag if found**:
+- WARNING: `LIKE '%term%'` — cannot use B-tree index
+- WARNING: Functions on columns in WHERE clause
+
+#### 4.5.4 Missing Transaction Boundaries [WARNING]
+
+```bash
+# Multiple writes without transaction
+git diff HEAD -- '*.ts' '*.tsx' | grep -E "INSERT|UPDATE|DELETE" | grep -v "BEGIN|COMMIT|ROLLBACK|transaction|\$transaction"
+```
+
+**Flag if found**:
+- WARNING: Multiple INSERT/UPDATE/DELETE in the same function without a transaction
+
+#### 4.5.5 Data Fetching Issues [BLOCKING]
+
+```bash
+# Data fetching hooks inside loops (client-side N+1)
+git diff HEAD -- '*.tsx' | grep -nE "\.map\(.*useSWR|\.map\(.*useQuery|\.map\(.*fetch"
+```
+
+**Flag if found**:
+- BLOCKING: Data fetching hooks (`useSWR`, `useQuery`) inside `.map()` or loops
+
+#### 4.5.6 Sequential Awaits [OPTIMIZATION]
+
+```bash
+# Back-to-back independent awaits
+git diff HEAD -- '*.ts' '*.tsx' | grep -nE "const.*=\s*await" -A 1 | grep -E "const.*=\s*await"
+```
+
+**Flag if found**:
+- OPTIMIZATION: Sequential awaits on independent queries — consider `Promise.all([])`
 
 ---
 

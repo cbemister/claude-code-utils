@@ -1,66 +1,7 @@
 ---
 name: enhance-design
 description: Comprehensive design enhancement that chains all design skills in phases - analyze, mobile optimize, conversion optimize, and polish. Transforms any interface into a professional, high-converting, mobile-friendly experience.
-hooks:
-  SubagentStart:
-    - matcher: ".*"
-      hooks:
-        - type: command
-          command: |
-            case "$AGENT_TYPE" in
-              "conversion-audit") echo "📊 Auditing conversion opportunities..." ;;
-              "mobile-patterns") echo "📱 Applying mobile navigation patterns..." ;;
-              "touch-interactions") echo "👆 Implementing touch interactions..." ;;
-              "mobile-accessibility") echo "♿ Adding accessibility support..." ;;
-              "copywriting-guide") echo "✍️  Optimizing copy and messaging..." ;;
-              "cta-optimizer") echo "🎯 Enhancing CTAs..." ;;
-              "social-proof") echo "⭐ Adding social proof elements..." ;;
-              "color-palette") echo "🎨 Refining color palette..." ;;
-              "typography-system") echo "📝 Establishing typography system..." ;;
-              "spacing-system") echo "📏 Creating spacing rhythm..." ;;
-              "component-states") echo "🔄 Adding interactive states..." ;;
-              "micro-interactions") echo "✨ Implementing micro-interactions..." ;;
-              "component-polish") echo "💎 Final polish pass..." ;;
-              *) echo "🔧 Running $AGENT_TYPE..." ;;
-            esac
-  SubagentStop:
-    - hooks:
-        - type: command
-          command: "echo '   ✓ Complete'"
-  Stop:
-    - hooks:
-        - type: agent
-          prompt: |
-            Verify that /enhance-design completed all required phases.
-
-            Check the conversation transcript for evidence that these phases ran:
-
-            Phase 1 - ANALYZE:
-            - [ ] /conversion-audit was invoked
-
-            Phase 2 - MOBILE OPTIMIZE (should run in parallel):
-            - [ ] /mobile-patterns was invoked
-            - [ ] /touch-interactions was invoked
-            - [ ] /mobile-accessibility was invoked
-
-            Phase 3 - CONVERSION OPTIMIZE (should run in parallel):
-            - [ ] /copywriting-guide was invoked
-            - [ ] /cta-optimizer was invoked
-            - [ ] /social-proof was invoked
-
-            Phase 4 - VISUAL POLISH (should run in batches):
-            - [ ] /color-palette was invoked
-            - [ ] /typography-system was invoked
-            - [ ] /spacing-system was invoked
-            - [ ] /component-states was invoked
-            - [ ] /micro-interactions was invoked
-            - [ ] /component-polish was invoked
-
-            Context: $ARGUMENTS
-
-            Return {"ok": true} if ALL phases completed successfully.
-            Return {"ok": false, "reason": "Missing: [list skills that didn't run]"} if any skills were skipped.
-          timeout: 120
+argument-hint: "[quick | mobile | conversion] — Optional: run subset of phases. Default: all 4 phases."
 ---
 
 # Enhance Design Skill
@@ -112,17 +53,12 @@ Default mode is **Full Enhancement** (all 4 phases). If the user passed an argum
 
 ### Phase 2: Mobile Optimization
 
-**Invoke all three skills in parallel** using the Skill tool in a single message:
-- `/mobile-patterns` - Navigation patterns (bottom nav, drawer, tabs), responsive grid, component adaptations (tables → lists, modals → sheets), safe area handling
-- `/touch-interactions` - Touch targets ≥ 48x48px, swipe gestures, touch feedback (scale, ripple), pull-to-refresh
-- `/mobile-accessibility` - Screen reader labels (VoiceOver/TalkBack), focus management, live regions, reduced motion support
+**Invoke using the Skill tool:**
+- `/mobile-design` - Navigation patterns, responsive grid, touch targets ≥ 48×48px, swipe gestures, VoiceOver/TalkBack support, reduced motion
 
-**Wait for all three to complete.**
+**Wait for completion.**
 
-**VERIFY**: After all three skills complete, run `git diff --stat` to check if files were actually modified. If NO files changed (agents completed without writing), the sub-skills' tool calls were likely blocked by permissions. In that case:
-1. Review the analysis/recommendations returned by each sub-skill
-2. Implement the changes yourself directly using Edit/Write tools
-3. Apply mobile patterns, touch interaction fixes, and accessibility improvements based on the sub-skills' guidance
+**VERIFY**: Run `git diff --stat` to check if files were modified. If NO files changed, implement the changes yourself directly using Edit/Write tools based on the skill's guidance.
 
 Verify these outputs before proceeding to Phase 3:
 - [ ] Bottom-heavy layout (thumb zone friendly)
@@ -135,14 +71,14 @@ Verify these outputs before proceeding to Phase 3:
 
 ### Phase 3: Conversion Optimization
 
-**Invoke all three skills in parallel** using the Skill tool in a single message:
-- `/copywriting-guide` - Rewrite headlines using PAS/AIDA/BAB frameworks, transform features into benefits, optimize microcopy, apply power words
-- `/cta-optimizer` - CTA copy (action verb + value + friction reducer), visual design (contrast, size, spacing), placement strategy, primary/secondary/tertiary hierarchy
-- `/social-proof` - Testimonials (photos, names, results), logo trust bar, stats/usage numbers, trust signals near CTAs and forms
+**Invoke all three in parallel** using the Skill tool in a single message:
+- `/conversion-audit copy` - Rewrite headlines using PAS/AIDA/BAB, transform features into benefits, optimize microcopy
+- `/conversion-audit cta` - CTA copy, visual design, placement strategy
+- `/conversion-audit social-proof` - Testimonials, logo trust bar, stats, trust signals near CTAs
 
 **Wait for all three to complete.**
 
-**VERIFY**: Run `git diff --stat` to check if files were actually modified. If NO files changed, implement the changes yourself directly based on the sub-skills' recommendations.
+**VERIFY**: Run `git diff --stat` to check if files were modified. If NO files changed, implement the changes yourself directly.
 
 Verify these outputs before proceeding to Phase 4:
 - [ ] Benefit-driven headlines
@@ -153,27 +89,25 @@ Verify these outputs before proceeding to Phase 4:
 
 ---
 
-### Phase 4: Visual Polish (3 Batches)
+### Phase 4: Visual Polish (2 Batches)
 
-**Batch 1 - Invoke all three in parallel** using the Skill tool in a single message:
-- `/color-palette` - Replace generic colors with sophisticated palette, create color scales (50-900), ensure WCAG contrast ratios, define semantic usage
-- `/typography-system` - Type scale with clear hierarchy, font pairing, weight/line-height definitions, responsive sizing
-- `/spacing-system` - Intentional spacing rhythm, content-relationship-based spacing, break mechanical uniformity, consistent scale
+**Batch 1 - Invoke using the Skill tool:**
+- `/design-system` - Full design system pass: colors (muted palette, WCAG contrast), typography (type scale, font pairing, hierarchy), spacing (4px base scale, visual rhythm), layout (asymmetric splits, focal points)
 
 **Wait for Batch 1 to complete.**
 
 **VERIFY**: Run `git diff --stat`. If no files changed, implement the design system changes yourself directly.
 
-**Batch 2 - Invoke both in parallel** using the Skill tool in a single message:
-- `/component-states` - Complete interactive states (hover, focus, active, disabled, loading), smooth transitions, keyboard focus indicators, error/success states
-- `/micro-interactions` - Subtle hover effects, entrance animations, meaningful loading states, polished state transitions
+**Batch 2 - Invoke all in parallel** using the Skill tool in a single message:
+- `/component-polish states` - Complete interactive states (hover, focus, active, disabled, loading), smooth transitions, focus indicators
+- `/component-polish interactions` - Hover effects, entrance animations, loading states, reduced-motion override
 
 **Wait for Batch 2 to complete.**
 
-**VERIFY**: Run `git diff --stat`. If no files changed, implement states and interactions yourself directly.
+**VERIFY**: Run `git diff --stat`. If no files changed, implement states and interactions yourself.
 
-**Batch 3 - Invoke sequentially:**
-- `/component-polish` - Final detail pass, perfect alignment and spacing, subtle shadows and depth, pixel-perfect implementation
+**Final - Invoke sequentially:**
+- `/component-polish` - Full polish pass: design system consistency, subtle details, spacing perfection
 
 **VERIFY**: Run `git diff --stat`. If no files changed, implement the polish yourself directly.
 
@@ -231,26 +165,15 @@ After all phases complete, present a summary:
 
 | Phase | Skill | Purpose |
 |-------|-------|---------|
-| 1 | `/conversion-audit` | Identify all design issues |
-| 2a | `/mobile-patterns` | Mobile navigation and layout |
-| 2b | `/touch-interactions` | Touch targets and gestures |
-| 2c | `/mobile-accessibility` | Screen reader support |
-| 3a | `/copywriting-guide` | Headlines and copy |
-| 3b | `/cta-optimizer` | CTA design and placement |
-| 3c | `/social-proof` | Testimonials and trust |
-| 4a | `/color-palette` | Professional colors |
-| 4b | `/typography-system` | Type hierarchy |
-| 4c | `/spacing-system` | Visual rhythm |
-| 4d | `/component-states` | Interactive states |
-| 4e | `/micro-interactions` | Animations |
-| 4f | `/component-polish` | Final details |
-
-## Integration with Agents
-
-This skill works well when invoked by:
-- **ui-ux-designer** - For complete design transformations
-- **mobile-designer** - When mobile-first approach is needed
-- **conversion-optimizer** - When revenue optimization is primary goal
+| 1 | `/conversion-audit` | Full audit — structure, copy, trust, friction, mobile |
+| 2 | `/mobile-design` | Navigation, layout, touch targets, screen reader support |
+| 3a | `/conversion-audit copy` | Headlines and copy optimization |
+| 3b | `/conversion-audit cta` | CTA design and placement |
+| 3c | `/conversion-audit social-proof` | Testimonials and trust signals |
+| 4a | `/design-system` | Colors, typography, spacing, layout |
+| 4b | `/component-polish states` | Interactive states |
+| 4c | `/component-polish interactions` | Animations and transitions |
+| 4d | `/component-polish` | Final detail pass |
 
 ## Notes
 

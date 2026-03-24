@@ -1,7 +1,7 @@
 ---
 name: design-app
 description: Generate multiple design concepts for an app, compare them side-by-side, and implement the chosen direction. Creates detailed design documents with color palettes, typography, spacing, component specs, and interactive HTML mockups.
-args: "[count] - Optional: number of concepts to generate (default: 3, max: 7)"
+argument-hint: "[count] - Optional: number of concepts to generate (default: 3, max: 7)"
 ---
 
 # Design App

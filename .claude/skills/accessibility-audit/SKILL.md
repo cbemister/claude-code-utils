@@ -1,6 +1,6 @@
 ---
 name: accessibility-audit
-description: Identify and fix accessibility issues to meet WCAG 2.1 Level AA standards. Checks semantic HTML, color contrast, keyboard navigation, ARIA usage, and more.
+description: Identify and fix accessibility issues for WCAG 2.1 Level AA compliance, including mobile screen reader support (VoiceOver/TalkBack), touch targets, and keyboard navigation.
 ---
 
 # Accessibility Audit and Fix
@@ -326,7 +326,89 @@ Identify and fix accessibility issues to ensure interfaces are usable by everyon
 ## Testing Tools
 
 - **Automated**: axe DevTools, Lighthouse, WAVE
-- **Screen Readers**: VoiceOver (Mac), NVDA (Windows), JAWS
+- **Screen Readers**: VoiceOver (Mac/iOS), TalkBack (Android), NVDA (Windows), JAWS
 - **Keyboard**: Tab through entire interface
 - **Contrast**: WebAIM Contrast Checker
 - **Zoom**: Test at 200% and 400%
+
+---
+
+## Mobile Accessibility
+
+Mobile-specific audit for VoiceOver (iOS), TalkBack (Android), and touch-based navigation.
+
+### WCAG 2.1 Mobile Criteria
+
+| Criterion | Level | Requirement |
+|-----------|-------|-------------|
+| **2.5.5 Target Size** | AAA | 44×44 CSS pixels minimum |
+| **2.5.1 Pointer Gestures** | A | Multi-point gestures have single-point alternative |
+| **2.5.2 Pointer Cancellation** | A | Completion on up-event, can abort |
+| **2.5.3 Label in Name** | A | Accessible name contains visible text |
+| **2.5.4 Motion Actuation** | A | Motion-triggered functions can be disabled |
+| **1.3.4 Orientation** | AA | Content works in portrait and landscape |
+| **1.4.10 Reflow** | AA | Content reflows to 320px without horizontal scroll |
+
+### Touch Targets
+
+- Minimum 44×44px for all tappable elements
+- 8px minimum gap between adjacent targets
+- Add padding to small visual elements without changing appearance
+
+### Screen Reader Labels
+
+```jsx
+// ❌ Bad: icon-only button, no label
+<button><svg><!-- icon --></svg></button>
+
+// ✅ Good: aria-label for screen readers
+<button aria-label="Close dialog">
+  <svg aria-hidden="true"><!-- icon --></svg>
+</button>
+```
+
+### Focus Management (Modals/Sheets)
+
+- Store `document.activeElement` before opening
+- Move focus to first focusable element inside modal
+- Trap Tab/Shift+Tab within modal while open
+- Return focus to trigger on close
+
+### Live Region Announcements
+
+```html
+<!-- Polite: status updates -->
+<div role="status" aria-live="polite" aria-atomic="true" class="sr-only"></div>
+
+<!-- Assertive: error messages -->
+<div role="alert" aria-live="assertive" aria-atomic="true" class="sr-only"></div>
+```
+
+### Reduced Motion
+
+```css
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+```
+
+### VoiceOver/TalkBack Testing Checklist
+
+```markdown
+- [ ] All interactive elements reachable by swipe navigation
+- [ ] Button labels are descriptive ("Close dialog" not "X")
+- [ ] Form inputs announce purpose and state
+- [ ] Modals trap focus and announce as dialogs
+- [ ] Dynamic content updates announced via live regions
+- [ ] Reading order matches visual order
+- [ ] Headings create logical document outline
+- [ ] Custom controls have appropriate ARIA roles
+- [ ] Loading states use aria-busy or live regions
+- [ ] Error messages use role="alert"
+- [ ] Content reflows to 320px without horizontal scroll
+- [ ] Works in portrait and landscape orientation
+- [ ] prefers-reduced-motion respected
+```

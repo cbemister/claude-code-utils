@@ -1,7 +1,7 @@
 ---
 name: generate-hypotheses
 description: Use when evaluation data exists and optimization proposals are needed. Analyzes scores, user journey drop-off points, and prior attempts to produce ranked hypotheses batched 2-3 per cycle.
-args: "[count] - Optional: number of hypotheses to generate (default: 5, max: 10)"
+argument-hint: "[count] - Optional: number of hypotheses to generate (default: 5, max: 10)"
 ---
 
 # Generate Hypotheses
